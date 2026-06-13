@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intro to Linear Algebra — Notes & Mocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --bg-card: #ffffff;
+    --border: #ddd5c8;
+    --border-soft: #ebe4d8;
+    --text: #2b2620;
+    --text-muted: #5f574b;
+    --text-dim: #8a8070;
+    --accent: #b06b3a;
+    --accent-hover: #c47d49;
+    --highlight: #f1ece2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 3.5rem 1.5rem 6rem; }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 2.3rem;
+    margin: 0 0 0.4rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .meta {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2.2rem;
+  }
+  .lead { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+  .docs { display: grid; gap: 1rem; }
+  .doc-card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem 1.6rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 1px 3px rgba(43, 38, 32, 0.04);
+  }
+  .doc-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(43, 38, 32, 0.08);
+  }
+  .doc-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.35rem;
+    color: var(--accent);
+    margin: 0 0 0.35rem;
+  }
+  .doc-desc { color: var(--text-muted); margin: 0; font-size: 0.96rem; }
+  .footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-soft);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Intro to Linear Algebra</h1>
+  <div class="meta">Prof. Kazeev · Exam prep</div>
+
+  <p class="lead">Study materials and mock exams for the 4th exam date. Pick a document below.</p>
+
+  <div class="docs">
+    <a class="doc-card" href="exam_notes.html">
+      <div class="doc-title">Exam Notes</div>
+      <p class="doc-desc">Core definitions, theorems, and worked-through proofs from the course.</p>
+    </a>
+    <a class="doc-card" href="mock_exams.html">
+      <div class="doc-title">Mock Exams</div>
+      <p class="doc-desc">Five full mock exams modeled on the recurring six-problem format, with extra Q7/Q8 from older dates. Answer keys included.</p>
+    </a>
+  </div>
+
+  <div class="footer">
+    Source on <a href="https://github.com/kulchankas/into_linal">GitHub</a>.
+  </div>
+</div>
+</body>
+</html>

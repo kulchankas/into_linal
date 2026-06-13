@@ -359,6 +359,16 @@ MathJax = {
   .callout.defbox dt { font-weight: 700; margin-top: 0.5rem; }
   .callout.defbox dd { margin: 0.1rem 0 0 0; color: var(--text-muted); }
 
+  details.callout summary {
+    cursor: pointer;
+    list-style: none;
+    margin-bottom: 0;
+  }
+  details.callout summary::-webkit-details-marker { display: none; }
+  details.callout summary::before { content: '▸ '; }
+  details.callout[open] summary::before { content: '▾ '; }
+  details.callout[open] summary { margin-bottom: 0.6rem; }
+
   /* CODE & MATH */
   code {
     font-family: 'JetBrains Mono', monospace;
@@ -1435,6 +1445,27 @@ $$\lambda_3 = 0,\quad \lambda_2 + \lambda_3 = 0 \Rightarrow \lambda_2 = 0,\quad 
 </div>
 
 <p><strong>The shortcut — don't row-reduce unless you have to.</strong> For a $2\times 2$ map, $T$ is injective $\iff \ker T = \{0\} \iff$ the two columns are linearly independent $\iff ad - bc \neq 0$ (the $2\times 2$ "cross-product" test — this is just whether one column is a complex multiple of the other; it is <em>not</em> a determinant method on the syllabus, just the rank-1 check).</p>
+
+<details class="callout">
+  <summary class="callout-title">Why $ad = bc$ is the proportionality test (click to expand)</summary>
+  <p>The homogeneous system is $az + bw = 0$ (row 1) and $cz + dw = 0$ (row 2). Two cases:</p>
+  <ul>
+    <li><strong>Rows point different directions (not proportional):</strong> the two equations constrain $(z,w)$ independently, and only $(0,0)$ satisfies both. Kernel zero → injective.</li>
+    <li><strong>Rows proportional (same direction):</strong> row 2 is just a rescaled row 1, so you effectively have <em>one</em> equation in two unknowns — infinitely many solutions forming a line. Kernel 1-dimensional → not injective.</li>
+  </ul>
+  <p>So injectivity reduces to: <em>are the rows proportional?</em> The algebra: rows $(a,b)$ and $(c,d)$ are proportional iff $(c,d) = \lambda(a,b)$, i.e. $c = \lambda a$, $d = \lambda b$. Then $ad = a(\lambda b) = \lambda ab$ and $bc = b(\lambda a) = \lambda ab$, so $ad = bc$. Conversely $ad - bc \neq 0$ means no such $\lambda$ — rows independent, kernel $\{0\}$.</p>
+  <p>In one line: $ad - bc = 0 \iff$ rows proportional $\iff$ rank 1 $\iff$ kernel is a line $\iff$ not injective.</p>
+  <p><strong>Exam wording:</strong> $ad-bc$ is the determinant, but determinants are <em>out of scope</em> in this course — don't cite "det $\neq 0 \Rightarrow$ invertible." Say instead "the two rows are linearly dependent, so the system reduces to one equation." Same computation, course-appropriate justification. (Equivalently: just row-reduce — subtract a multiple of row 1 from row 2 and see if row 2 vanishes.)</p>
+</details>
+
+<details class="callout">
+  <summary class="callout-title">Why $\ker T = \{0\}$ means injective (click to expand)</summary>
+  <p>The one move that makes it work: for a <em>linear</em> map, $f(u) - f(v) = f(u - v)$. So "two outputs equal" $\iff$ "their difference maps to $0$" $\iff$ "$u-v \in \ker f$."</p>
+  <p><strong>($\ker f = \{0\} \Rightarrow$ injective):</strong> if $f(u) = f(v)$ then $f(u-v) = f(u)-f(v) = 0$, so $u - v \in \ker f = \{0\}$, giving $u - v = 0$, i.e. $u = v$.</p>
+  <p><strong>(injective $\Rightarrow \ker f = \{0\}$):</strong> if $x \in \ker f$ then $f(x) = 0 = f(0)$, and injectivity forces $x = 0$.</p>
+  <p><strong>Intuition:</strong> the kernel measures how much gets crushed to $0$. A linear map can only merge two distinct points $u \neq v$ if it crushes the nonzero direction $u - v$ to zero. Nothing crushed (except $0$) ⇒ nothing merged ⇒ one-to-one.</p>
+  <p><strong>Why it needs linearity:</strong> for a general function this fails — $g(x) = x^2$ has only $0 \mapsto 0$ yet isn't injective ($g(2)=g(-2)$). The equivalence lives entirely on $f(u-v) = f(u)-f(v)$.</p>
+</details>
 
 <ol>
   <li><strong>Write the matrix</strong> $T = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ from $T(z,w) = (az+bw,\ cz+dw)$.</li>

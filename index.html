@@ -2,109 +2,200 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intro to Linear Algebra — Notes & Mocks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1612">
+<meta name="description" content="Notes and mock exams for Introduction to Linear Algebra — Prof. Kazeev, Universität Wien.">
+<title>Linear Algebra — Notes & Mock Exams</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400..600;9..144,1,400..600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf7f2;
-    --bg-card: #ffffff;
-    --border: #ddd5c8;
-    --border-soft: #ebe4d8;
-    --text: #2b2620;
-    --text-muted: #5f574b;
-    --text-dim: #8a8070;
-    --accent: #b06b3a;
-    --accent-hover: #c47d49;
-    --highlight: #f1ece2;
+    --bg: #1a1612;
+    --bg-elevated: #221d18;
+    --bg-card: #1f1a15;
+    --border: #3a342c;
+    --border-soft: #2a251f;
+    --text: #f5efe4;
+    --text-muted: #b8aa97;
+    --text-dim: #8a7e6e;
+    --accent: #e0b888;
+    --accent-hover: #ecc89c;
+    --glow: rgba(224, 184, 136, 0.14);
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 17px;
     line-height: 1.65;
-    margin: 0;
-    padding: 0;
+    letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    /* soft warm glow behind the hero */
+    background-image:
+      radial-gradient(900px 500px at 50% -10%, var(--glow), transparent 70%);
+    background-repeat: no-repeat;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 3.5rem 1.5rem 6rem; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(3rem, 9vw, 6rem) clamp(1.25rem, 5vw, 2rem) 5rem;
+    padding-left: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-left));
+    padding-right: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-right));
+  }
+
+  /* HERO */
+  .eyebrow {
+    font-weight: 500;
+    color: var(--accent);
+    font-size: clamp(0.74rem, 2.6vw, 0.85rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1.1rem;
+  }
   h1 {
     font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 2.3rem;
-    margin: 0 0 0.4rem;
-    color: var(--text);
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 9vw, 3.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.3rem;
   }
-  .meta {
-    color: var(--text-dim);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 2.2rem;
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede {
+    font-size: clamp(1rem, 3.4vw, 1.12rem);
+    color: var(--text-muted);
+    max-width: 34em;
+    line-height: 1.6;
   }
-  .lead { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
-  .docs { display: grid; gap: 1rem; }
-  .doc-card {
-    display: block;
+
+  /* DOC CARDS */
+  .docs {
+    margin-top: clamp(2.5rem, 7vw, 3.5rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.1rem;
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.4rem 1.6rem;
+    border-radius: 14px;
+    padding: clamp(1.4rem, 4vw, 1.85rem);
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 1px 3px rgba(43, 38, 32, 0.04);
+    overflow: hidden;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    -webkit-tap-highlight-color: transparent;
   }
-  .doc-card:hover {
+  .card::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(420px 200px at 100% 0%, var(--glow), transparent 60%);
+    opacity: 0; transition: opacity .25s ease;
+    pointer-events: none;
+  }
+  .card:hover, .card:focus-visible {
+    transform: translateY(-3px);
     border-color: var(--accent);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(43, 38, 32, 0.08);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    outline: none;
   }
-  .doc-title {
+  .card:hover::before, .card:focus-visible::before { opacity: 1; }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .card-title {
     font-family: 'Fraunces', serif;
     font-weight: 600;
-    font-size: 1.35rem;
+    font-size: clamp(1.4rem, 4.5vw, 1.7rem);
     color: var(--accent);
-    margin: 0 0 0.35rem;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
   }
-  .doc-desc { color: var(--text-muted); margin: 0; font-size: 0.96rem; }
-  .footer {
-    margin-top: 3.5rem;
+  .card-desc { color: var(--text-muted); font-size: 0.96rem; flex: 1; }
+  .card-cta {
+    margin-top: 1.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .card-cta .arrow { transition: transform .2s ease; }
+  .card:hover .card-cta .arrow, .card:focus-visible .card-cta .arrow { transform: translateX(4px); }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    margin-top: 2.5rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  .meta-row .dot { color: var(--accent); }
+
+  footer {
+    margin-top: clamp(3rem, 8vw, 4.5rem);
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-soft);
     color: var(--text-dim);
     font-size: 0.85rem;
   }
-  .footer a { color: var(--accent); text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (hover: none) {
+    .card:active { transform: translateY(-1px) scale(0.995); border-color: var(--accent); }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Intro to Linear Algebra</h1>
-  <div class="meta">Prof. Kazeev · Exam prep</div>
 
-  <p class="lead">Study materials and mock exams for the 4th exam date. Pick a document below.</p>
+  <header>
+    <div class="eyebrow">Universität Wien · Prof. Kazeev</div>
+    <h1>Introduction to<br><em>Linear Algebra</em></h1>
+    <p class="lede">Everything you need for the 4th exam date — distilled notes, the must-know proofs, and five full mock exams with answer keys.</p>
+  </header>
 
-  <div class="docs">
-    <a class="doc-card" href="exam_notes.html">
-      <div class="doc-title">Exam Notes</div>
-      <p class="doc-desc">Core definitions, theorems, and worked-through proofs from the course.</p>
+  <main class="docs">
+    <a class="card" href="exam_notes.html">
+      <div class="card-num">01 / NOTES</div>
+      <div class="card-title">Exam Notes</div>
+      <p class="card-desc">Core definitions, computational recipes, and the big Problem-5 proofs — organized with a navigable sidebar.</p>
+      <span class="card-cta">Open notes <span class="arrow">→</span></span>
     </a>
-    <a class="doc-card" href="mock_exams.html">
-      <div class="doc-title">Mock Exams</div>
-      <p class="doc-desc">Five full mock exams modeled on the recurring six-problem format, with extra Q7/Q8 from older dates. Answer keys included.</p>
+
+    <a class="card" href="mock_exams.html">
+      <div class="card-num">02 / PRACTICE</div>
+      <div class="card-title">Mock Exams</div>
+      <p class="card-desc">Five mock papers in the recurring six-problem format, plus historical Q7/Q8 extras. Every answer key included.</p>
+      <span class="card-cta">Start practicing <span class="arrow">→</span></span>
     </a>
+  </main>
+
+  <div class="meta-row">
+    <span><span class="dot">●</span> 2 documents</span>
+    <span><span class="dot">●</span> 5 mock exams</span>
+    <span><span class="dot">●</span> Computer-verified answers</span>
   </div>
 
-  <div class="footer">
-    Source on <a href="https://github.com/kulchankas/into_linal">GitHub</a>.
-  </div>
+  <footer>
+    Source &amp; updates on <a href="https://github.com/kulchankas/into_linal">GitHub</a>. Best viewed on any device — phone, iPad, or desktop.
+  </footer>
+
 </div>
 </body>
 </html>

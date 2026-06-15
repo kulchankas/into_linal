@@ -315,6 +315,25 @@ MathJax = {
     font-size: 0.97rem;
   }
 
+  .proof-idea {
+    color: var(--text);
+    font-size: 0.97rem;
+    margin: 0 0 1.25rem;
+    padding: 0.7rem 0.95rem;
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+  }
+  .proof-idea .idea-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 0.68rem;
+    color: var(--accent);
+    margin-right: 0.55rem;
+  }
+
   .proof ol, .proof ul {
     padding-left: 1.5rem;
     margin: 0.75rem 0;
@@ -1092,6 +1111,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-257">
   <div class="proof-header">II.5.7 — Triangular structure under matrix multiplication</div>
   <div class="proof-statement">Lower-tri × lower-tri = lower-tri with $(AB)_{ii} = A_{ii} B_{ii}$. Unit/strict properties preserved. Same for upper-tri.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Split each entry $(AB)_{ij}=\sum_k A_{ik}B_{kj}$ by the range of $k$; triangularity kills every term except the diagonal one $A_{ii}B_{ii}$.</div>
   <ol>
     <li>Fix $i \leq j$. Split $(AB)_{ij} = \sum_k A_{ik} B_{kj}$ into three ranges: $k &lt; i$, $i \leq k \leq j$, $k &gt; j$.</li>
     <li>Lower-triangularity kills the third sum ($A_{ik} = 0$ for $k > i$) and the first ($B_{kj} = 0$ for $k < j$).</li>
@@ -1103,6 +1123,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-258">
   <div class="proof-header">II.5.8 — Inversion of a single Gaussian elimination step</div>
   <div class="proof-statement">For $\ell \in \mathbb{F}^m$ with first $k$ components zero and $e_k$ the $k$-th column of $I$: $(I - \ell e_k^T)^{-1} = I + \ell e_k^T$.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Multiply the two candidates out directly: the cross-terms cancel and the quadratic term dies because $e_k^T\ell=\ell_k=0$, leaving $I$.</div>
   <ol>
     <li>Compute $(I \mp \ell e_k^T)(I \pm \ell e_k^T) = I \pm \ell e_k^T \mp \ell e_k^T - \ell(e_k^T \ell) e_k^T$.</li>
     <li>The cross-terms cancel. The quadratic term has $e_k^T \ell = \ell_k = 0$ by assumption.</li>
@@ -1113,6 +1134,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-259">
   <div class="proof-header">II.5.9 — Representation of $r$ steps of Gaussian elimination</div>
   <div class="proof-statement">For $\ell_1, \dots, \ell_r \in \mathbb{F}^m$ ($r \le m-1$) where $\ell_k$ has its first $k$ components zero: $\displaystyle (I + \ell_1 e_1^T)\cdots(I + \ell_r e_r^T) = I + \sum_{k=1}^r \ell_k e_k^T$.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Induct on $r$: the only new cross-terms produced by the next factor vanish since the first $n$ components of $\ell_{n+1}$ are zero.</div>
   <p><strong>Induction on $r$.</strong></p>
   <ol>
     <li><strong>Base ($r=1$):</strong> both sides equal $I + \ell_1 e_1^T$. Trivial.</li>
@@ -1125,6 +1147,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-2510">
   <div class="proof-header">II.5.10 — Lower-triangular matrices and inversion</div>
   <div class="proof-statement">(a) Unit lower-tri ⇒ invertible with unit lower-tri inverse. (b) Lower-tri with no zero on diagonal ⇒ invertible with lower-tri inverse. (c) Invertible lower-tri ⇒ no zeros on diagonal.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Factor $L$ into elementary steps (II.5.9), each invertible (II.5.8) and lower-tri-preserving (II.5.7); (c) is a contradiction from a zero diagonal entry forcing a zero row or column.</div>
 
   <h4>(a)</h4>
   <p>Write $L - I = \sum_{k=1}^{m-1} \ell_k e_k^T$ where $\ell_k$ has first $k$ components zero. By Lemma II.5.9, $L = \prod_{k=1}^{m-1} (I + \ell_k e_k^T)$. Each factor invertible by II.5.8. So $L^{-1} = \prod_{k=m-1}^{1} (I - \ell_k e_k^T)$ (note reversed order). By II.5.7(b), $L^{-1}$ is unit lower-tri.</p>
@@ -1144,6 +1167,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-1129">
   <div class="proof-header">III.1.29 — The span is the smallest containing subspace</div>
   <div class="proof-statement">For $A \subseteq V$: (i) there is a unique subspace $\langle A \rangle$ containing $A$ such that every subspace $W \supseteq A$ has $\langle A \rangle \subseteq W$. (ii) $v \in \langle A \rangle$ iff $v$ is a finite linear combination of elements of $A$.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Define $\langle A\rangle$ as the intersection of all subspaces containing $A$ (so it is smallest by construction), then show it coincides with the set of finite linear combinations of $A$.</div>
 
   <h4>(i)</h4>
   <p>Existence: define $\langle A \rangle := \bigcap_{W \supseteq A, W \text{ subspace}} W$. Intersection of subspaces is a subspace; contains $A$; minimal by construction.</p>
@@ -1157,6 +1181,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-1136">
   <div class="proof-header">III.1.36 — Three equivalent characterizations of linear independence</div>
   <div class="proof-statement">For $A \subseteq V$: (i) $A$ linearly independent ⇔ (ii) every $v \in \langle A \rangle$ has a unique representation ⇔ (iii) $\langle B \rangle \subsetneq \langle A \rangle$ for every proper $B \subsetneq A$.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Run the cycle (i)⇒(ii)⇒(iii)⇒(i): subtracting two representations of the same vector links uniqueness to the absence of a smaller spanning subset, which is exactly independence.</div>
 
   <h4>(i) ⇒ (ii)</h4>
   <p>If $v = \sum \lambda_i a_i = \sum \mu_i a_i$, then $\sum (\lambda_i - \mu_i) a_i = 0$ forces $\lambda_i = \mu_i$ by linear independence.</p>
@@ -1171,6 +1196,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-1138">
   <div class="proof-header">III.1.38 — Three equivalent characterizations of a basis</div>
   <div class="proof-statement">$\mathcal{B} \subseteq V$ is a basis ⇔ minimal spanning set ⇔ maximal linearly independent set.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> A basis is "spanning + independent"; "minimal spanning" and "maximal independent" just restate one of those two halves via the characterizations in III.1.36.</div>
 
   <h4>(i) ⇔ (ii)</h4>
   <p>Spanning is in both. Minimality "$\langle A \rangle \neq V$ for $A \subsetneq \mathcal{B}$" is exactly III.1.36(iii), equivalent to linear independence.</p>
@@ -1185,6 +1211,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-1146">
   <div class="proof-header">III.1.46 — Exchange Lemma</div>
   <div class="proof-statement">For $A \subseteq V$, $v \in \langle A \rangle$ with $v = \sum \lambda_i a_i$ and $\lambda_0 \neq 0$ on some $a_0 \in A$. Then $A' := (A \setminus \{a_0\}) \cup \{v\}$ satisfies $\langle A' \rangle = \langle A \rangle$.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> The nonzero coefficient $\lambda_0$ lets you solve $v=\sum\lambda_i a_i$ for $a_0$, so $a_0$ and $v$ are mutually expressible and swapping them leaves the span unchanged.</div>
   <ol>
     <li>From $v = \lambda_0 a_0 + \sum_{i \neq 0} \lambda_i a_i$ with $\lambda_0 \neq 0$, solve for $a_0$:
     $$a_0 = \frac{1}{\lambda_0} v - \sum_{i \neq 0} \frac{\lambda_i}{\lambda_0} a_i$$</li>
@@ -1197,6 +1224,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-1147">
   <div class="proof-header">III.1.47 — Steinitz Exchange Theorem</div>
   <div class="proof-statement">The full proof lives in the big-proofs section above (it's a Tier-1 10-point candidate). See <a href="#proof-steinitz">Steinitz Exchange Theorem</a>. Quick reminders for part (ii) below.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Greedily pull independent vectors out of $A$: whenever they don't yet span, some $a$ lies outside their span, and one exchange installs it — terminating in at most $n$ steps.</div>
   <h4>(ii) — extracting a finite spanning subset (the part the big version compresses)</h4>
   <p>If $A = \{0\}$ take $A' = \emptyset$. Otherwise pick $a_1 \neq 0$; renumbering gives $\{a_1, v_2, \dots, v_n\}$ spanning. If $\langle\{a_1\}\rangle = V$, done; else there is $a_2 \in A \setminus \langle\{a_1\}\rangle$ (since $A$ spans), so some $v_i$ has a nonzero coefficient and exchanging gives $\{a_1, a_2, v_3, \dots, v_n\}$ spanning. Iterate: at step $\ell$, if $\{a_1, \dots, a_\ell\}$ doesn't span there is $a_{\ell+1} \in A \setminus \langle\{a_1, \dots, a_\ell\}\rangle$, forcing a nonzero $v$-coefficient; after $\le n$ exchanges the $a$'s alone span $V$, yielding $A'$. $\square$</p>
 </div>
@@ -1204,6 +1232,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 <div class="proof" id="proof-211">
   <div class="proof-header">III.2.11 — Kernel/image are subspaces; injectivity criterion</div>
   <div class="proof-statement">For linear $f: V \to W$: (i) image of a subspace is a subspace of $W$; (ii) preimage of a subspace is a subspace of $V$; (iii) $f$ surjective ⇔ $\text{im}(f) = W$; (iv) $f$ injective ⇔ $\ker(f) = \{0\}$.</div>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Linearity pushes linear combinations through $f$ (and $f(0)=0$), so images and preimages stay closed; injectivity ⇔ trivial kernel because $f(x)=f(y)\iff f(x-y)=0$.</div>
 
   <h4>(i)</h4>
   <p>Let $w, w' \in f(\hat V)$. Then $w = f(v)$, $w' = f(v')$ for some $v, v' \in \hat V$. By linearity, $\lambda w + w' = f(\lambda v + v') \in f(\hat V)$. Also $f(0) = 0 \in f(\hat V)$. ✓</p>
@@ -1222,11 +1251,13 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
   <div class="proof-header">Q2 small proofs</div>
 
   <h4>Associativity of function composition</h4>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Evaluate both sides at an arbitrary point; both collapse to $h(g(f(x)))$, so the two functions agree everywhere.</div>
   <p>For any $x$ in the domain of $f$:</p>
   $$((h \circ g) \circ f)(x) = (h \circ g)(f(x)) = h(g(f(x))) = h((g \circ f)(x)) = (h \circ (g \circ f))(x)$$
   <p>Equal at every point ⇒ functions equal. $\square$</p>
 
   <h4>Uniqueness of inverse function</h4>
+  <div class="proof-idea"><span class="idea-label">Main idea</span> Sandwich one inverse between the other's identities — $\tilde g=\tilde g\circ(f\circ g)=(\tilde g\circ f)\circ g=g$ — using associativity.</div>
   <p>Suppose $g, \tilde g$ both satisfy $g \circ f = \text{id}_X$ and $f \circ g = \text{id}_Y$. Then:</p>
   $$\tilde g = \tilde g \circ \text{id}_Y = \tilde g \circ (f \circ g) = (\tilde g \circ f) \circ g = \text{id}_X \circ g = g$$
   <p>Using associativity of composition in the middle step. $\square$</p>

@@ -6,8 +6,7 @@
 <title>Linear Algebra — Exam Notes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<meta name="theme-color" content="#f6f7f9">
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,ital,wght@6..72,0,400..600;6..72,1,400..500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script>
 MathJax = {
   tex: {
@@ -21,24 +20,20 @@ MathJax = {
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
   :root {
-    --bg: #fafaf8;
-    --bg-elevated: #ffffff;
-    --bg-card: #ffffff;
-    --border: #e6e6e0;
-    --border-soft: #f0f0ea;
-    --text: #1b1b18;
-    --text-muted: #57574f;
-    --text-dim: #8f8f86;
-    --accent: #0f766e;
-    --accent-hover: #0d9488;
-    --warn: #b45309;
-    --danger: #b91c1c;
-    --ok: #15803d;
-    --highlight: #e9f4f1;
-    --code-bg: #eef2f1;
-    --font-head: 'Newsreader', Georgia, 'Times New Roman', serif;
-    --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --bg: #1a1612;
+    --bg-elevated: #221d18;
+    --bg-card: #1f1a15;
+    --border: #3a342c;
+    --border-soft: #2a251f;
+    --text: #f5efe4;
+    --text-muted: #b8aa97;
+    --text-dim: #8a7e6e;
+    --accent: #e0b888;
+    --accent-hover: #ecc89c;
+    --warn: #d99a7e;
+    --danger: #c87060;
+    --highlight: #2a2218;
+    --code-bg: #14110d;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,7 +41,7 @@ MathJax = {
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: var(--font-body);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--text);
     font-size: 17px;
@@ -57,7 +52,11 @@ MathJax = {
     text-rendering: optimizeLegibility;
   }
 
-  .layout { display: block; }
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
 
   /* SIDEBAR */
   .sidebar {
@@ -72,7 +71,7 @@ MathJax = {
   }
 
   .sidebar-header {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: -0.01em;
@@ -89,7 +88,7 @@ MathJax = {
   }
 
   .sidebar nav h3 {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -119,68 +118,10 @@ MathJax = {
 
   /* MAIN CONTENT */
   main {
-    max-width: 720px;
-    padding: clamp(2.25rem, 6vw, 4.5rem) clamp(1.15rem, 5vw, 2rem) 6rem;
-    padding-left: max(clamp(1.15rem, 5vw, 2rem), env(safe-area-inset-left));
-    padding-right: max(clamp(1.15rem, 5vw, 2rem), env(safe-area-inset-right));
+    max-width: 780px;
+    padding: 4rem 4rem 6rem;
     margin: 0 auto;
   }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--text-dim);
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-    margin-bottom: 2.25rem;
-    transition: color .15s ease;
-  }
-  .back-link:hover { color: var(--accent); }
-
-  /* TABLE OF CONTENTS */
-  .toc {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.6rem 1.85rem;
-    margin: 0 0 4.5rem;
-    box-shadow: 0 1px 2px rgba(27, 27, 24, 0.04);
-  }
-  .toc-title {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    margin-bottom: 1.2rem;
-  }
-  .toc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-    gap: 1.5rem 2rem;
-  }
-  .toc-group h4 {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--accent);
-    margin: 0 0 0.55rem;
-  }
-  .toc-group a {
-    display: block;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    padding: 0.17rem 0;
-    line-height: 1.4;
-    transition: color .12s ease;
-  }
-  .toc-group a:hover { color: var(--accent); }
 
   /* TITLE BLOCK */
   .title-block {
@@ -190,7 +131,7 @@ MathJax = {
   }
 
   .eyebrow {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: var(--accent);
     font-size: 0.85rem;
@@ -200,7 +141,7 @@ MathJax = {
   }
 
   h1 {
-    font-family: var(--font-head);
+    font-family: 'Fraunces', serif;
     font-weight: 500;
     font-size: 3.25rem;
     line-height: 1.05;
@@ -229,7 +170,7 @@ MathJax = {
   }
 
   .part-number {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     color: var(--accent);
     font-size: 0.85rem;
@@ -239,7 +180,7 @@ MathJax = {
   }
 
   h2 {
-    font-family: var(--font-head);
+    font-family: 'Fraunces', serif;
     font-weight: 500;
     font-size: 2.25rem;
     line-height: 1.15;
@@ -257,7 +198,7 @@ MathJax = {
   }
 
   h3 {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 1.4rem;
     margin: 3rem 0 1rem;
@@ -266,7 +207,7 @@ MathJax = {
   }
 
   h4 {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 1.05rem;
     margin: 1.75rem 0 0.75rem;
@@ -302,7 +243,7 @@ MathJax = {
   }
 
   .definition .term {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     color: var(--accent);
     font-size: 1.05rem;
@@ -317,7 +258,7 @@ MathJax = {
     font-style: normal;
     margin-left: 0.5rem;
     font-weight: 400;
-    font-family: var(--font-mono);
+    font-family: 'JetBrains Mono', monospace;
   }
 
   /* PROOFS */
@@ -330,7 +271,7 @@ MathJax = {
   }
 
   .proof-header {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     color: var(--accent);
     font-size: 1.05rem;
@@ -345,8 +286,8 @@ MathJax = {
   .proof-tag {
     display: inline-block;
     background: var(--warn);
-    color: #fff;
-    font-family: var(--font-mono);
+    color: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
     font-weight: 700;
     padding: 0.15rem 0.55rem;
@@ -357,13 +298,13 @@ MathJax = {
 
   .proof-tag.tier1 {
     background: var(--danger);
-    color: #fff;
+    color: var(--text);
   }
 
   .proof-tag.tier2 {
     background: var(--accent, #3a6ea5);
-    color: #fff;
-    opacity: 1;
+    color: var(--text);
+    opacity: 0.85;
   }
 
   .proof-statement {
@@ -394,7 +335,7 @@ MathJax = {
   }
 
   .callout-title {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     color: var(--accent);
     text-transform: uppercase;
@@ -430,7 +371,7 @@ MathJax = {
 
   /* CODE & MATH */
   code {
-    font-family: var(--font-mono);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.88em;
     background: var(--code-bg);
     color: var(--accent);
@@ -455,7 +396,7 @@ MathJax = {
   }
 
   th {
-    font-family: var(--font-body);
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     color: var(--accent);
     text-transform: uppercase;
@@ -472,11 +413,11 @@ MathJax = {
     color: var(--text-dim);
     margin: 3rem 0;
     letter-spacing: 1em;
-    font-family: var(--font-head);
+    font-family: 'Fraunces', serif;
   }
 
   .pull-quote {
-    font-family: var(--font-head);
+    font-family: 'Fraunces', serif;
     font-style: italic;
     font-size: 1.25rem;
     font-weight: 400;
@@ -489,13 +430,16 @@ MathJax = {
   }
 
   /* MOBILE */
-  @media (max-width: 640px) {
-    h1 { font-size: 2.3rem; }
-    h2 { font-size: 1.7rem; }
-    .toc { padding: 1.3rem 1.35rem; }
-    .toc-grid { gap: 1.25rem 1.5rem; }
-    /* let wide tables scroll instead of breaking the layout */
-    main table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar {
+      position: relative;
+      height: auto;
+      padding: 1.5rem;
+    }
+    main { padding: 2rem 1.5rem 4rem; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.85rem; }
   }
 
   /* PRINT */
@@ -521,9 +465,6 @@ MathJax = {
   }
   mjx-container[display="true"] {
     margin: 1.25rem 0 !important;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
   }
 </style>
 </head>
@@ -531,83 +472,75 @@ MathJax = {
 
 <div class="layout">
 
-<main>
+<aside class="sidebar">
+  <a href="index.html" style="display:inline-block;color:var(--text-dim);text-decoration:none;font-size:0.82rem;font-weight:500;margin-bottom:1rem;">← All documents</a>
+  <div class="sidebar-header">Linear Algebra<br>Exam Notes</div>
+  <div class="sidebar-sub">Kazeev / UniVie — 4th exam date</div>
 
-<a class="back-link" href="index.html">← All documents</a>
+  <nav>
+    <h3>Orientation</h3>
+    <a href="#exam-format">The exam format</a>
+    <a href="#strategy">Strategy & timing</a>
+
+    <h3>Definitions</h3>
+    <a href="#defs-foundation">Foundation</a>
+    <a href="#defs-matrices">Matrices</a>
+    <a href="#defs-spaces">Vector spaces</a>
+    <a href="#defs-maps">Linear maps</a>
+
+    <h3>Computational recipes</h3>
+    <a href="#recipe-lu">LU decomposition</a>
+    <a href="#recipe-inverse">Matrix inverse</a>
+    <a href="#recipe-multiply">Matrix multiplication</a>
+
+    <h3>The big proofs (Problem 5)</h3>
+    <a href="#proof-sums">IV.1.4 Sums</a>
+    <a href="#proof-rankn">IV.1.10 Rank-Nullity</a>
+    <a href="#proof-steinitz">III.1.47 Steinitz</a>
+    <a href="#proof-rank">IV.1.15 Rank</a>
+
+    <h3>Other in-scope proofs</h3>
+    <a href="#proof-257">II.5.7 Triangular mult</a>
+    <a href="#proof-258">II.5.8 Elimination step</a>
+    <a href="#proof-259">II.5.9 $r$ elim. steps</a>
+    <a href="#proof-2510">II.5.10 Triangular inv</a>
+    <a href="#proof-1129">III.1.29 Span</a>
+    <a href="#proof-1136">III.1.36 Lin. indep.</a>
+    <a href="#proof-1138">III.1.38 Basis</a>
+    <a href="#proof-1146">III.1.46 Exchange</a>
+    <a href="#proof-1147">III.1.47 Steinitz (ii)</a>
+    <a href="#proof-211">III.2.11 Kernel/Image</a>
+    <a href="#proof-small">Q2 small proofs</a>
+
+    <h3>Concept guides</h3>
+    <a href="#concept-subspace">Subspaces</a>
+    <a href="#concept-span">Span</a>
+    <a href="#concept-basis">Basis</a>
+    <a href="#concept-lindep">Linear independence</a>
+
+    <h3>Problem 6 patterns</h3>
+    <a href="#p6-complexkernel">Complex kernel + injectivity</a>
+    <a href="#p6-linearitytest">Is this map linear?</a>
+    <a href="#p6-setimage">Image/preimage of a set</a>
+    <a href="#p6-fixed">Fixed-point subspace</a>
+    <a href="#p6-poly">Polynomial subspaces</a>
+    <a href="#p6-steinitz">Dimension arguments</a>
+    <a href="#p6-directsum">Direct sum tricks</a>
+    <a href="#p6-zp">Maps over $\mathbb{Z}_p$</a>
+    <a href="#p6-basisext">Basis extension</a>
+
+    <h3>Exam day</h3>
+    <a href="#exam-day">What to remember</a>
+  </nav>
+</aside>
+
+<main>
 
 <div class="title-block">
   <div class="eyebrow">Introduction to Linear Algebra · 2025–2026</div>
   <h1>Everything you<br>need for the <em>exam</em></h1>
   <p class="lede">A complete, dense, deliberately compressed reference — definitions, recipes, proofs, and patterns — for the 4th-date exam under Prof. Kazeev at UniVie.</p>
 </div>
-
-<nav class="toc" aria-label="Contents">
-  <div class="toc-title">Contents</div>
-  <div class="toc-grid">
-    <div class="toc-group">
-      <h4>Orientation</h4>
-      <a href="#exam-format">The exam format</a>
-      <a href="#strategy">Strategy & timing</a>
-    </div>
-    <div class="toc-group">
-      <h4>Definitions</h4>
-      <a href="#defs-foundation">Foundation</a>
-      <a href="#defs-matrices">Matrices</a>
-      <a href="#defs-spaces">Vector spaces</a>
-      <a href="#defs-maps">Linear maps</a>
-    </div>
-    <div class="toc-group">
-      <h4>Computational recipes</h4>
-      <a href="#recipe-lu">LU decomposition</a>
-      <a href="#recipe-inverse">Matrix inverse</a>
-      <a href="#recipe-multiply">Matrix multiplication</a>
-    </div>
-    <div class="toc-group">
-      <h4>The big proofs (Problem 5)</h4>
-      <a href="#proof-sums">IV.1.4 Sums</a>
-      <a href="#proof-rankn">IV.1.10 Rank-Nullity</a>
-      <a href="#proof-steinitz">III.1.47 Steinitz</a>
-      <a href="#proof-rank">IV.1.15 Rank</a>
-    </div>
-    <div class="toc-group">
-      <h4>Other in-scope proofs</h4>
-      <a href="#proof-257">II.5.7 Triangular mult</a>
-      <a href="#proof-258">II.5.8 Elimination step</a>
-      <a href="#proof-259">II.5.9 $r$ elim. steps</a>
-      <a href="#proof-2510">II.5.10 Triangular inv</a>
-      <a href="#proof-1129">III.1.29 Span</a>
-      <a href="#proof-1136">III.1.36 Lin. indep.</a>
-      <a href="#proof-1138">III.1.38 Basis</a>
-      <a href="#proof-1146">III.1.46 Exchange</a>
-      <a href="#proof-1147">III.1.47 Steinitz (ii)</a>
-      <a href="#proof-211">III.2.11 Kernel/Image</a>
-      <a href="#proof-small">Q2 small proofs</a>
-    </div>
-    <div class="toc-group">
-      <h4>Concept guides</h4>
-      <a href="#concept-subspace">Subspaces</a>
-      <a href="#concept-span">Span</a>
-      <a href="#concept-basis">Basis</a>
-      <a href="#concept-lindep">Linear independence</a>
-    </div>
-    <div class="toc-group">
-      <h4>Problem 6 patterns</h4>
-      <a href="#p6-complexkernel">Complex kernel + injectivity</a>
-      <a href="#p6-linearitytest">Is this map linear?</a>
-      <a href="#p6-setimage">Image/preimage of a set</a>
-      <a href="#p6-fixed">Fixed-point subspace</a>
-      <a href="#p6-poly">Polynomial subspaces</a>
-      <a href="#p6-steinitz">Dimension arguments</a>
-      <a href="#p6-directsum">Direct sum tricks</a>
-      <a href="#p6-zp">Maps over $\mathbb{Z}_p$</a>
-      <a href="#p6-basisext">Basis extension</a>
-    </div>
-    <div class="toc-group">
-      <h4>Exam day</h4>
-      <a href="#exam-day">What to remember</a>
-    </div>
-  </div>
-</nav>
 
 <!-- ============================================================ -->
 <!-- ORIENTATION                                                  -->

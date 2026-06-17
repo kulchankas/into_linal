@@ -6,7 +6,7 @@
 <title>Linear Algebra — Exam Notes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script>
 MathJax = {
   tex: {
@@ -116,6 +116,19 @@ MathJax = {
     border-left-color: var(--accent);
   }
 
+  /* CONTENT LINKS */
+  main a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(224, 184, 136, 0.4);
+    text-underline-offset: 2px;
+    transition: color .15s ease, text-decoration-color .15s ease;
+  }
+  main a:hover {
+    color: var(--accent-hover);
+    text-decoration-color: var(--accent-hover);
+  }
+
   /* MAIN CONTENT */
   main {
     max-width: 780px;
@@ -141,7 +154,7 @@ MathJax = {
   }
 
   h1 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Sora', sans-serif;
     font-weight: 500;
     font-size: 3.25rem;
     line-height: 1.05;
@@ -180,7 +193,7 @@ MathJax = {
   }
 
   h2 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Sora', sans-serif;
     font-weight: 500;
     font-size: 2.25rem;
     line-height: 1.15;
@@ -429,11 +442,11 @@ MathJax = {
     color: var(--text-dim);
     margin: 3rem 0;
     letter-spacing: 1em;
-    font-family: 'Fraunces', serif;
+    font-family: 'Sora', sans-serif;
   }
 
   .pull-quote {
-    font-family: 'Fraunces', serif;
+    font-family: 'Sora', sans-serif;
     font-style: italic;
     font-size: 1.25rem;
     font-weight: 400;

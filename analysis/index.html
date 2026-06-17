@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1612">
+<meta name="description" content="Analysis — lecture notes and problem-set archive.">
+<title>Analysis — Notes & Problem Sets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400..600;9..144,1,400..600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1612;
+    --bg-elevated: #221d18;
+    --bg-card: #1f1a15;
+    --border: #3a342c;
+    --border-soft: #2a251f;
+    --text: #f5efe4;
+    --text-muted: #b8aa97;
+    --text-dim: #8a7e6e;
+    --accent: #e0b888;
+    --accent-hover: #ecc89c;
+    --glow: rgba(224, 184, 136, 0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    background-image: radial-gradient(900px 500px at 50% -10%, var(--glow), transparent 70%);
+    background-repeat: no-repeat;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 3rem) clamp(1.25rem, 5vw, 2rem) 5rem;
+    padding-left: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-left));
+    padding-right: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-right));
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+    transition: color .15s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: var(--accent);
+    font-size: clamp(0.74rem, 2.6vw, 0.82rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(2.2rem, 8vw, 3.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.1rem;
+  }
+  .lede {
+    font-size: clamp(1rem, 3.4vw, 1.08rem);
+    color: var(--text-muted);
+    max-width: 34em;
+  }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin: clamp(2.75rem, 7vw, 3.75rem) 0 1.1rem;
+  }
+  .doc-list { display: grid; gap: 0.6rem; }
+  .doc {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 0.95rem 1.2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .doc:hover, .doc:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+    outline: none;
+  }
+  .doc .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    min-width: 2.4rem;
+  }
+  .doc .label { flex: 1; font-weight: 500; }
+  .doc .label .sub { color: var(--text-dim); font-weight: 400; }
+  .doc .ext {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.15rem 0.45rem;
+  }
+  .grid-sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.6rem; }
+  footer {
+    margin-top: clamp(3rem, 8vw, 4.5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-soft);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  @media (hover: none) {
+    .doc:active { transform: translateY(-1px); border-color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="../index.html">← All subjects</a>
+
+  <div class="eyebrow">Universität Wien · Analysis</div>
+  <h1>Analysis</h1>
+  <p class="lede">Lecture notes and the complete problem-set archive. PDFs open in your browser.</p>
+
+  <h2>Lecture notes</h2>
+  <div class="doc-list">
+    <a class="doc" href="notes/Book_Project-8.pdf">
+      <span class="num">P8</span>
+      <span class="label">Book Project — <span class="sub">Part 8</span></span>
+      <span class="ext">PDF</span>
+    </a>
+    <a class="doc" href="notes/Book_Project-9.pdf">
+      <span class="num">P9</span>
+      <span class="label">Book Project — <span class="sub">Part 9</span></span>
+      <span class="ext">PDF</span>
+    </a>
+  </div>
+
+  <h2>Problem sets</h2>
+  <div class="doc-list grid-sets">
+    <a class="doc" href="problem-sets/Questions_1.pdf"><span class="num">01</span><span class="label">Sheet 1</span></a>
+    <a class="doc" href="problem-sets/Questions_2.pdf"><span class="num">02</span><span class="label">Sheet 2</span></a>
+    <a class="doc" href="problem-sets/Questions_3.pdf"><span class="num">03</span><span class="label">Sheet 3</span></a>
+    <a class="doc" href="problem-sets/Questions_4.pdf"><span class="num">04</span><span class="label">Sheet 4</span></a>
+    <a class="doc" href="problem-sets/Questions_5.pdf"><span class="num">05</span><span class="label">Sheet 5</span></a>
+    <a class="doc" href="problem-sets/Questions_6.pdf"><span class="num">06</span><span class="label">Sheet 6</span></a>
+    <a class="doc" href="problem-sets/Questions_7.pdf"><span class="num">07</span><span class="label">Sheet 7</span></a>
+    <a class="doc" href="problem-sets/Questions_8.pdf"><span class="num">08</span><span class="label">Sheet 8</span></a>
+    <a class="doc" href="problem-sets/Questions_9.pdf"><span class="num">09</span><span class="label">Sheet 9</span></a>
+    <a class="doc" href="problem-sets/Questions_10.pdf"><span class="num">10</span><span class="label">Sheet 10</span></a>
+    <a class="doc" href="problem-sets/Questions_11_section_7_5.pdf"><span class="num">11</span><span class="label">Sheet 11 <span class="sub">§7.5</span></span></a>
+    <a class="doc" href="problem-sets/Questions_12.pdf"><span class="num">12</span><span class="label">Sheet 12</span></a>
+    <a class="doc" href="problem-sets/Questions_13.pdf"><span class="num">13</span><span class="label">Sheet 13</span></a>
+  </div>
+
+  <footer>
+    Source &amp; updates on <a href="https://github.com/kulchankas/into_linal">GitHub</a>.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1a1612">
-<meta name="description" content="First-year university mathematics — notes, proofs, mock exams, and problem sets for Linear Algebra and Analysis.">
-<title>University Maths — Notes & Practice</title>
+<meta name="description" content="Notes and mock exams for Introduction to Linear Algebra — Profs. Kazeev & Schichl, Universität Wien.">
+<title>Linear Algebra — Notes & Mock Exams</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400..600;9..144,1,400..600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -34,9 +34,12 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     min-height: 100vh;
-    background-image: radial-gradient(900px 500px at 50% -10%, var(--glow), transparent 70%);
+    /* soft warm glow behind the hero */
+    background-image:
+      radial-gradient(900px 500px at 50% -10%, var(--glow), transparent 70%);
     background-repeat: no-repeat;
   }
+
   .wrap {
     max-width: 760px;
     margin: 0 auto;
@@ -44,12 +47,13 @@
     padding-left: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-left));
     padding-right: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-right));
   }
+
+  /* HERO */
   .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
     font-weight: 500;
     color: var(--accent);
     font-size: clamp(0.74rem, 2.6vw, 0.85rem);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     margin-bottom: 1.1rem;
   }
@@ -65,9 +69,11 @@
   .lede {
     font-size: clamp(1rem, 3.4vw, 1.12rem);
     color: var(--text-muted);
-    max-width: 36em;
+    max-width: 34em;
     line-height: 1.6;
   }
+
+  /* DOC CARDS */
   .docs {
     margin-top: clamp(2.5rem, 7vw, 3.5rem);
     display: grid;
@@ -129,6 +135,7 @@
   }
   .card-cta .arrow { transition: transform .2s ease; }
   .card:hover .card-cta .arrow, .card:focus-visible .card-cta .arrow { transform: translateX(4px); }
+
   .meta-row {
     display: flex;
     flex-wrap: wrap;
@@ -138,6 +145,7 @@
     font-size: 0.85rem;
   }
   .meta-row .dot { color: var(--accent); }
+
   footer {
     margin-top: clamp(3rem, 8vw, 4.5rem);
     padding-top: 1.5rem;
@@ -147,6 +155,7 @@
   }
   footer a { color: var(--accent); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
   @media (hover: none) {
     .card:active { transform: translateY(-1px) scale(0.995); border-color: var(--accent); }
   }
@@ -155,32 +164,34 @@
 <body>
 <div class="wrap">
 
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:.4rem;color:var(--text-dim);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.02em;margin-bottom:1.75rem;">← All subjects</a>
+
   <header>
-    <div class="eyebrow">Universität Wien · First-year maths</div>
-    <h1>University maths<br><em>notes &amp; practice</em></h1>
-    <p class="lede">Distilled notes, must-know proofs, mock exams, and the full problem-set archive — for first-year Linear Algebra and Analysis.</p>
+    <div class="eyebrow">Universität Wien · Profs. Kazeev & Schichl</div>
+    <h1>Introduction to<br><em>Linear Algebra</em></h1>
+    <p class="lede">Everything you need for the exam — distilled notes, the must-know proofs, and five full mock exams with answer keys.</p>
   </header>
 
   <main class="docs">
-    <a class="card" href="linear-algebra/index.html">
-      <div class="card-num">01 / LINEAR ALGEBRA</div>
-      <div class="card-title">Linear Algebra</div>
-      <p class="card-desc">Definitions, computational recipes, the big Problem-5 proofs, and five full mock exams with answer keys.</p>
-      <span class="card-cta">Enter <span class="arrow">→</span></span>
+    <a class="card" href="exam_notes.html">
+      <div class="card-num">01 / NOTES</div>
+      <div class="card-title">Exam Notes</div>
+      <p class="card-desc">Core definitions, computational recipes, and the big Problem-5 proofs — organized with a navigable sidebar.</p>
+      <span class="card-cta">Open notes <span class="arrow">→</span></span>
     </a>
 
-    <a class="card" href="analysis/index.html">
-      <div class="card-num">02 / ANALYSIS</div>
-      <div class="card-title">Analysis</div>
-      <p class="card-desc">Lecture notes and the complete problem-set archive — thirteen sheets to work through.</p>
-      <span class="card-cta">Enter <span class="arrow">→</span></span>
+    <a class="card" href="mock_exams.html">
+      <div class="card-num">02 / PRACTICE</div>
+      <div class="card-title">Mock Exams</div>
+      <p class="card-desc">Five mock papers in the recurring six-problem format, plus historical Q7/Q8 extras. Every answer key included.</p>
+      <span class="card-cta">Start practicing <span class="arrow">→</span></span>
     </a>
   </main>
 
   <div class="meta-row">
-    <span><span class="dot">●</span> 2 subjects</span>
+    <span><span class="dot">●</span> 2 documents</span>
     <span><span class="dot">●</span> 5 mock exams</span>
-    <span><span class="dot">●</span> 13 problem sets</span>
+    <span><span class="dot">●</span> Computer-verified answers</span>
   </div>
 
   <footer>

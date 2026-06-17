@@ -1,11 +1,11 @@
-# into_linal
+# mfds_univie_first_year
 
 First-year university maths — notes, proofs, mock exams, and problem sets for
 **Linear Algebra** and **Analysis** (Universität Wien).
 
 ## Live site
 
-**https://kulchankas.github.io/into_linal/** — hub linking to both subjects.
+**https://kulchankas.github.io/mfds_univie_first_year/** — hub linking to both subjects.
 
 ## Structure
 
@@ -28,11 +28,11 @@ First-year university maths — notes, proofs, mock exams, and problem sets for
 
 | Page | Live |
 | --- | --- |
-| Hub | [/](https://kulchankas.github.io/into_linal/) |
-| Linear Algebra | [/linear-algebra/](https://kulchankas.github.io/into_linal/linear-algebra/) |
-| LA · Exam Notes | [/linear-algebra/exam_notes.html](https://kulchankas.github.io/into_linal/linear-algebra/exam_notes.html) |
-| LA · Mock Exams | [/linear-algebra/mock_exams.html](https://kulchankas.github.io/into_linal/linear-algebra/mock_exams.html) |
-| Analysis | [/analysis/](https://kulchankas.github.io/into_linal/analysis/) |
+| Hub | [/](https://kulchankas.github.io/mfds_univie_first_year/) |
+| Linear Algebra | [/linear-algebra/](https://kulchankas.github.io/mfds_univie_first_year/linear-algebra/) |
+| LA · Exam Notes | [/linear-algebra/exam_notes.html](https://kulchankas.github.io/mfds_univie_first_year/linear-algebra/exam_notes.html) |
+| LA · Mock Exams | [/linear-algebra/mock_exams.html](https://kulchankas.github.io/mfds_univie_first_year/linear-algebra/mock_exams.html) |
+| Analysis | [/analysis/](https://kulchankas.github.io/mfds_univie_first_year/analysis/) |
 
 The old top-level `exam_notes.html` / `mock_exams.html` URLs still work — they
 redirect to their new homes under `linear-algebra/`.

@@ -316,22 +316,19 @@ MathJax = {
   }
 
   .proof-idea {
-    color: var(--text);
-    font-size: 0.97rem;
-    margin: 0 0 1.25rem;
-    padding: 0.7rem 0.95rem;
-    background: var(--highlight);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 4px 4px 0;
-  }
-  .proof-idea .idea-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-size: 0.68rem;
     color: var(--accent);
-    margin-right: 0.55rem;
+    font-style: italic;
+    font-size: 0.95rem;
+    margin: 0.3rem 0 0.9rem;
+  }
+  .proof-idea::before {
+    content: 'Main idea — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
   }
 
   .proof ol, .proof ul {
@@ -492,7 +489,6 @@ MathJax = {
 <div class="layout">
 
 <aside class="sidebar">
-  <a href="index.html" style="display:inline-block;color:var(--text-dim);text-decoration:none;font-size:0.82rem;font-weight:500;margin-bottom:1rem;">← All documents</a>
   <div class="sidebar-header">Linear Algebra<br>Exam Notes</div>
   <div class="sidebar-sub">Kazeev / UniVie — 4th exam date</div>
 
@@ -533,9 +529,14 @@ MathJax = {
 
     <h3>Concept guides</h3>
     <a href="#concept-subspace">Subspaces</a>
-    <a href="#concept-span">Span</a>
+    <a href="#concept-kernel-subspace">Why kernel is a subspace</a>
+    <a href="#concept-fixedpoint">Fixed points / $\ker(h-\mathrm{id})$</a>
+    <a href="#concept-linearity">Linearity &amp; homogeneity</a>
+    <a href="#concept-span">Span (linear hull)</a>
     <a href="#concept-basis">Basis</a>
     <a href="#concept-lindep">Linear independence</a>
+    <a href="#concept-terminology">Other terms (iso, canonical…)</a>
+    <a href="#concept-changeofbasis">Change of basis</a>
 
     <h3>Problem 6 patterns</h3>
     <a href="#p6-complexkernel">Complex kernel + injectivity</a>
@@ -592,12 +593,15 @@ MathJax = {
     <tr><td>Past 4th date</td><td>Dimension Theorem for Sums (IV.1.4)</td></tr>
     <tr><td>Real Exam 1 (Feb 2026)</td><td>Steinitz (III.1.47)</td></tr>
     <tr><td>Real Exam 2 (Mar 2026)</td><td>Dimension Theorem for Sums (IV.1.4)</td></tr>
+    <tr><td>3rd date (April 2026)</td><td>Rank-Nullity (IV.1.10)</td></tr>
+    <tr><td>4th date (June 2026)</td><td><strong>Basis characterizations (III.1.38)</strong></td></tr>
   </tbody>
 </table>
 
 <div class="callout warn">
-  <div class="callout-title">For the 4th date — what to prioritize</div>
-  <p>Frequencies across 6 exams: <strong>Sums 3/6 (50%)</strong>, <strong>Rank-Nullity 2/6 (33%)</strong>, <strong>Steinitz 1/6 (17%)</strong>. Sums is the highest base rate; Rank-Nullity alternated with it across past papers. Prepare all three. If forced to rank effort: Sums &gt; Rank-Nullity &gt; Steinitz.</p>
+  <div class="callout-title">The candidate pool is wider than "the big three"</div>
+  <p>The June 2026 paper used <strong>III.1.38 — three equivalent characterizations of a basis</strong> as the Problem 5 proof. That is <em>not</em> one of the Sums / Rank-Nullity / Steinitz trio — so the 10-point proof can be drawn from the broader set of examinable proofs, including the "smaller" structural results (III.1.36, III.1.38, III.1.46, III.2.11). Do not prepare only the big three; be ready to <em>prove</em> any of the in-scope proofs, not just state them.</p>
+  <p>Rough frequencies (8 exams): Sums 3, Rank-Nullity 3, Steinitz 1, Basis-characterizations 1. Sums and Rank-Nullity are now neck-and-neck as the most common, but the spread means the safe strategy is full proof coverage of III.1.29, III.1.36, III.1.38, III.1.46, III.1.47, III.2.11, IV.1.4, IV.1.10, IV.1.15 — i.e. <em>all</em> of them, at proof level, not just recognition.</p>
 </div>
 
 <h3 id="strategy">Strategy & timing</h3>
@@ -1110,8 +1114,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-257">
   <div class="proof-header">II.5.7 — Triangular structure under matrix multiplication</div>
+  <div class="proof-idea">Expand the product entry-by-entry and split the index sum — triangularity zeroes out everything except the surviving diagonal/below-diagonal terms.</div>
   <div class="proof-statement">Lower-tri × lower-tri = lower-tri with $(AB)_{ii} = A_{ii} B_{ii}$. Unit/strict properties preserved. Same for upper-tri.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Split each entry $(AB)_{ij}=\sum_k A_{ik}B_{kj}$ by the range of $k$; triangularity kills every term except the diagonal one $A_{ii}B_{ii}$.</div>
   <ol>
     <li>Fix $i \leq j$. Split $(AB)_{ij} = \sum_k A_{ik} B_{kj}$ into three ranges: $k &lt; i$, $i \leq k \leq j$, $k &gt; j$.</li>
     <li>Lower-triangularity kills the third sum ($A_{ik} = 0$ for $k > i$) and the first ($B_{kj} = 0$ for $k < j$).</li>
@@ -1122,8 +1126,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-258">
   <div class="proof-header">II.5.8 — Inversion of a single Gaussian elimination step</div>
+  <div class="proof-idea">Multiply the two candidates out — the cross-terms cancel and the quadratic term dies because $\ell_k = 0$, leaving exactly $I$.</div>
   <div class="proof-statement">For $\ell \in \mathbb{F}^m$ with first $k$ components zero and $e_k$ the $k$-th column of $I$: $(I - \ell e_k^T)^{-1} = I + \ell e_k^T$.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Multiply the two candidates out directly: the cross-terms cancel and the quadratic term dies because $e_k^T\ell=\ell_k=0$, leaving $I$.</div>
   <ol>
     <li>Compute $(I \mp \ell e_k^T)(I \pm \ell e_k^T) = I \pm \ell e_k^T \mp \ell e_k^T - \ell(e_k^T \ell) e_k^T$.</li>
     <li>The cross-terms cancel. The quadratic term has $e_k^T \ell = \ell_k = 0$ by assumption.</li>
@@ -1133,8 +1137,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-259">
   <div class="proof-header">II.5.9 — Representation of $r$ steps of Gaussian elimination</div>
+  <div class="proof-idea">Induct on $r$ — each new factor's cross-terms vanish because the multiplier vectors have zeros in the already-processed positions, so the product is just the sum of the single steps.</div>
   <div class="proof-statement">For $\ell_1, \dots, \ell_r \in \mathbb{F}^m$ ($r \le m-1$) where $\ell_k$ has its first $k$ components zero: $\displaystyle (I + \ell_1 e_1^T)\cdots(I + \ell_r e_r^T) = I + \sum_{k=1}^r \ell_k e_k^T$.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Induct on $r$: the only new cross-terms produced by the next factor vanish since the first $n$ components of $\ell_{n+1}$ are zero.</div>
   <p><strong>Induction on $r$.</strong></p>
   <ol>
     <li><strong>Base ($r=1$):</strong> both sides equal $I + \ell_1 e_1^T$. Trivial.</li>
@@ -1146,8 +1150,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-2510">
   <div class="proof-header">II.5.10 — Lower-triangular matrices and inversion</div>
+  <div class="proof-idea">Build the inverse one column at a time by back-substitution; triangular structure means each step only depends on already-solved entries.</div>
   <div class="proof-statement">(a) Unit lower-tri ⇒ invertible with unit lower-tri inverse. (b) Lower-tri with no zero on diagonal ⇒ invertible with lower-tri inverse. (c) Invertible lower-tri ⇒ no zeros on diagonal.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Factor $L$ into elementary steps (II.5.9), each invertible (II.5.8) and lower-tri-preserving (II.5.7); (c) is a contradiction from a zero diagonal entry forcing a zero row or column.</div>
 
   <h4>(a)</h4>
   <p>Write $L - I = \sum_{k=1}^{m-1} \ell_k e_k^T$ where $\ell_k$ has first $k$ components zero. By Lemma II.5.9, $L = \prod_{k=1}^{m-1} (I + \ell_k e_k^T)$. Each factor invertible by II.5.8. So $L^{-1} = \prod_{k=m-1}^{1} (I - \ell_k e_k^T)$ (note reversed order). By II.5.7(b), $L^{-1}$ is unit lower-tri.</p>
@@ -1166,8 +1170,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-1129">
   <div class="proof-header">III.1.29 — The span is the smallest containing subspace</div>
+  <div class="proof-idea">Show two inclusions: the span is itself a subspace containing the set, and any subspace containing the set must contain all its linear combinations — hence the span.</div>
   <div class="proof-statement">For $A \subseteq V$: (i) there is a unique subspace $\langle A \rangle$ containing $A$ such that every subspace $W \supseteq A$ has $\langle A \rangle \subseteq W$. (ii) $v \in \langle A \rangle$ iff $v$ is a finite linear combination of elements of $A$.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Define $\langle A\rangle$ as the intersection of all subspaces containing $A$ (so it is smallest by construction), then show it coincides with the set of finite linear combinations of $A$.</div>
 
   <h4>(i)</h4>
   <p>Existence: define $\langle A \rangle := \bigcap_{W \supseteq A, W \text{ subspace}} W$. Intersection of subspaces is a subspace; contains $A$; minimal by construction.</p>
@@ -1180,8 +1184,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-1136">
   <div class="proof-header">III.1.36 — Three equivalent characterizations of linear independence</div>
+  <div class="proof-idea">Prove a cycle of implications — "no nontrivial relation" ⇒ "unique representations" ⇒ "removing any vector shrinks the span" ⇒ back to the start.</div>
   <div class="proof-statement">For $A \subseteq V$: (i) $A$ linearly independent ⇔ (ii) every $v \in \langle A \rangle$ has a unique representation ⇔ (iii) $\langle B \rangle \subsetneq \langle A \rangle$ for every proper $B \subsetneq A$.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Run the cycle (i)⇒(ii)⇒(iii)⇒(i): subtracting two representations of the same vector links uniqueness to the absence of a smaller spanning subset, which is exactly independence.</div>
 
   <h4>(i) ⇒ (ii)</h4>
   <p>If $v = \sum \lambda_i a_i = \sum \mu_i a_i$, then $\sum (\lambda_i - \mu_i) a_i = 0$ forces $\lambda_i = \mu_i$ by linear independence.</p>
@@ -1195,8 +1199,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-1138">
   <div class="proof-header">III.1.38 — Three equivalent characterizations of a basis</div>
+  <div class="proof-idea">Tie "independent + spanning" to "maximal independent set" and "minimal spanning set" via a cycle of implications, using that adding/removing a vector breaks one property.</div>
   <div class="proof-statement">$\mathcal{B} \subseteq V$ is a basis ⇔ minimal spanning set ⇔ maximal linearly independent set.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> A basis is "spanning + independent"; "minimal spanning" and "maximal independent" just restate one of those two halves via the characterizations in III.1.36.</div>
 
   <h4>(i) ⇔ (ii)</h4>
   <p>Spanning is in both. Minimality "$\langle A \rangle \neq V$ for $A \subsetneq \mathcal{B}$" is exactly III.1.36(iii), equivalent to linear independence.</p>
@@ -1210,8 +1214,8 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-1146">
   <div class="proof-header">III.1.46 — Exchange Lemma</div>
+  <div class="proof-idea">A nonzero coefficient lets you solve for the old vector in terms of the new one, so swapping it in keeps the span unchanged.</div>
   <div class="proof-statement">For $A \subseteq V$, $v \in \langle A \rangle$ with $v = \sum \lambda_i a_i$ and $\lambda_0 \neq 0$ on some $a_0 \in A$. Then $A' := (A \setminus \{a_0\}) \cup \{v\}$ satisfies $\langle A' \rangle = \langle A \rangle$.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> The nonzero coefficient $\lambda_0$ lets you solve $v=\sum\lambda_i a_i$ for $a_0$, so $a_0$ and $v$ are mutually expressible and swapping them leaves the span unchanged.</div>
   <ol>
     <li>From $v = \lambda_0 a_0 + \sum_{i \neq 0} \lambda_i a_i$ with $\lambda_0 \neq 0$, solve for $a_0$:
     $$a_0 = \frac{1}{\lambda_0} v - \sum_{i \neq 0} \frac{\lambda_i}{\lambda_0} a_i$$</li>
@@ -1223,16 +1227,16 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
 
 <div class="proof" id="proof-1147">
   <div class="proof-header">III.1.47 — Steinitz Exchange Theorem</div>
+  <div class="proof-idea">Apply the Exchange Lemma repeatedly, trading independent vectors into the spanning set one at a time — independent can never outnumber spanning.</div>
   <div class="proof-statement">The full proof lives in the big-proofs section above (it's a Tier-1 10-point candidate). See <a href="#proof-steinitz">Steinitz Exchange Theorem</a>. Quick reminders for part (ii) below.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Greedily pull independent vectors out of $A$: whenever they don't yet span, some $a$ lies outside their span, and one exchange installs it — terminating in at most $n$ steps.</div>
   <h4>(ii) — extracting a finite spanning subset (the part the big version compresses)</h4>
   <p>If $A = \{0\}$ take $A' = \emptyset$. Otherwise pick $a_1 \neq 0$; renumbering gives $\{a_1, v_2, \dots, v_n\}$ spanning. If $\langle\{a_1\}\rangle = V$, done; else there is $a_2 \in A \setminus \langle\{a_1\}\rangle$ (since $A$ spans), so some $v_i$ has a nonzero coefficient and exchanging gives $\{a_1, a_2, v_3, \dots, v_n\}$ spanning. Iterate: at step $\ell$, if $\{a_1, \dots, a_\ell\}$ doesn't span there is $a_{\ell+1} \in A \setminus \langle\{a_1, \dots, a_\ell\}\rangle$, forcing a nonzero $v$-coefficient; after $\le n$ exchanges the $a$'s alone span $V$, yielding $A'$. $\square$</p>
 </div>
 
 <div class="proof" id="proof-211">
   <div class="proof-header">III.2.11 — Kernel/image are subspaces; injectivity criterion</div>
+  <div class="proof-idea">Use linearity to check the subspace axioms directly; injectivity ⇔ trivial kernel follows from $f(u)-f(v)=f(u-v)$.</div>
   <div class="proof-statement">For linear $f: V \to W$: (i) image of a subspace is a subspace of $W$; (ii) preimage of a subspace is a subspace of $V$; (iii) $f$ surjective ⇔ $\text{im}(f) = W$; (iv) $f$ injective ⇔ $\ker(f) = \{0\}$.</div>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Linearity pushes linear combinations through $f$ (and $f(0)=0$), so images and preimages stay closed; injectivity ⇔ trivial kernel because $f(x)=f(y)\iff f(x-y)=0$.</div>
 
   <h4>(i)</h4>
   <p>Let $w, w' \in f(\hat V)$. Then $w = f(v)$, $w' = f(v')$ for some $v, v' \in \hat V$. By linearity, $\lambda w + w' = f(\lambda v + v') \in f(\hat V)$. Also $f(0) = 0 \in f(\hat V)$. ✓</p>
@@ -1251,13 +1255,11 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
   <div class="proof-header">Q2 small proofs</div>
 
   <h4>Associativity of function composition</h4>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Evaluate both sides at an arbitrary point; both collapse to $h(g(f(x)))$, so the two functions agree everywhere.</div>
   <p>For any $x$ in the domain of $f$:</p>
   $$((h \circ g) \circ f)(x) = (h \circ g)(f(x)) = h(g(f(x))) = h((g \circ f)(x)) = (h \circ (g \circ f))(x)$$
   <p>Equal at every point ⇒ functions equal. $\square$</p>
 
   <h4>Uniqueness of inverse function</h4>
-  <div class="proof-idea"><span class="idea-label">Main idea</span> Sandwich one inverse between the other's identities — $\tilde g=\tilde g\circ(f\circ g)=(\tilde g\circ f)\circ g=g$ — using associativity.</div>
   <p>Suppose $g, \tilde g$ both satisfy $g \circ f = \text{id}_X$ and $f \circ g = \text{id}_Y$. Then:</p>
   $$\tilde g = \tilde g \circ \text{id}_Y = \tilde g \circ (f \circ g) = (\tilde g \circ f) \circ g = \text{id}_X \circ g = g$$
   <p>Using associativity of composition in the middle step. $\square$</p>
@@ -1293,13 +1295,68 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
   <p>Examples: $\{p : p(0) = 0\}$ is $\ker(\text{eval at 0})$. $\{v : h(v) = v\}$ is $\ker(h - \text{id})$. $\{p : \int_0^1 p = 0\}$ is $\ker(\text{integration})$.</p>
 </div>
 
-<h3 id="concept-span">Span</h3>
+<h3 id="concept-kernel-subspace">Why the kernel is always a subspace</h3>
 
-<p>$\langle A \rangle$ — two equivalent definitions:</p>
+<p>For any linear $f: V \to W$, $\ker f = \{v \in V : f(v) = 0\}$ is a subspace of $V$. The three checks all run on linearity:</p>
 <ol>
-  <li><strong>Bottom-up:</strong> all finite linear combinations of elements of $A$.</li>
-  <li><strong>Top-down:</strong> the smallest subspace of $V$ containing $A$.</li>
+  <li><strong>Zero:</strong> $f(0) = 0$ (true for every linear map), so $0 \in \ker f$.</li>
+  <li><strong>Addition:</strong> $u, v \in \ker f \Rightarrow f(u + v) = f(u) + f(v) = 0 + 0 = 0$.</li>
+  <li><strong>Scalar mult:</strong> $v \in \ker f,\ \lambda \in \mathbb{F} \Rightarrow f(\lambda v) = \lambda f(v) = \lambda \cdot 0 = 0$.</li>
 </ol>
+<p><strong>The deep reason:</strong> $\{0\}$ is a subspace of $W$, and the <em>preimage of any subspace under a linear map is a subspace</em> (Prop III.2.11(ii)). The kernel is just the preimage of $\{0\}$ — so it's a subspace for free, no axiom-checking needed. Linearity is the engine: it lets $f$ pass through sums and scalar multiples.</p>
+
+<h3 id="concept-fixedpoint">Fixed points and $\ker(h - \mathrm{id})$</h3>
+
+<p>$\mathrm{id}$ is the identity map, $\mathrm{id}(v) = v$. For linear $h: V \to V$, the map $h - \mathrm{id}$ sends $v \mapsto h(v) - v$. Its kernel is</p>
+$$\ker(h - \mathrm{id}) = \{v : h(v) - v = 0\} = \{v : h(v) = v\}$$
+<p>— precisely the vectors $h$ leaves <strong>fixed</strong>. So "the fixed-point set of $h$" and "$\ker(h - \mathrm{id})$" name the <em>same set</em>. This is why the fixed-point set is automatically a subspace (Problem 6 favorite): rather than checking three axioms by hand, just write "it equals $\ker(h - \mathrm{id})$, the kernel of a linear map, hence a subspace by III.2.11." One line, full marks.</p>
+
+<h3 id="concept-linearity">Linearity, additivity, homogeneity</h3>
+
+<p>A map $f: V \to W$ is <strong>linear</strong> iff it satisfies both:</p>
+<ul>
+  <li><strong>Additivity:</strong> $f(u + v) = f(u) + f(v)$ for all $u, v \in V$.</li>
+  <li><strong>Homogeneity:</strong> $f(\lambda v) = \lambda f(v)$ for all $v \in V$, $\lambda \in \mathbb{F}$.</li>
+</ul>
+<p>Equivalently, one combined condition: $f(\lambda u + \mu v) = \lambda f(u) + \mu f(v)$. A consequence (not a separate axiom) is $f(0) = 0$ — useful as a quick disqualifier: <em>if $f(0) \neq 0$, the map is not linear.</em></p>
+
+<div class="callout">
+  <div class="callout-title">Using these on Problem 6 ("is this map linear?")</div>
+  <p>To prove <em>not</em> linear, break <strong>one</strong> property with a concrete counterexample — homogeneity is usually easiest. A squared term like $v_1^2$ fails it: with $v = (1,0,\dots)$ and $\lambda = 2$, the offending component gives $f(2v) = 4 \neq 2 = 2f(v)$. A nonzero constant term fails via $f(0) \neq 0$. To prove linear, write $f(v) = Av$ for a matrix $A$ and note matrix multiplication is linear.</p>
+</div>
+
+<h4>Which standard operations are linear (use these to spot subspaces)</h4>
+<p>Each of these is a linear map, so any condition built from them — set equal to $0$ — defines a subspace (a kernel):</p>
+<ul>
+  <li><strong>Differentiation</strong> $D: p \mapsto p'$. Additivity $(p+q)' = p' + q'$ and homogeneity $(\lambda p)' = \lambda p'$ are the basic derivative rules. On coefficients, $a_0 + a_1 X + a_2 X^2 + a_3 X^3 \mapsto a_1 + 2a_2 X + 3a_3 X^2$ — each coefficient just scaled and shifted, plainly linear. (Higher derivatives $p''$, $p'''$ too, as repeated compositions.)</li>
+  <li><strong>Evaluation at a point</strong> $E_c: p \mapsto p(c)$. $(p+q)(c) = p(c) + q(c)$ and $(\lambda p)(c) = \lambda\,p(c)$. Linear for <em>any</em> fixed $c$ — this is why $p(0)=0$, $p(1)=0$, etc. give subspaces.</li>
+  <li><strong>Integration</strong> $p \mapsto \int_a^b p$. Linear by the linearity of the integral.</li>
+</ul>
+<p><strong>Compositions and combinations stay linear.</strong> So $p \mapsto p'(2)$ is "differentiate, then evaluate at 2" — a composition $E_2 \circ D$ of two linear maps, hence linear. Likewise $p \mapsto p''(0) + p(1)$ is a sum of linear maps, still linear. That's why exotic-looking conditions like $\{p : p'(2) = 0\}$ or $\{p : p''(0) + p(1) = 0\}$ are all subspaces — each is "[a linear map of $p$] $= 0$", i.e. a kernel.</p>
+<div class="callout warn">
+  <div class="callout-title">What breaks linearity</div>
+  <p>A <em>nonlinear</em> operation on $p$: a product or power of evaluations like $p(2)^2 = 0$ or $p(0)\cdot p(1) = 0$. These are not linear in $p$, so they don't automatically give subspaces — check by hand (they usually fail, or collapse to something like $\{p : p(2)=0\}$).</p>
+</div>
+
+<h3 id="concept-span">Span (= linear hull)</h3>
+
+<div class="callout warn">
+  <div class="callout-title">Terminology — Kazeev uses several names for the same thing</div>
+  <p>The span $\langle A \rangle$ is also called the <strong>linear hull</strong> (or just the <strong>hull</strong>) of $A$ — this is Kazeev's <em>primary</em> name for it (Def. II.5.20 / III.1.x). All of these mean the identical object:</p>
+  <ul>
+    <li><strong>span of $A$</strong> = <strong>linear hull of $A$</strong> = <strong>hull of $A$</strong> = $\langle A \rangle$.</li>
+    <li>"$A$ <strong>generates</strong> $W$" / "$A$ is a <strong>generating system</strong> for $W$" means $\langle A \rangle = W$ — same as "$A$ <strong>spans</strong> $W$" / "$A$ is a <strong>spanning set</strong>."</li>
+    <li>A space is <strong>finitely generated</strong> iff it has a finite spanning set (equivalently, a finite linear hull generator) — i.e. finite-dimensional.</li>
+  </ul>
+  <p>If the exam says "compute the linear hull" or "is $A$ a generating system," it's asking about the span. Don't let the vocabulary throw you.</p>
+</div>
+
+<p><strong>Definition (II.5.20):</strong> for $A \subseteq V$, the <strong>linear hull</strong> $\langle A \rangle$ is the subspace of all finite linear combinations of elements of $A$ — equivalently, the smallest subspace containing $A$. Two equivalent definitions:</p>
+<ol>
+  <li><strong>Bottom-up:</strong> all finite linear combinations $\lambda_1 a_1 + \dots + \lambda_k a_k$ of elements of $A$.</li>
+  <li><strong>Top-down:</strong> the smallest subspace of $V$ containing $A$ (the intersection of all subspaces containing $A$).</li>
+</ol>
+<p>Special cases: $\langle \emptyset \rangle = \{0\}$, and $\langle W \rangle = W$ for a subspace $W$. If $A \subseteq B$ then $\langle A \rangle \subseteq \langle B \rangle$.</p>
 
 <p>In $\mathbb{R}^3$:</p>
 <ul>
@@ -1308,7 +1365,7 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
   <li>3 non-coplanar vectors → all of $\mathbb{R}^3$.</li>
 </ul>
 
-<p>Adding parallel/redundant vectors does <strong>not</strong> grow the span.</p>
+<p>Adding parallel/redundant vectors does <strong>not</strong> grow the span/hull.</p>
 
 <h3 id="concept-basis">Basis</h3>
 
@@ -1329,6 +1386,24 @@ $$x_3 = \tfrac{y_3}{u_{33}}, \quad x_2 = \tfrac{y_2 - u_{23} x_3}{u_{22}}, \quad
     <li><strong>All bases have the same size (Steinitz):</strong> defines dimension.</li>
   </ul>
 </div>
+
+<h3 id="concept-terminology">Other terms that may appear (don't get caught out)</h3>
+<ul>
+  <li><strong>Standard / canonical basis:</strong> the basis $\{e_1, \dots, e_n\}$ of $\mathbb{F}^n$ ($e_i$ has a 1 in slot $i$, 0 elsewhere). "Canonical" = "standard" here.</li>
+  <li><strong>Isomorphism:</strong> a bijective linear map. Two spaces are <strong>isomorphic</strong> if there's an isomorphism between them. Key fact: two finite-dimensional spaces over $\mathbb{F}$ are isomorphic $\iff$ they have the same dimension. (So $\mathbb{R}_3[X] \cong \mathbb{R}^4 \cong M_2(\mathbb{R})$, all dimension 4.)</li>
+  <li><strong>Homomorphism:</strong> in this course, a synonym for linear map (a vector-space homomorphism). $L(V,W)$ is the space of all linear maps $V \to W$.</li>
+  <li><strong>Coordinates / coordinate vector $[v]_B$:</strong> the scalars $(c_1,\dots,c_n)$ with $v = c_1 b_1 + \dots + c_n b_n$ for a basis $B = \{b_1,\dots,b_n\}$. Unique by the basis property.</li>
+</ul>
+
+<h3 id="concept-changeofbasis">Change of basis</h3>
+<p>Re-expressing the same vector in a different basis. For a basis $B = \{b_1,\dots,b_n\}$ of $\mathbb{F}^n$ and the standard basis $S$:</p>
+<ul>
+  <li><strong>$[\mathrm{id}]_B^S$</strong> (from $B$-coords to $S$-coords) is the matrix whose <em>columns are the basis vectors</em> $b_1,\dots,b_n$. Call it $B$. So $[v]_S = B\,[v]_B$.</li>
+  <li><strong>$[\mathrm{id}]_S^B$</strong> (from $S$-coords to $B$-coords) is its inverse $B^{-1}$. So $[v]_B = B^{-1}[v]_S$.</li>
+  <li>Self-check: $[\mathrm{id}]_B^S \cdot [\mathrm{id}]_S^B = I$.</li>
+</ul>
+<p>The notation $[\mathrm{id}]_{\text{from}}^{\text{to}}$ reads bottom→top: takes coordinates in the bottom basis, returns them in the top. The matrix whose columns <em>are</em> the basis vectors is always the "$B \to S$" one.</p>
+<p><strong>To do it:</strong> (1) stack the basis vectors as columns to get $B = [\mathrm{id}]_B^S$; (2) invert (augment $[B \mid I]$, row-reduce — over $\mathbb{Z}_p$, mod $p$) to get $[\mathrm{id}]_S^B = B^{-1}$; (3) verify $BB^{-1} = I$. To prove $B$ is a basis: row-reduce to $n$ pivots (i.e. $B$ invertible).</p>
 
 <h3 id="concept-lindep">Linear independence</h3>
 

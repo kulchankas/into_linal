@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1612">
+<meta name="description" content="Each Analysis topic mapped to its pages in the Book Project notes, plus how the method is used in data science and machine learning — now and in the future.">
+<title>Analysis → Data Science — Topic map & ML context</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  :root {
+    --bg: #1a1612;
+    --bg-elevated: #221d18;
+    --bg-card: #1f1a15;
+    --border: #3a342c;
+    --border-soft: #2a251f;
+    --text: #f5efe4;
+    --text-muted: #b8aa97;
+    --text-dim: #8a7e6e;
+    --accent: #e0b888;
+    --accent-hover: #ecc89c;
+    --ml: #8fb8de;
+    --future: #c4a6df;
+    --glow: rgba(224, 184, 136, 0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    background-image: radial-gradient(900px 500px at 50% -10%, var(--glow), transparent 70%);
+    background-repeat: no-repeat;
+  }
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 3rem) clamp(1.25rem, 5vw, 2rem) 5rem;
+    padding-left: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-left));
+    padding-right: max(clamp(1.25rem, 5vw, 2rem), env(safe-area-inset-right));
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--text-dim); text-decoration: none;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    letter-spacing: 0.02em; margin-bottom: 2rem; transition: color .15s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--accent);
+    font-size: clamp(0.74rem, 2.6vw, 0.82rem); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: 'Sora', sans-serif; font-weight: 600;
+    font-size: clamp(2rem, 7vw, 2.9rem); line-height: 1.06;
+    letter-spacing: -0.03em; margin-bottom: 1.1rem;
+  }
+  .lede { font-size: clamp(1rem, 3.4vw, 1.1rem); color: var(--text-muted); max-width: 42em; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem;
+    margin: 1.75rem 0 0; font-size: 0.85rem; color: var(--text-dim);
+  }
+  .legend b { font-weight: 600; }
+  .legend .k-read { color: var(--accent); }
+  .legend .k-ml { color: var(--ml); }
+  .legend .k-future { color: var(--future); }
+
+  .block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: clamp(1.3rem, 4vw, 1.8rem);
+    margin-top: 1.5rem;
+  }
+  .block-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.74rem;
+    color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .block h2 {
+    font-family: 'Sora', sans-serif; font-weight: 600;
+    font-size: clamp(1.2rem, 4vw, 1.5rem); letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 0.9rem; color: var(--text);
+  }
+  .read {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem;
+    font-size: 0.92rem; color: var(--text-muted);
+    border-left: 3px solid var(--accent);
+    background: rgba(224,184,136,0.07);
+    padding: 0.55rem 0.85rem; border-radius: 0 6px 6px 0; margin-bottom: 1rem;
+  }
+  .read .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+  }
+  .read .pages { font-family: 'JetBrains Mono', monospace; color: var(--accent-hover); }
+  .row { margin: 0.85rem 0; }
+  .row .label {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;
+  }
+  .row.ml .label { color: var(--ml); }
+  .row.future .label { color: var(--future); }
+  .row p { color: var(--text-muted); font-size: 0.96rem; }
+  .row p strong { color: var(--text); font-weight: 600; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85em;
+    background: #14110d; color: var(--accent); padding: 0.08rem 0.35rem; border-radius: 3px;
+  }
+  .callout {
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem; margin: 2rem 0;
+    color: var(--text-muted); font-size: 0.93rem;
+  }
+  mjx-container { color: var(--text) !important; }
+  footer {
+    margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-soft);
+    color: var(--text-dim); font-size: 0.85rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="index.html">← Analysis</a>
+
+  <div class="eyebrow">Analysis · for Data Science &amp; ML</div>
+  <h1>Where each Analysis topic shows up in machine learning</h1>
+  <p class="lede">The same ten blocks as the <a href="study-guide/" style="color:var(--accent)">study guide</a>, each mapped to its pages in the <a href="notes/Book_Project.pdf" style="color:var(--accent)">Book Project</a> notes, then connected to how the method is actually used in data science and ML today — and where it's heading.</p>
+
+  <div class="legend">
+    <span><b class="k-read">📖 Read</b> — pages in the notes PDF</span>
+    <span><b class="k-ml">🤖 In ML today</b> — current use</span>
+    <span><b class="k-future">🔮 Next</b> — where it's going</span>
+  </div>
+
+  <div class="callout">
+    Page numbers refer to <code>analysis/notes/Book_Project.pdf</code> (184 pp.). The book is in two parts: <em>I. Limits &amp; Local Linear Approximation</em> (pp. 7–96) and <em>II. From Infinite Dimensions to Computation</em> (pp. 97–184).
+  </div>
+
+  <!-- 1 -->
+  <div class="block">
+    <div class="block-num">Block 1</div>
+    <h2>Metric spaces, norms &amp; topology</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 11–23</span> — Metric spaces · Completeness · Compactness; norms with continuous linear maps <span class="pages">pp. 101–106</span>.</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p><strong>Distance is the whole game</strong> for $k$-NN, $k$-means, DBSCAN and hierarchical clustering — the choice of metric (Euclidean, cosine, Mahalanobis) <em>defines</em> what "similar" means. Norms are how we regularize: the $L^1$ norm (lasso) drives sparsity, the $L^2$ norm (ridge / weight decay) controls magnitude. <strong>Embeddings</strong> (word, sentence, image vectors) are points in a metric space where cosine distance encodes meaning. Completeness/compactness are the abstract guarantee that "a best model exists" on a closed, bounded parameter set.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Metric learning</strong> — learning the distance itself via contrastive / triplet losses (Siamese networks, CLIP) — and <strong>non-Euclidean embeddings</strong> (hyperbolic space for hierarchies, Riemannian/geometric deep learning). At industrial scale, <strong>vector databases + RAG</strong> are nearest-neighbour search in a metric space.</p></div>
+  </div>
+
+  <!-- 2 -->
+  <div class="block">
+    <div class="block-num">Block 2</div>
+    <h2>Continuity, openness &amp; connectedness</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 24–38</span> — Continuity in metric spaces (connectedness pp. 27–36).</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p><strong>Continuity = stability:</strong> a small input change should cause a small output change. <strong>Lipschitz continuity</strong> bounds how much a network can amplify a perturbation — the core quantity in <strong>adversarial robustness</strong> and many generalization bounds. Connected components of a classifier's level sets are literally the regions it groups together, and continuity of the loss is what makes gradient descent meaningful at all.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Certified robustness</strong> (provable Lipschitz bounds, randomized smoothing), architectures with built-in 1-Lipschitz layers, and <strong>topological data analysis</strong> (persistent homology) that summarizes the shape and connectedness of data.</p></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="block">
+    <div class="block-num">Block 3</div>
+    <h2>Curves &amp; arc length</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 135–139</span> — rectifiable curves (lightly covered; mostly problem-set material).</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p><strong>Training is a curve</strong> in parameter space — learning-rate schedules trace different paths to the same basin. Curve length on a data manifold is the basis of <strong>manifold learning</strong> (Isomap uses geodesic, not straight-line, distance), and <strong>latent-space interpolation</strong> in VAEs/GANs/diffusion is a curve whose smoothness determines sample quality.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Neural ODEs</strong> and continuous-depth models define the network itself as a curve solving an ODE; <strong>flow matching &amp; diffusion</strong> transport probability mass along curves; Riemannian optimization follows <strong>geodesics</strong> on constraint manifolds.</p></div>
+  </div>
+
+  <!-- 4 -->
+  <div class="block">
+    <div class="block-num">Block 4</div>
+    <h2>Differentiability, gradient &amp; the affine-approximation pipeline</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 61–70</span> (1-D), <span class="pages">125–134</span> (Fréchet derivative), <span class="pages">140–150</span> (gradient &amp; Jacobian in coordinates).</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p><strong>This is the engine of deep learning.</strong> Backpropagation <em>is</em> the chain rule for Fréchet/Jacobian derivatives; the gradient is the descent direction; the first-order Taylor (affine) approximation is exactly what one SGD step trusts. <strong>Autodiff</strong> (PyTorch, JAX) is industrial-scale Jacobian computation. Jacobians also drive normalizing flows (change-of-variables) and sensitivity analysis.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Differentiable everything</strong> — differentiable physics, rendering and simulators; implicit differentiation through optimization layers; JAX-style composable transforms (<code>grad</code>, <code>jvp</code>, <code>vjp</code>) as the substrate of scientific ML.</p></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="block">
+    <div class="block-num">Block 5</div>
+    <h2>Taylor's formula, the Hessian &amp; classifying extrema</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 71–77</span> (1-D extrema), <span class="pages">89–96</span> (Taylor), <span class="pages">151–158</span> (multivariate Taylor &amp; the Hessian).</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p>The <strong>Hessian is the curvature</strong> of the loss landscape. Its eigenvalues classify critical points — and deep-learning losses are dominated by <strong>saddle points</strong>, not local minima. Curvature drives Newton / quasi-Newton steps, conditioning, and trust regions; second-order Taylor expansions justify Gauss–Newton and Fisher approximations.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Sharpness-aware minimization (SAM)</strong> and the "flat-minima generalize better" line of work; curvature-aware optimizers (<strong>Sophia</strong>); and <strong>influence functions</strong> (Hessian-vector products) for data attribution, debugging and machine unlearning.</p></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="block">
+    <div class="block-num">Block 6</div>
+    <h2>Convexity</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 76–78</span> (1-D convex functions), <span class="pages">129–134</span> (convexity in normed spaces).</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p>A convex problem has a <strong>single global minimum</strong> and clean duality — so SVMs, logistic/linear regression, lasso and ridge are all convex and come with convergence guarantees. <strong>Jensen's inequality</strong> underlies the ELBO in variational inference and the EM algorithm.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p>Deep nets are non-convex, but <strong>convex relaxations</strong> power certified robustness and verification, <strong>online convex optimization</strong> gives bandit/RL regret bounds, and convex duality reappears in optimal transport and in the (near-convex) <strong>neural-tangent-kernel</strong> regime of very wide networks.</p></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="block">
+    <div class="block-num">Block 7</div>
+    <h2>Optimization algorithms: GD, SGD, mini-batch</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 158–165</span> — gradient descent &amp; stochastic methods (within Taylor's formula &amp; local extrema).</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p><strong>Every model you train is trained this way.</strong> Mini-batch SGD is the workhorse; <strong>momentum, Adam and AdamW</strong> are the deep-learning defaults. Step-size schedules, gradient variance, and convergence rates are daily, practical concerns — not theory footnotes.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p>Optimizers for <strong>trillion-parameter models</strong> — distributed/sharded training (ZeRO), memory-frugal variants (8-bit Adam, <strong>Lion</strong>), structured second-order methods (<strong>Shampoo</strong>), and the active theory of <strong>why SGD generalizes</strong> (implicit regularization).</p></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="block">
+    <div class="block-num">Block 8</div>
+    <h2>Newton's method · implicit &amp; inverse function theorems</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 166–172</span> — Newton's method in $\mathbb{R}^n$, implicit / inverse function theorems.</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p>Newton / quasi-Newton (<strong>L-BFGS</strong>) solves smaller and convex problems and underlies <strong>natural-gradient / K-FAC</strong>. The <strong>implicit function theorem</strong> is how we differentiate through an <code>argmin</code> or a fixed point — the engine of bilevel and hyperparameter optimization and meta-learning.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Deep equilibrium models (DEQs)</strong> and implicit layers solve for a fixed point and backprop via the implicit function theorem — constant-memory, "infinite-depth" networks — alongside differentiable optimization layers (OptNet, cvxpylayers).</p></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="block">
+    <div class="block-num">Block 9</div>
+    <h2>Constrained extrema · submanifolds &amp; Lagrange multipliers</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 173–183</span> — local extrema under constraints, submanifolds, Lagrange multipliers.</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p><strong>Lagrange multipliers / KKT</strong> are the theory behind SVM duality, constrained and regularized learning, and the <strong>Lagrangian</strong> used in constrained/safe RL and fairness constraints. Submanifolds formalize the <strong>manifold hypothesis</strong> — that real data lives on a low-dimensional surface in a high-dimensional space.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Safe RL and constrained RLHF</strong> via Lagrangian methods; <strong>Riemannian optimization</strong> on Stiefel/Grassmann manifolds (orthogonality constraints in attention and normalizing flows); and physics-/constraint-informed learning.</p></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="block">
+    <div class="block-num">Block 10</div>
+    <h2>Operator norms &amp; the (von) Neumann series</h2>
+    <div class="read"><span class="tag">📖 Read</span> <span class="pages">pp. 101–111</span> — continuous linear maps, operator norm, Neumann series; Hilbert spaces <span class="pages">pp. 112–124</span>.</div>
+    <div class="row ml"><span class="label">🤖 In ML today</span>
+      <p>The <strong>spectral (operator) norm</strong> of a weight matrix bounds how much a layer stretches its input — so it controls a network's Lipschitz constant, stability and generalization. <strong>Spectral normalization</strong> stabilizes GAN training and bounds Transformer sensitivity. The <strong>Neumann series</strong> $(I-A)^{-1}=\sum_k A^k$ is how iterative linear solvers, PageRank, and influence-function / implicit-gradient computations avoid forming an explicit inverse. <strong>Hilbert spaces</strong> give us kernels / RKHS (SVMs, Gaussian processes) and the function-space view of wide networks.</p></div>
+    <div class="row future"><span class="label">🔮 Next</span>
+      <p><strong>Operator learning</strong> — Fourier Neural Operators and DeepONets that learn maps <em>between function spaces</em> — is the mathematics of "AI for PDEs / science," and operator-norm control is increasingly how we keep very large Transformers stable at scale.</p></div>
+  </div>
+
+  <div class="callout">
+    <strong>Bottom line.</strong> First-year Analysis is, almost line for line, the language of modern ML: limits and continuity give <em>stability</em>, derivatives give <em>training</em>, Taylor/Hessian give <em>curvature</em>, convexity gives <em>guarantees</em>, and operators give <em>scale</em>. The frontier (implicit layers, neural ODEs, operator learning, geometric deep learning) is built directly on Part II of these notes.
+  </div>
+
+  <footer>
+    Topic pages extracted from the Book Project notes. ML connections are a synthesis of standard literature — ask if you'd like linked citations. Source on <a href="https://github.com/kulchankas/mfds_univie_first_year">GitHub</a>.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -126,6 +126,25 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
     padding: 1rem 1.25rem; margin: 2rem 0;
     color: var(--text-muted); font-size: 0.93rem;
   }
+  .refs h2 {
+    font-family: 'Sora', sans-serif; font-weight: 600;
+    font-size: clamp(1.3rem, 4.5vw, 1.6rem); letter-spacing: -0.02em;
+    margin: 3rem 0 0.5rem;
+  }
+  .refs h3 {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent); margin: 1.4rem 0 0.5rem;
+  }
+  .refs ul { list-style: none; }
+  .refs li {
+    color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;
+    margin: 0.4rem 0; padding-left: 1.1rem; text-indent: -1.1rem;
+  }
+  .refs li .auth { color: var(--text-dim); }
+  .refs a { color: var(--accent); text-decoration: none; }
+  .refs a:hover { text-decoration: underline; }
+  .refs .id { font-family: 'JetBrains Mono', monospace; font-size: 0.82em; color: var(--text-dim); }
   mjx-container { color: var(--text) !important; }
   footer {
     margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-soft);
@@ -268,8 +287,44 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
     <strong>Bottom line.</strong> First-year Analysis is, almost line for line, the language of modern ML: limits and continuity give <em>stability</em>, derivatives give <em>training</em>, Taylor/Hessian give <em>curvature</em>, convexity gives <em>guarantees</em>, and operators give <em>scale</em>. The frontier (implicit layers, neural ODEs, operator learning, geometric deep learning) is built directly on Part II of these notes.
   </div>
 
+  <section class="refs">
+    <h2>Key references</h2>
+
+    <h3>Optimization &amp; training</h3>
+    <ul>
+      <li><span class="auth">Kingma &amp; Ba (2015).</span> <a href="https://arxiv.org/abs/1412.6980">Adam: A Method for Stochastic Optimization.</a> <span class="id">arXiv:1412.6980</span></li>
+      <li><span class="auth">Loshchilov &amp; Hutter (2019).</span> <a href="https://arxiv.org/abs/1711.05101">Decoupled Weight Decay Regularization (AdamW).</a> <span class="id">arXiv:1711.05101</span></li>
+      <li><span class="auth">Chen et al. (2023).</span> <a href="https://arxiv.org/abs/2302.06675">Symbolic Discovery of Optimization Algorithms (Lion).</a> <span class="id">arXiv:2302.06675</span></li>
+    </ul>
+
+    <h3>Curvature &amp; data attribution</h3>
+    <ul>
+      <li><span class="auth">Foret et al. (2021).</span> <a href="https://arxiv.org/abs/2010.01412">Sharpness-Aware Minimization for Efficiently Improving Generalization.</a> <span class="id">arXiv:2010.01412</span></li>
+      <li><span class="auth">Koh &amp; Liang (2017).</span> <a href="https://arxiv.org/abs/1703.04730">Understanding Black-box Predictions via Influence Functions.</a> <span class="id">arXiv:1703.04730</span></li>
+    </ul>
+
+    <h3>Stability &amp; operators</h3>
+    <ul>
+      <li><span class="auth">Miyato et al. (2018).</span> <a href="https://arxiv.org/abs/1802.05957">Spectral Normalization for Generative Adversarial Networks.</a> <span class="id">arXiv:1802.05957</span></li>
+      <li><span class="auth">Li et al. (2021).</span> <a href="https://arxiv.org/abs/2010.08895">Fourier Neural Operator for Parametric Partial Differential Equations.</a> <span class="id">arXiv:2010.08895</span></li>
+      <li><span class="auth">Lu et al. (2021).</span> <a href="https://arxiv.org/abs/1910.03193">Learning nonlinear operators (DeepONet).</a> <span class="id">arXiv:1910.03193</span></li>
+    </ul>
+
+    <h3>Implicit &amp; continuous-depth models</h3>
+    <ul>
+      <li><span class="auth">Chen et al. (2018).</span> <a href="https://arxiv.org/abs/1806.07366">Neural Ordinary Differential Equations.</a> <span class="id">arXiv:1806.07366</span></li>
+      <li><span class="auth">Bai, Kolter &amp; Koltun (2019).</span> <a href="https://arxiv.org/abs/1909.01377">Deep Equilibrium Models.</a> <span class="id">arXiv:1909.01377</span></li>
+    </ul>
+
+    <h3>Theory &amp; geometry</h3>
+    <ul>
+      <li><span class="auth">Jacot, Gabriel &amp; Hongler (2018).</span> <a href="https://arxiv.org/abs/1806.07572">Neural Tangent Kernel: Convergence and Generalization in Neural Networks.</a> <span class="id">arXiv:1806.07572</span></li>
+      <li><span class="auth">Bronstein et al. (2021).</span> <a href="https://arxiv.org/abs/2104.13478">Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges.</a> <span class="id">arXiv:2104.13478</span></li>
+    </ul>
+  </section>
+
   <footer>
-    Topic pages extracted from the Book Project notes. ML connections are a synthesis of standard literature — ask if you'd like linked citations. Source on <a href="https://github.com/kulchankas/mfds_univie_first_year">GitHub</a>.
+    Topic pages extracted from the Book Project notes; ML connections drawn from the literature cited above. Source on <a href="https://github.com/kulchankas/mfds_univie_first_year">GitHub</a>.
   </footer>
 
 </div>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1612">
+<meta name="description" content="Daily practice sheets for Analysis — one per day, with cumulative spaced review plus fresh problems on previously covered topics.">
+<title>Daily Practice Sheets — Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  :root{
+    --bg:#1a1612;--bg-elevated:#221d18;--bg-card:#1f1a15;--border:#3a342c;--border-soft:#2a251f;
+    --text:#f5efe4;--text-muted:#b8aa97;--text-dim:#8a7e6e;--accent:#e0b888;--accent-hover:#ecc89c;
+    --review:#8fb8de;--today:#e0b888;--stretch:#c4a6df;--glow:rgba(224,184,136,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;background-image:radial-gradient(900px 500px at 50% -10%,var(--glow),transparent 70%);background-repeat:no-repeat}
+  .wrap{max-width:760px;margin:0 auto;padding:clamp(1.5rem,5vw,2.5rem) clamp(1.1rem,5vw,1.75rem) 5rem;padding-left:max(clamp(1.1rem,5vw,1.75rem),env(safe-area-inset-left));padding-right:max(clamp(1.1rem,5vw,1.75rem),env(safe-area-inset-right))}
+  .back-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--text-dim);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.8rem;margin-bottom:1.5rem;transition:color .15s}
+  .back-link:hover{color:var(--accent)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--accent);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8rem}
+  h1{font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(1.9rem,6vw,2.5rem);letter-spacing:-.03em;line-height:1.08;margin-bottom:.6rem}
+  .lede{color:var(--text-muted);font-size:clamp(1rem,3.4vw,1.08rem);max-width:42em}
+  .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin:1.5rem 0 .5rem;font-size:.85rem;color:var(--text-dim)}
+  .legend b{font-weight:600}
+  .k-review{color:var(--review)}.k-today{color:var(--today)}.k-stretch{color:var(--stretch)}
+
+  details.day{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;margin-top:1rem;overflow:hidden}
+  details.day>summary{cursor:pointer;list-style:none;padding:1.1rem 1.3rem;font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+  details.day>summary::-webkit-details-marker{display:none}
+  details.day>summary::before{content:'▸';color:var(--accent);font-size:.8em}
+  details.day[open]>summary::before{content:'▾'}
+  details.day[open]>summary{border-bottom:1px solid var(--border-soft)}
+  summary .dnum{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.85rem}
+  summary .dps{font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:.74rem;font-weight:400;margin-left:auto}
+  .daybody{padding:1.1rem 1.3rem 1.4rem}
+  .grp{margin-top:1.1rem}
+  .grp:first-child{margin-top:.2rem}
+  .grp-lbl{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+  .grp.review .grp-lbl{color:var(--review)}
+  .grp.today .grp-lbl{color:var(--today)}
+  .grp.stretch .grp-lbl{color:var(--stretch)}
+  ol.tasks{list-style:none;counter-reset:t}
+  ol.tasks>li{counter-increment:t;position:relative;padding-left:1.7rem;margin:.55rem 0;color:var(--text)}
+  ol.tasks>li::before{content:counter(t);position:absolute;left:0;top:.05rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text-dim);border:1px solid var(--border);border-radius:5px;width:1.25rem;height:1.25rem;display:flex;align-items:center;justify-content:center}
+  details.sol{margin:.35rem 0 .2rem}
+  details.sol summary{cursor:pointer;list-style:none;color:#8bc6a0;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.04em}
+  details.sol summary::-webkit-details-marker{display:none}
+  details.sol summary::before{content:'▸ solution'}
+  details.sol[open] summary::before{content:'▾ solution'}
+  details.sol .body{color:var(--text-muted);font-size:.93rem;border-left:2px solid var(--border);padding-left:.9rem;margin-top:.4rem}
+  .callout{background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin:1.5rem 0;color:var(--text-muted);font-size:.92rem}
+  mjx-container{color:var(--text)!important}
+  footer{margin-top:3rem;padding-top:1.3rem;border-top:1px solid var(--border-soft);color:var(--text-dim);font-size:.82rem}
+  footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back-link" href="index.html">← Analysis</a>
+  <div class="eyebrow">Analysis · Daily practice</div>
+  <h1>Daily practice sheets</h1>
+  <p class="lede">One sheet per content day of the <a href="study-guide/#plan" style="color:var(--accent)">17-day plan</a>. Each day mixes <b class="k-review">spaced review</b> of earlier problem sets, the day's <b class="k-today">core</b> tasks, and a <b class="k-stretch">stretch</b> problem that hits previously-covered topics from a new angle — so material keeps coming back. These are <em>fresh</em> problems (not the ones already in the study guide's practice blocks). Solutions are hidden — try first.</p>
+
+  <div class="legend">
+    <span><b class="k-review">🔁 Review</b> — earlier topics, cumulative</span>
+    <span><b class="k-today">🎯 Today</b> — the day's block</span>
+    <span><b class="k-stretch">🌱 Stretch</b> — deeper / different angle</span>
+  </div>
+
+  <!-- DAY 1 -->
+  <details class="day"><summary><span class="dnum">Day 1</span> Metric spaces, completeness, compactness <span class="dps">covers PS1 · 📖 11–23</span></summary>
+  <div class="daybody">
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Prove $d(x,y)=|\arctan x-\arctan y|$ is a metric on $\mathbb R$.
+        <details class="sol"><summary></summary><div class="body">(M1) symmetry and (M2) triangle inequality are inherited from $|\cdot|$ on $\mathbb R$. (M3): $d(x,y)=0\iff\arctan x=\arctan y\iff x=y$, since $\arctan$ is injective. (It is the pullback of the standard metric by the injection $\arctan$.)</div></details></li>
+      <li>Which are compact in $\mathbb R$? (a) $[0,1)$ &nbsp;(b) $\{0\}\cup\{1/n:n\ge1\}$ &nbsp;(c) $\mathbb N$.
+        <details class="sol"><summary></summary><div class="body">(a) No: $x_n=1-\tfrac1n\to1\notin[0,1)$, so no subsequence converges in the set. (b) Yes: bounded and closed (its only limit point $0$ is included) ⇒ Heine–Borel. (c) No: unbounded.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>In a set with the <em>discrete</em> metric, show a subset is compact $\iff$ it is finite.
+        <details class="sol"><summary></summary><div class="body">Finite: any sequence repeats a value infinitely ⇒ has a constant (convergent) subsequence. Infinite: choose distinct $x_1,x_2,\dots$; pairwise distance is $1$, so no subsequence is Cauchy ⇒ none converges ⇒ not compact.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 2 -->
+  <details class="day"><summary><span class="dnum">Day 2</span> Continuity, preimages, connectedness <span class="dps">covers PS2 · 📖 24–38</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Day 1</div>
+    <ol class="tasks">
+      <li>Use the sequential characterization to show $\{0\}\cup\{1/n\}$ is closed.
+        <details class="sol"><summary></summary><div class="body">Take $(x_k)$ in the set with $x_k\to x$. Either it is eventually constant ($x$ is in the set), or it has infinitely many distinct $1/n$ terms, forcing $x=0$, which is in the set. It contains all its limits ⇒ closed.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Show $f(x)=1/x$ is continuous on $(0,\infty)$ using sequences.
+        <details class="sol"><summary></summary><div class="body">If $x_n\to x>0$, eventually $x_n>x/2$, so $|1/x_n-1/x|=\dfrac{|x-x_n|}{x_nx}\le \dfrac{2}{x^2}|x_n-x|\to0$.</div></details></li>
+      <li>For $f(x)=x^2$ compute $f^{-1}\big((-1,1)\big)$ and confirm it is open.
+        <details class="sol"><summary></summary><div class="body">$x^2<1\iff x\in(-1,1)$ and $x^2>-1$ always, so $f^{-1}((-1,1))=(-1,1)$ — open, as the continuity theorem predicts for the preimage of an open set.</div></details></li>
+      <li>Is $\{(x,y)\in\mathbb R^2:xy>0\}$ path-connected?
+        <details class="sol"><summary></summary><div class="body">No — it is quadrants I and III, which are disjoint. A path between a point of I and a point of III would have a connected image and must cross $\{xy\le0\}$. Each quadrant separately is path-connected (convex).</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Prove a continuous $f:[0,1]\to\mathbb R$ is bounded and attains a maximum.
+        <details class="sol"><summary></summary><div class="body">$[0,1]$ is compact ⇒ $f([0,1])$ is compact in $\mathbb R$ ⇒ closed and bounded. Bounded gives boundedness; $\sup f([0,1])$ lies in the (closed) image, so it is attained — the Extreme Value Theorem.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 3 -->
+  <details class="day"><summary><span class="dnum">Day 3</span> Contractions, fixed points, path-connectedness <span class="dps">covers PS2 P4 · 📖 24–38</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–2</div>
+    <ol class="tasks">
+      <li>Is $\mathbb R^2\setminus\{(0,0)\}$ path-connected?
+        <details class="sol"><summary></summary><div class="body">Yes. For two points, use the straight segment if it misses the origin; if it passes through $0$, detour via a third point off that line. The punctured plane is path-connected.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Show $f(x)=\tfrac12\big(x+\tfrac2x\big)$ maps $[1,2]\to[1,2]$, is a contraction, and find its fixed point.
+        <details class="sol"><summary></summary><div class="body">$f'(x)=\tfrac12(1-2/x^2)$; on $[1,2]$, $2/x^2\in[\tfrac12,2]$ so $f'\in[-\tfrac12,\tfrac14]$, $|f'|\le\tfrac12<1$ ⇒ contraction ($L=\tfrac12$). $f(1)=f(2)=\tfrac32$ and the min is $f(\sqrt2)=\sqrt2$, so $f([1,2])\subseteq[\sqrt2,\tfrac32]\subset[1,2]$. Fixed point: $x=\tfrac12(x+2/x)\Rightarrow x=\sqrt2$ (the Heron iteration).</div></details></li>
+      <li>For $g(x)=\cos x$ on $[0,1]$ ($L=\sin 1\approx0.841$), bound the iterations from $x_0=0$ to reach error $10^{-3}$, using $d(x_n,x^\*)\le \tfrac{L^n}{1-L}d(x_1,x_0)$.
+        <details class="sol"><summary></summary><div class="body">$d(x_1,x_0)=|\cos 0-0|=1$. Need $\tfrac{0.841^{\,n}}{0.159}\le10^{-3}$, i.e. $0.841^{\,n}\le1.59\times10^{-4}$, so $n\ge \dfrac{\ln(1.59\times10^{-4})}{\ln 0.841}\approx\dfrac{-8.75}{-0.173}\approx 51$ steps.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Show completeness is essential: give a contraction with no fixed point.
+        <details class="sol"><summary></summary><div class="body">$f(x)=x/2$ on $(0,1)$ is a contraction ($L=\tfrac12$), but the only candidate fixed point is $0\notin(0,1)$ — so it has none. The space $(0,1)$ is not complete.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 4 -->
+  <details class="day"><summary><span class="dnum">Day 4</span> Curves &amp; arc length <span class="dps">covers PS3 · 📖 135–139</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–3</div>
+    <ol class="tasks">
+      <li>Does $f(x)=\tfrac14(x^2+1)$ have a unique fixed point on $[0,1]$? Find it.
+        <details class="sol"><summary></summary><div class="body">$f'(x)=x/2$, $|f'|\le\tfrac12$ on $[0,1]$; $f([0,1])\subseteq[\tfrac14,\tfrac12]$. Contraction on the complete $[0,1]$ ⇒ unique fixed point, solving $\tfrac14(x^2+1)=x\Rightarrow x^2-4x+1=0\Rightarrow x=2-\sqrt3\approx0.268$.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Length of $\gamma(t)=(\cos t,\sin t)$, $t\in[0,\pi]$.
+        <details class="sol"><summary></summary><div class="body">$\|\gamma'(t)\|=\|(-\sin t,\cos t)\|=1$, so length $=\int_0^\pi 1\,dt=\pi$.</div></details></li>
+      <li>Length of $\gamma(t)=\big(t,\tfrac23 t^{3/2}\big)$, $t\in[0,3]$.
+        <details class="sol"><summary></summary><div class="body">$\gamma'=(1,t^{1/2})$, $\|\gamma'\|=\sqrt{1+t}$. Length $=\int_0^3\sqrt{1+t}\,dt=\big[\tfrac23(1+t)^{3/2}\big]_0^3=\tfrac23(8-1)=\tfrac{14}{3}$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Show arc length is invariant under an increasing $C^1$ reparametrization $\sigma=\gamma\circ\phi$.
+        <details class="sol"><summary></summary><div class="body">$\sigma'(s)=\gamma'(\phi(s))\phi'(s)$, $\|\sigma'(s)\|=\|\gamma'(\phi(s))\|\,\phi'(s)$ (as $\phi'>0$). Substituting $t=\phi(s)$, $dt=\phi'(s)\,ds$ turns $\int\|\sigma'\|\,ds$ into $\int\|\gamma'(t)\|\,dt$ — same length.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 5 -->
+  <details class="day"><summary><span class="dnum">Day 5</span> Gradient, partials, affine approximation, Jacobian <span class="dps">covers PS4 PS5 · 📖 61–70, 125–150</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–4</div>
+    <ol class="tasks">
+      <li>Show $f(x,y)=x^2+y^2$ attains a minimum on the closed disk $\{x^2+y^2\le1\}$.
+        <details class="sol"><summary></summary><div class="body">The closed disk is compact and $f$ continuous ⇒ minimum attained (at the origin, value $0$).</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>For $f(x,y)=e^{xy}$, compute $\nabla f$ and the affine approximation at $(1,0)$; estimate $f(1.1,0.1)$.
+        <details class="sol"><summary></summary><div class="body">$\nabla f=(ye^{xy},xe^{xy})$; at $(1,0)$: $f=1$, $\nabla f=(0,1)$. So $F(x,y)=1+(y-0)=1+y$ and $f(1.1,0.1)\approx1.1$ (true $e^{0.11}\approx1.116$).</div></details></li>
+      <li>For $f(x,y)=(x+y,\,xy)$, find the Jacobian at $(2,3)$ and estimate $f(2.05,2.98)$.
+        <details class="sol"><summary></summary><div class="body">$J=\begin{pmatrix}1&1\\ y&x\end{pmatrix}=\begin{pmatrix}1&1\\3&2\end{pmatrix}$; $f(2,3)=(5,6)$, $\Delta=(0.05,-0.02)$. $F=(5,6)+J\Delta=(5+0.03,\,6+0.11)=(5.03,\,6.11)$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Show $f(x,y)=\tfrac{xy}{x^2+y^2}$ (with $f(0,0)=0$) has both partials at $0$ but is not continuous there.
+        <details class="sol"><summary></summary><div class="body">On the axes $f\equiv0$, so $f_x(0,0)=f_y(0,0)=0$. But along $y=x$, $f=\tfrac{x^2}{2x^2}=\tfrac12\ne0=f(0,0)$, so $f$ is not continuous at $0$. (Existence of partials ≠ differentiability.)</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 6 -->
+  <details class="day"><summary><span class="dnum">Day 6</span> Taylor in $\mathbb R^n$, Hessian, classifying extrema <span class="dps">covers PS6 PS7 P1 · 📖 151–158</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–5</div>
+    <ol class="tasks">
+      <li>Use the Jacobian of $f(x,y)=(x^2,xy)$ at $(1,1)$ to estimate $f(1.02,0.97)$.
+        <details class="sol"><summary></summary><div class="body">$J=\begin{pmatrix}2x&0\\ y&x\end{pmatrix}=\begin{pmatrix}2&0\\1&1\end{pmatrix}$; $f(1,1)=(1,1)$, $\Delta=(0.02,-0.03)$. $F=(1+0.04,\,1+(0.02-0.03))=(1.04,\,0.99)$.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Find and classify the critical points of $f(x,y)=x^3-3x+y^2$.
+        <details class="sol"><summary></summary><div class="body">$\nabla f=(3x^2-3,\,2y)=0\Rightarrow x=\pm1,\ y=0$. $H=\begin{pmatrix}6x&0\\0&2\end{pmatrix}$. At $(1,0)$: $\det=12>0,\ 6>0$ ⇒ local min. At $(-1,0)$: $\det=-12<0$ ⇒ saddle.</div></details></li>
+      <li>Classify the critical point of $f(x,y)=x^2+xy+y^2$.
+        <details class="sol"><summary></summary><div class="body">$\nabla f=(2x+y,\,x+2y)=0\Rightarrow(0,0)$. $H=\begin{pmatrix}2&1\\1&2\end{pmatrix}$, $\det=3>0$, $2>0$ ⇒ (global) minimum.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Second-order Taylor of $f(x,y)=e^{x}\cos y$ at $(0,0)$.
+        <details class="sol"><summary></summary><div class="body">$f(0,0)=1$, $\nabla f=(e^x\cos y,-e^x\sin y)=(1,0)$, $H=\begin{pmatrix}e^x\cos y&-e^x\sin y\\-e^x\sin y&-e^x\cos y\end{pmatrix}=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$. So $f\approx 1+x+\tfrac12(x^2-y^2)$.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 8 -->
+  <details class="day"><summary><span class="dnum">Day 8</span> Convexity <span class="dps">covers PS7 P3 · 📖 76–78, 129–134</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–6</div>
+    <ol class="tasks">
+      <li>Classify the critical point of $f(x,y)=x^2-y^2$.
+        <details class="sol"><summary></summary><div class="body">$\nabla f=(2x,-2y)=0\Rightarrow(0,0)$; $H=\mathrm{diag}(2,-2)$, $\det=-4<0$ ⇒ saddle.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Show $f(x)=x^4$ is convex on $\mathbb R$ but not strongly convex near $0$.
+        <details class="sol"><summary></summary><div class="body">$f''(x)=12x^2\ge0$ ⇒ convex. But $f''(0)=0$, so there is no $m>0$ with $f''\ge m$ on a neighbourhood of $0$ ⇒ not strongly convex there.</div></details></li>
+      <li>Show $\max(f,g)$ of convex $f,g$ is convex; show $\min$ need not be.
+        <details class="sol"><summary></summary><div class="body">$h=\max(f,g)$: $h(\lambda x+(1-\lambda)y)\le\max(\lambda f(x)+(1-\lambda)f(y),\,\lambda g(x)+(1-\lambda)g(y))\le\lambda h(x)+(1-\lambda)h(y)$. Counterexample for min: $\min(x,-x)=-|x|$ is concave.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Prove AM–GM for two positives via convexity: $\sqrt{ab}\le\tfrac{a+b}{2}$.
+        <details class="sol"><summary></summary><div class="body">$-\ln$ is convex, so $-\ln\tfrac{a+b}{2}\le\tfrac12(-\ln a)+\tfrac12(-\ln b)=-\ln\sqrt{ab}$. Exponentiating gives $\tfrac{a+b}{2}\ge\sqrt{ab}$.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 9 -->
+  <details class="day"><summary><span class="dnum">Day 9</span> Gradient descent, SGD, $L$-smoothness <span class="dps">covers PS7 P4 PS8 · 📖 158–165</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–8</div>
+    <ol class="tasks">
+      <li>Is $f(x,y)=x^2+3y^2$ convex? Find the global minimum.
+        <details class="sol"><summary></summary><div class="body">$H=\mathrm{diag}(2,6)\succ0$ ⇒ strictly convex; minimum at $(0,0)$, value $0$.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>For $f(x)=\tfrac12 x^2$ (so $f'(x)=x$, $L=1$), gradient descent is $x_{k+1}=(1-\eta)x_k$. For which $\eta$ does it converge, and what is the best step?
+        <details class="sol"><summary></summary><div class="body">Converges $\iff|1-\eta|<1\iff 0<\eta<2$ (note $2/L=2$). Best step $\eta=1$: reaches the minimum in one step.</div></details></li>
+      <li>For $f(x)=\tfrac12 x^\top A x$ with $A=\mathrm{diag}(1,10)$, what step size guarantees convergence, and what sets the rate?
+        <details class="sol"><summary></summary><div class="body">Need $\eta<2/L=2/10=0.2$. The rate is set by the condition number $\kappa=L/\mu=10/1=10$; the worst-case contraction factor is $\tfrac{\kappa-1}{\kappa+1}=\tfrac{9}{11}$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Why does SGD use an <em>unbiased</em> gradient estimate, and what is the trade-off versus full-batch GD?
+        <details class="sol"><summary></summary><div class="body">A random mini-batch gradient $\nabla f_i$ satisfies $\mathbb E[\nabla f_i]=\nabla f$, so steps are correct in expectation. It is far cheaper per step but noisy, which is why it typically needs decreasing step sizes (or averaging); the noise can also help escape saddle points and sharp minima.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 10 -->
+  <details class="day"><summary><span class="dnum">Day 10</span> Newton in 1-D and $\mathbb R^n$, convergence orders <span class="dps">covers PS8 P3–4 PS10 · 📖 166–172</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–9</div>
+    <ol class="tasks">
+      <li>For $f(x)=\tfrac12 x^2$, compare gradient descent ($\eta=0.5$) with Newton from $x_0=1$.
+        <details class="sol"><summary></summary><div class="body">GD: $x_{k+1}=0.5x_k$ ⇒ linear, $x_k=2^{-k}$. Newton: $x_{k+1}=x_k-f'/f''=x_k-x_k=0$ — exact in one step (a quadratic objective is solved in a single Newton step).</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Newton for $\sqrt2$: $f(x)=x^2-2$, iterate twice from $x_0=2$.
+        <details class="sol"><summary></summary><div class="body">$x_{k+1}=x_k-\tfrac{x_k^2-2}{2x_k}=\tfrac12\big(x_k+\tfrac2{x_k}\big)$. $x_1=\tfrac12(2+1)=1.5$; $x_2=\tfrac12(1.5+1.3333\ldots)=1.41\overline6$, already $\approx\sqrt2=1.41421\ldots$.</div></details></li>
+      <li>State Newton's order of convergence near a simple root and why.
+        <details class="sol"><summary></summary><div class="body">Quadratic ($r=2$): $e_{k+1}\approx\tfrac{f''(x^\*)}{2f'(x^\*)}e_k^2$, from Taylor-expanding $f$ about the root. It needs $f'(x^\*)\ne0$ (simple root) and $x_0$ close enough.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Build sequences with linear vs quadratic convergence to $0$ and compare.
+        <details class="sol"><summary></summary><div class="body">Linear: $a_k=2^{-k}$ ($a_{k+1}/a_k=\tfrac12$). Quadratic: $b_k=2^{-2^{k}}$ ($b_{k+1}/b_k^{2}=1$). After a few steps $b_k$ is astronomically smaller — quadratic roughly doubles the number of correct digits each step.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 11 -->
+  <details class="day"><summary><span class="dnum">Day 11</span> Newton edge cases · implicit / inverse function theorem <span class="dps">covers PS10 · 📖 166–172</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–10</div>
+    <ol class="tasks">
+      <li>What does Newton do on $f(x)=x^3-2x+2$ from $x_0=0$?
+        <details class="sol"><summary></summary><div class="body">$f'=3x^2-2$. $x_1=0-\tfrac{2}{-2}=1$; $f(1)=1$, $f'(1)=1$, $x_2=1-\tfrac11=0$. It enters the $2$-cycle $0,1,0,1,\dots$ — Newton can cycle or diverge when $x_0$ is poor or $f'$ is small.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>By the IFT, where does $x^2+y^2=1$ define $y=g(x)$? Compute $g'$.
+        <details class="sol"><summary></summary><div class="body">$F=x^2+y^2-1$, $F_y=2y\ne0\iff y\ne0$. There $g'(x)=-F_x/F_y=-x/y$.</div></details></li>
+      <li>For $F(x,y)=xe^{y}+y=0$ near $(0,0)$, find $g'(0)$ with $y=g(x)$.
+        <details class="sol"><summary></summary><div class="body">$F(0,0)=0$; $F_y=xe^y+1=1\ne0$ at $(0,0)$; $F_x=e^y=1$. So $g'(0)=-F_x/F_y=-1$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Is $f(x,y)=(e^x\cos y,\,e^x\sin y)$ locally invertible at $(0,0)$?
+        <details class="sol"><summary></summary><div class="body">$J=\begin{pmatrix}e^x\cos y&-e^x\sin y\\ e^x\sin y&e^x\cos y\end{pmatrix}$, $\det=e^{2x}=1\ne0$ at $(0,0)$ ⇒ by the Inverse Function Theorem it is locally invertible (this is the complex exponential).</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 12 -->
+  <details class="day"><summary><span class="dnum">Day 12</span> Implicit/Inverse FT · submanifolds · tangent space <span class="dps">covers PS11 · 📖 166–179</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–11</div>
+    <ol class="tasks">
+      <li>Does the folium $x^3+y^3=6xy$ define $y=g(x)$ near $(3,3)$? Find $g'(3)$.
+        <details class="sol"><summary></summary><div class="body">$F=x^3+y^3-6xy$, $F_y=3y^2-6x=27-18=9\ne0$ ⇒ yes. $F_x=3x^2-6y=27-18=9$, so $g'(3)=-F_x/F_y=-1$.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Show the unit sphere $S=\{x^2+y^2+z^2=1\}$ is a $2$-submanifold and find the tangent plane at $(0,0,1)$.
+        <details class="sol"><summary></summary><div class="body">$g=x^2+y^2+z^2-1$, $\nabla g=(2x,2y,2z)\ne0$ on $S$ ⇒ regular value ⇒ $2$-manifold. The tangent space is $\ker dg=\{v:\nabla g\cdot v=0\}$; at $(0,0,1)$, $\nabla g=(0,0,2)$, so the tangent plane is $z=1$ (directions with $v_3=0$, the horizontal plane).</div></details></li>
+      <li>Tangent line to $\{x^2+y^2=1\}$ at $\big(\tfrac{\sqrt2}{2},\tfrac{\sqrt2}{2}\big)$.
+        <details class="sol"><summary></summary><div class="body">$\nabla g=(2x,2y)\propto(1,1)$, so the tangent direction is $(1,-1)$ and the line is $x+y=\sqrt2$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Why is the regularity condition $\nabla g\ne0$ needed? Give a set where it fails.
+        <details class="sol"><summary></summary><div class="body">$\{y^2=x^3\}$ (a cusp): with $g=y^2-x^3$, $\nabla g=(-3x^2,2y)=(0,0)$ at the origin. The level set has a singular cusp there and is not a smooth manifold.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 13 -->
+  <details class="day"><summary><span class="dnum">Day 13</span> Lagrange multipliers · constrained extrema <span class="dps">covers PS12 PS13 PS14 P1 · 📖 173–183</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–12</div>
+    <ol class="tasks">
+      <li>Tangent plane to the graph $z=x^2+y^2$ at $(1,1,2)$.
+        <details class="sol"><summary></summary><div class="body">As a level set $g=z-x^2-y^2$, $\nabla g=(-2x,-2y,1)=(-2,-2,1)$. Tangent plane: $-2(x-1)-2(y-1)+(z-2)=0\Rightarrow z=2x+2y-2$.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Extremize $f(x,y)=x+y$ on $x^2+y^2=1$.
+        <details class="sol"><summary></summary><div class="body">$\nabla f=\lambda\nabla g$: $(1,1)=\lambda(2x,2y)\Rightarrow x=y=\tfrac1{2\lambda}$; the constraint gives $x=y=\pm\tfrac1{\sqrt2}$. Max $=\sqrt2$ at $(\tfrac1{\sqrt2},\tfrac1{\sqrt2})$, min $=-\sqrt2$.</div></details></li>
+      <li>Minimize $f(x,y)=x^2+y^2$ subject to $x+2y=5$.
+        <details class="sol"><summary></summary><div class="body">$(2x,2y)=\lambda(1,2)\Rightarrow x=\tfrac\lambda2,\ y=\lambda$; constraint $\tfrac\lambda2+2\lambda=5\Rightarrow\lambda=2$, so $(x,y)=(1,2)$ and the minimum is $1+4=5$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Prove AM–GM for three positives via Lagrange: maximize $xyz$ with $x+y+z=s$ fixed.
+        <details class="sol"><summary></summary><div class="body">$(yz,xz,xy)=\lambda(1,1,1)\Rightarrow xy=yz=zx\Rightarrow x=y=z=s/3$. So $\max xyz=(s/3)^3$, giving $\sqrt[3]{xyz}\le\tfrac{x+y+z}{3}$.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <!-- DAY 14 -->
+  <details class="day"><summary><span class="dnum">Day 14</span> Operator norms · (von) Neumann series <span class="dps">covers PS9 PS14 P3 · 📖 101–111</span></summary>
+  <div class="daybody">
+    <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–13</div>
+    <ol class="tasks">
+      <li>Find the closest point of the plane $x+y+z=1$ to the origin (via Lagrange) and the distance.
+        <details class="sol"><summary></summary><div class="body">Minimize $x^2+y^2+z^2$ on the plane: $(2x,2y,2z)=\lambda(1,1,1)\Rightarrow x=y=z$; constraint ⇒ $x=y=z=\tfrac13$. Distance$^2=3\cdot\tfrac19=\tfrac13$, distance $=\tfrac1{\sqrt3}$.</div></details></li>
+    </ol></div>
+    <div class="grp today"><div class="grp-lbl">🎯 Today</div>
+    <ol class="tasks">
+      <li>Compute $\|A\|_1$ and $\|A\|_\infty$ for $A=\begin{pmatrix}1&-2\\3&4\end{pmatrix}$.
+        <details class="sol"><summary></summary><div class="body">$\|A\|_1=$ max absolute column sum $=\max(1+3,\,2+4)=6$. $\|A\|_\infty=$ max absolute row sum $=\max(1+2,\,3+4)=7$.</div></details></li>
+      <li>For $A=\begin{pmatrix}0&1/2\\ 1/3&0\end{pmatrix}$ compute $(I-A)^{-1}$ and relate it to the Neumann series.
+        <details class="sol"><summary></summary><div class="body">$I-A=\begin{pmatrix}1&-1/2\\-1/3&1\end{pmatrix}$, $\det=1-\tfrac16=\tfrac56$, so $(I-A)^{-1}=\tfrac{6}{5}\begin{pmatrix}1&1/2\\1/3&1\end{pmatrix}=\begin{pmatrix}6/5&3/5\\2/5&6/5\end{pmatrix}$. Since $\|A\|_\infty=\tfrac12<1$, this equals $\sum_{k\ge0}A^k$.</div></details></li>
+    </ol></div>
+    <div class="grp stretch"><div class="grp-lbl">🌱 Stretch</div>
+    <ol class="tasks">
+      <li>Show: if $\|A\|<1$ in some operator norm, then $I-A$ is invertible with $\|(I-A)^{-1}\|\le\tfrac{1}{1-\|A\|}$.
+        <details class="sol"><summary></summary><div class="body">The Neumann series $\sum_{k\ge0}A^k$ converges absolutely because $\sum\|A\|^k=\tfrac1{1-\|A\|}<\infty$. Its sum $S$ satisfies $(I-A)S=S(I-A)=I$, so $S=(I-A)^{-1}$, and $\|S\|\le\sum\|A\|^k=\tfrac1{1-\|A\|}$.</div></details></li>
+    </ol></div>
+  </div></details>
+
+  <div class="callout"><strong>Days 7, 15–17 have no sheet</strong> — they are the checkpoint and full mocks in the plan. Use the <a href="../linear-algebra/mock_exams.html" style="color:var(--accent)">mock format</a> and the study guide's per-block practice for those.</div>
+
+  <footer>
+    Fresh problems with hidden solution sketches — distinct from the study guide's practice blocks. Source on <a href="https://github.com/kulchankas/mfds_univie_first_year">GitHub</a>.
+  </footer>
+</div>
+</body>
+</html>

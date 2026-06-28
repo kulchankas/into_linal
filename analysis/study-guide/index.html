@@ -784,6 +784,12 @@ myBisection(f, 0, 2)   <span class="cm"># → converges to √2 ≈ 1.41421…</
   $f$ convex: $f(\lambda x+(1-\lambda)y)\le\lambda f(x)+(1-\lambda)f(y)$ for $\lambda\in[0,1]$.
   <strong>First-order</strong> ($C^1$): $f(y)\ge f(x)+\nabla f(x)^\top(y-x)$. <strong>Second-order</strong> ($C^2$): $H_f\succeq0$ everywhere. <strong>Jensen:</strong> $f\big(\sum\lambda_i x_i\big)\le\sum\lambda_i f(x_i)$ for weights summing to 1.</div>
 
+  <div class="box def"><span class="lbl">Definition · convex set (and the function living on it)</span>
+  A set $C$ in a vector space is <strong>convex</strong> if for all $x,y\in C$ and $\lambda\in[0,1]$ the whole segment stays inside: $\lambda x+(1-\lambda)y\in C$. A function $f:C\to\mathbb R$ on a convex set is <strong>convex</strong> when $f(\lambda x+(1-\lambda)y)\le\lambda f(x)+(1-\lambda)f(y)$ — equivalently, its <em>epigraph</em> $\{(x,t):t\ge f(x)\}$ is a convex set. (Convex functions are defined only on convex domains, so the chord between two points makes sense.)</div>
+
+  <div class="box idea"><span class="lbl">Example · convexity $\Rightarrow$ path-connectedness (links Block 2)</span>
+  Every convex set $C$ is <strong>path-connected</strong>. For $x,y\in C$ take the straight segment $\gamma(t)=(1-t)x+ty$, $t\in[0,1]$: it is continuous, $\gamma(0)=x$, $\gamma(1)=y$, and it stays in $C$ by the very definition of convexity — so it is a path from $x$ to $y$ (Definition 1.4.10). Hence <strong>convex $\Rightarrow$ path-connected $\Rightarrow$ connected</strong> (the converse fails: an annulus is path-connected but not convex). This is exactly why convex feasible sets are so well-behaved in optimization — you can always travel in a straight line between any two feasible points and never leave the set.</div>
+
   <h3>Solution logic — the three closure rules (PS7 P3)</h3>
   <div class="box recipe"><span class="lbl">Recipe · prove these convex</span>
   <ul>

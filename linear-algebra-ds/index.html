@@ -69,9 +69,9 @@
   <p class="lede">A self-study track built around the course textbook: watch for intuition, read for rigour, and practise with the actual course exercises — organised chapter by chapter, with the data-science payoff of each topic.</p>
 
   <a class="feature" href="notes/Linear_Algebra_Mula_Wu.pdf">
-    <div class="feature-tag">📘 Course textbook</div>
+    <div class="feature-tag">📘 Course textbook · v. 29 Jun 2026</div>
     <div class="feature-title">Linear Algebra — Mula &amp; Wu (2026)</div>
-    <p class="feature-desc">The course spine: vector spaces → inner-product spaces → bilinear/sesquilinear forms → determinants → eigenvalues &amp; SVD, with a data-science slant throughout (least-squares, SVD, spectral methods). Exercises at the end of each chapter.</p>
+    <p class="feature-desc">The course spine: vector spaces → inner-product spaces → bilinear/sesquilinear forms → determinants → eigenvalues → spectral theorems &amp; SVD, with a data-science slant throughout (least-squares, SVD, spectral methods). Exercises at the end of each chapter. <em>This is the latest version (29 June 2026), which completes Chapter 6 with the Singular Value Decomposition.</em></p>
     <span class="feature-cta">Open the textbook (PDF) →</span>
   </a>
 
@@ -124,12 +124,21 @@
     <div class="row ds"><span class="rl">🤖 In data science</span><div>The Jacobian determinant is the change-of-variables factor in normalizing flows; $\log\det$ appears in Gaussian likelihoods; determinant = volume scaling under a linear map.</div></div>
   </div></details>
 
-  <details class="ch"><summary><span class="cnum">Ch 5</span> Eigenvalues &amp; Spectral Theory<span class="ctopics">eigenvalues/-vectors/-spaces · characteristic polynomial · diagonalization · Cayley–Hamilton · matrix functions · triangularization · spectral theorems · SVD</span></summary>
+  <details class="ch"><summary><span class="cnum">Ch 5</span> Eigenvalues<span class="ctopics">eigenvalues/-vectors/-spaces · characteristic polynomial · diagonalization · Cayley–Hamilton · matrix functions · triangularization over $\mathbb{C}$</span></summary>
   <div class="chbody">
-    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 14 (eigenvectors &amp; eigenvalues) and ch. 15 (abstract vector spaces); plus 3B1B's SVD / PCA explainers.</div></div>
-    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4 (Matrix Decompositions — eigendecomposition &amp; SVD, the DS-critical chapter); Strang 18.06 lec. 21–22, 25, 29–30 (eigenvalues, symmetric matrices, SVD); Axler ch. 5, 7 (eigenvalues, the spectral theorem). Course textbook ch. 5.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 14 (eigenvectors &amp; eigenvalues) and ch. 15 (abstract vector spaces).</div></div>
+    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4.1–4.4 (eigendecomposition, characteristic polynomial); Strang 18.06 lec. 21–22, 25 (eigenvalues, symmetric matrices, diagonalization); Axler ch. 5, 8 (eigenvalues, operators on complex spaces). Course textbook ch. 5.</div></div>
     <div class="row prac"><span class="rl">🎯 Course exercises</span><div>5.1, 5.2, 5.3, 5.5, 5.6, 5.8, 5.10, 5.14, 5.15, 5.16, 5.17, 5.19, 5.22, 5.25, 5.29, 5.31.</div></div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>The headline chapter: PCA = eigendecomposition of the covariance; SVD powers dimensionality reduction, recommender systems and latent-semantic analysis; spectral clustering and PageRank are eigenproblems; matrix functions (e.g. $e^{tA}$) model graph diffusion and dynamics.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span><div>PCA = eigendecomposition of the covariance; spectral clustering and PageRank are eigenproblems; matrix functions (e.g. $e^{tA}$) model graph diffusion and linear dynamics; the characteristic polynomial underlies stability analysis.</div></div>
+  </div></details>
+
+  <details class="ch"><summary><span class="cnum">Ch 6</span> Spectral Theorems &amp; SVD<span class="ctopics">Schur's lemma &amp; unitary triangularization · diagonalization of normal endomorphisms (spectral theorem) · Singular Value Decomposition</span></summary>
+  <div class="chbody">
+    <div class="row ds"><span class="rl">🆕 New in v. 29 Jun</span><div>This version completes Chapter 6 with §6.3 — the <strong>Singular Value Decomposition</strong> (Theorem 6.9). It's the single most important decomposition for data science, so give it real time.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B's <a href="https://www.youtube.com/watch?v=vSczTbgc8Rc">SVD / PCA</a> and singular-value visual explainers; revisit Essence ch. 14 for the symmetric-matrix case behind the spectral theorem.</div></div>
+    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4.5 (the SVD — the DS-critical section); Strang 18.06 lec. 29–30 (SVD, its geometry &amp; applications); Axler ch. 7 (the spectral theorem for self-adjoint &amp; normal operators). Course textbook ch. 6.</div></div>
+    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>No end-of-chapter exercises — this is a theory chapter. Reinforce it via the Ch 5 eigenvalue exercises and by computing an SVD by hand on a small $2\times2$, then checking against <code>numpy.linalg.svd</code>.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span><div>The headline result: SVD powers dimensionality reduction (truncated SVD / low-rank approximation via Eckart–Young), recommender systems and latent-semantic analysis, pseudo-inverses for least-squares, and image compression. The spectral theorem guarantees real, orthogonally-diagonalizable covariance matrices — the bedrock of PCA.</div></div>
   </div></details>
 
   <h2>Weekly homework schedule</h2>

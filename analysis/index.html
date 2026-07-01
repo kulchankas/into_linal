@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1a1612">
-<meta name="description" content="Analysis — lecture notes and problem-set archive.">
-<title>Analysis — Notes & Problem Sets</title>
+<meta name="description" content="Analysis — self-paced study guide, flashcards, daily practice, lecture notes, and problem-set archive with progress tracking.">
+<title>Analysis — Self-study Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -170,6 +170,48 @@
   }
   footer a { color: var(--accent); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+  .box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 11px 11px 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    color: var(--text-muted);
+    font-size: 0.94rem;
+  }
+  .box .lbl {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .box ul { margin: 0.3rem 0 0; padding-left: 1.2rem; }
+  .box li { margin: 0.35rem 0; }
+  .box a { color: var(--accent); }
+  .session-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.55rem;
+  }
+  .session-block {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+  }
+  .session-block .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .session-block p { font-size: 0.86rem; margin: 0; color: var(--text-muted); }
   @media (hover: none) {
     .doc:active { transform: translateY(-1px); border-color: var(--accent); }
   }
@@ -180,14 +222,23 @@
 
   <a class="back-link" href="../index.html">← All subjects</a>
 
-  <div class="eyebrow">Universität Wien · Analysis</div>
+  <div class="eyebrow">Universität Wien · Analysis · self-paced</div>
   <h1>Analysis</h1>
-  <p class="lede">A full exam study guide, plus lecture notes and the complete problem-set archive.</p>
+  <p class="lede">Learn the material properly, at your own pace — ten topic blocks with recipes and recall checks, spaced-repetition flashcards, daily practice sheets, and the full problem-set archive. Progress saves in your browser on the study guide and practice pages.</p>
+
+  <div class="box"><span class="lbl">One study session (~90 min)</span>
+  <p style="margin-bottom:.55rem">Use this block whenever you sit down — adjust times, but keep the order: read → drill → connect → explain.</p>
+  <div class="session-grid">
+    <div class="session-block"><div class="time">0–25 min · 📖 Read</div><p>One block in the study guide + matching pages in the Book Project notes.</p></div>
+    <div class="session-block"><div class="time">25–55 min · 🎯 Practise</div><p>Problem-set exercises or that day's practice sheet. Write full reasoning before peeking.</p></div>
+    <div class="session-block"><div class="time">55–75 min · 🃏 Recall</div><p>Flashcards for definitions and theorems from the block you just studied.</p></div>
+    <div class="session-block"><div class="time">75–90 min · 🤖 Connect</div><p>Skim the ML map for the block — why does this matter for data science?</p></div>
+  </div></div>
 
   <a class="feature" href="study-guide/">
-    <div class="feature-tag">★ Exam study guide</div>
-    <div class="feature-title">Analysis in Data Science — Exam Study Guide</div>
-    <p class="feature-desc">Ten topic blocks (metric spaces → operator norms) with state / prove / compute framing, worked recipes, practice problems with hidden solutions, a 2.5-week plan, and a one-page cheat sheet.</p>
+    <div class="feature-tag">★ Core study guide</div>
+    <div class="feature-title">Analysis in Data Science — Study Guide</div>
+    <p class="feature-desc">Ten topic blocks (metric spaces → operator norms) with state / prove / compute framing, worked recipes, practice problems with hidden solutions, block progress tracking, and an optional 17-day accelerated schedule if you need one.</p>
     <span class="feature-cta">Open study guide →</span>
   </a>
 
@@ -208,7 +259,7 @@
   <a class="feature" href="daily-practice.html">
     <div class="feature-tag">📝 Daily practice</div>
     <div class="feature-title">Daily practice sheets</div>
-    <p class="feature-desc">One sheet per day of the plan, each blending cumulative spaced review of earlier problem sets with fresh tasks on the day's topic — so everything keeps coming back. Hidden solution sketches.</p>
+    <p class="feature-desc">One sheet per content day (14 sheets), each blending cumulative spaced review with fresh tasks — tick days off as you go. Hidden solution sketches.</p>
     <span class="feature-cta">Open the sheets →</span>
   </a>
 
@@ -222,7 +273,7 @@
   </div>
 
   <h2>Problem sets</h2>
-  <p style="color:var(--text-muted);font-size:.9rem;margin:-.3rem 0 1rem">Tagged by your professor’s coding — <b style="color:#8bc6a0">✅ on exam</b> · <b style="color:#e0b888">⚠️ maybe</b> · <b style="color:#c87060">❌ skip</b>. Full breakdown in the <a href="study-guide/#exam-focus" style="color:var(--accent)">study guide</a>.</p>
+  <p style="color:var(--text-muted);font-size:.9rem;margin:-.3rem 0 1rem">Tagged by your professor's coding — <b style="color:#8bc6a0">✅ priority</b> · <b style="color:#e0b888">⚠️ maybe</b> · <b style="color:#c87060">❌ later</b>. Full breakdown in the <a href="study-guide/#exam-focus" style="color:var(--accent)">study guide</a>.</p>
   <div class="doc-list grid-sets">
     <a class="doc" href="problem-sets/Questions_1.pdf"><span class="num">01</span><span class="label">Sheet 1</span></a>
     <a class="doc" href="problem-sets/Questions_2.pdf"><span class="num">02</span><span class="label">Sheet 2 <span class="sub">✅1,4 ⚠️2</span></span></a>

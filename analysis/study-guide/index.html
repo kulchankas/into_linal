@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Analysis in Data Science — Exam Study Guide</title>
+<title>Analysis in Data Science — Study Guide</title>
 <script>
 window.MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
@@ -161,6 +161,56 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;p
 code{overflow-wrap:break-word}
 section{scroll-margin-top:24px}
 
+/* ---- progress dashboard ---- */
+.dashboard{border:1px solid var(--line);border-radius:12px;padding:clamp(1rem,3vw,1.35rem);margin:0 0 28px;background:#fbfaf4}
+.dash-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:.75rem 1rem;margin-bottom:1rem}
+.dash-title{font-family:"Space Grotesk",sans-serif;font-size:1.15rem;font-weight:700;color:var(--accent2);letter-spacing:-.02em;margin:0}
+.dash-sub{font-size:.86rem;color:var(--muted);margin-top:.15rem}
+.dash-actions{display:flex;flex-wrap:wrap;gap:.45rem}
+.btn-sync{font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:7px 12px;border-radius:8px;display:inline-flex;align-items:center;gap:.35rem;transition:background .15s,border-color .15s,color .15s}
+.btn-sync:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sync.primary{background:#f0e3da;border-color:rgba(181,73,31,.35);color:var(--accent)}
+.btn-sync.danger:hover{border-color:#9c2b2b;color:#9c2b2b}
+.dash-stats{display:flex;align-items:center;gap:1.1rem;margin-bottom:.85rem}
+.ring-wrap{position:relative;width:68px;height:68px;flex-shrink:0}
+.ring-wrap svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring-bg{fill:none;stroke:var(--line);stroke-width:6}
+.ring-fg{fill:none;stroke:var(--accent2);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .35s ease}
+.ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk",sans-serif;font-size:.78rem;font-weight:700;color:var(--accent2)}
+.stat-lines{flex:1;min-width:0}
+.stat-line{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.86rem;color:var(--muted);padding:.25rem 0;border-bottom:1px dotted var(--line)}
+.stat-line:last-child{border-bottom:none}
+.stat-line strong{color:var(--ink);font-weight:600}
+.sync-panel{margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--line)}
+.sync-panel[hidden]{display:none}
+.sync-panel label{display:block;font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:.35rem}
+.sync-panel textarea{width:100%;min-height:80px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.75rem;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--line);border-radius:8px;padding:.6rem .7rem;resize:vertical}
+.sync-panel .sync-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
+.sync-msg{font-size:.82rem;margin-top:.45rem;min-height:1.2em}
+.sync-msg.ok{color:#2c6b3e}.sync-msg.err{color:#9c2b2b}
+.block-done-row{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;margin:.55rem 0 1rem}
+.block-check{font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:6px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:.4rem;transition:background .15s,border-color .15s,color .15s}
+.block-check:hover{border-color:var(--accent2);color:var(--accent2)}
+.block-check[aria-checked="true"]{background:#e6efe6;border-color:#2c6b3e;color:#2c6b3e}
+.block-check[aria-checked="true"]::before{content:'✓';font-weight:700}
+section.is-done{border-left:3px solid #2c6b3e;padding-left:14px;margin-left:-17px}
+.box.session{border-left-color:var(--accent);background:#fcf3ee}
+.session-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.55rem;margin-top:.45rem}
+.session-block{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:.6rem .7rem}
+.session-block .time{font-family:"Space Grotesk",sans-serif;font-size:10.5px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.session-block p{font-size:.88rem;margin:0;color:var(--muted)}
+nav a.nav-done{color:#2c6b3e;font-weight:600}
+nav a.nav-done::after{content:' ✓';font-size:.85em}
+[data-theme="dark"] .dashboard{background:#13211c;border-color:#2a3a31}
+[data-theme="dark"] .block-check[aria-checked="true"]{background:#1b2e22;border-color:#3a6b50;color:#90d2a5}
+[data-theme="dark"] section.is-done{border-left-color:#5fb39b}
+[data-theme="dark"] nav a.nav-done{color:#5fb39b}
+[data-theme="dark"] .box.session{background:#22160f}
+[data-theme="dark"] .btn-sync.primary{background:#26190f}
+@media print{
+  .dashboard,.block-done-row,.block-check{display:none!important}
+}
+
 /* ---------- dark theme ---------- */
 [data-theme="dark"]{
   --ink:#e8e2d0; --paper:#0e1a16; --line:#2a3a31; --accent:#e8915f; --accent2:#5fb39b;
@@ -257,14 +307,17 @@ section{scroll-margin-top:24px}
 <div class="wrap">
 <nav>
   <button class="nav-close" aria-label="Close navigation">✕</button>
+  <a href="../index.html" style="font-size:12px;margin-bottom:10px;display:block;color:var(--muted);text-decoration:none">← Analysis hub</a>
   <h1>Analysis<br>in Data Science</h1>
-  <div class="sub">Exam study guide · built around the 13 problem sets · Ehler, <em>Mathematical Structures of Computation</em> (ch. 11 &amp; §7.5)</div>
+  <div class="sub">Self-paced study guide · 10 topic blocks · Ehler, <em>Mathematical Structures of Computation</em> (ch. 11 &amp; §7.5)</div>
   <div class="toggle-row">
     <button class="btn-ui js-theme" aria-label="Toggle dark mode"><span class="ti">◐</span><span class="tl">Dark</span></button>
     <button class="btn-ui" onclick="window.print()" aria-label="Print or save as PDF">⎙ Print</button>
   </div>
+  <a href="#progress">Your progress</a>
   <a href="#how">How to use this</a>
-  <a href="#plan">2.5-week plan</a>
+  <a href="#self-paced">Self-paced path</a>
+  <a href="#plan">Accelerated schedule</a>
   <div class="grp">Topic blocks</div>
   <a href="#b1">1 · Metric spaces &amp; topology</a>
   <a href="#b2">2 · Continuity &amp; connectedness</a>
@@ -276,6 +329,10 @@ section{scroll-margin-top:24px}
   <a href="#b8">8 · Newton &amp; inverse/implicit</a>
   <a href="#b9">9 · Constrained extrema</a>
   <a href="#b10">10 · Operator norms &amp; Neumann</a>
+  <div class="grp">Practice tools</div>
+  <a href="../flashcards.html">Flashcards</a>
+  <a href="../daily-practice.html">Daily practice</a>
+  <a href="../for-data-science.html">ML topic map</a>
   <div class="grp">Reference</div>
   <a href="#julia">Julia template bank</a>
   <a href="#cheats">One-page cheat sheet</a>
@@ -286,27 +343,87 @@ section{scroll-margin-top:24px}
 
 <main>
 <header class="hero">
-  <div class="eyebrow">Exam preparation · 2.5 weeks</div>
+  <div class="eyebrow">Self-paced · 10 blocks</div>
   <h1>Analysis in Data&nbsp;Science</h1>
-  <p class="lede">A practice-first guide. The exam mirrors the problem sets, so every concept here is tied to the tasks that test it, the logic for solving that task type, and fresh problems to drill it.</p>
+  <p class="lede">Learn the material properly, at your own pace — not cram for an exam. Each block ties concepts to problem-set task types, solution recipes, and fresh practice problems. Mark blocks complete as you go; progress saves in your browser.</p>
 </header>
+
+<section id="progress" class="dashboard" aria-labelledby="dash-title">
+  <div class="dash-head">
+    <div>
+      <h2 class="dash-title" id="dash-title">Your progress</h2>
+      <p class="dash-sub">Saved locally · export to move devices</p>
+    </div>
+    <div class="dash-actions">
+      <button type="button" class="btn-sync primary" id="btn-export">Export</button>
+      <button type="button" class="btn-sync" id="btn-import-toggle" aria-expanded="false" aria-controls="sync-panel">Import</button>
+      <button type="button" class="btn-sync danger" id="btn-reset">Reset</button>
+    </div>
+  </div>
+  <div class="dash-stats">
+    <div class="ring-wrap" aria-hidden="true">
+      <svg viewBox="0 0 72 72"><circle class="ring-bg" cx="36" cy="36" r="30"/><circle class="ring-fg" id="ring-fg" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg>
+      <div class="ring-label" id="ring-label">0/10</div>
+    </div>
+    <div class="stat-lines">
+      <div class="stat-line"><span>Blocks complete</span><strong id="stat-blocks">0 / 10</strong></div>
+      <div class="stat-line"><span>Next up</span><strong id="stat-next">Block 1</strong></div>
+    </div>
+  </div>
+  <div class="sync-panel" id="sync-panel" hidden>
+    <label for="import-data">Paste exported JSON</label>
+    <textarea id="import-data" rows="4" spellcheck="false" placeholder='{"v":1,"blocks":{"1":true,...}}'></textarea>
+    <div class="sync-row">
+      <button type="button" class="btn-sync primary" id="btn-import-apply">Apply import</button>
+      <button type="button" class="btn-sync" id="btn-import-cancel">Cancel</button>
+    </div>
+    <p class="sync-msg" id="sync-msg" role="status" aria-live="polite"></p>
+  </div>
+</section>
 
 <section id="how">
   <h2><span class="tag">Read first</span>How to use this guide</h2>
   <p>This is organized into <strong>ten topic blocks</strong>, not by problem-set number, so related ideas sit together. Each block shows which problem sets it covers, gives you the minimum you must be able to <em>state</em>, <em>prove</em>, and <em>compute</em>, walks the <em>solution logic</em> for the recurring task types, and ends with <strong>new practice problems</strong> (with hidden solutions).</p>
+  <div class="box session"><span class="lbl">One study session (~90 min)</span>
+  <div class="session-grid">
+    <div class="session-block"><div class="time">0–25 min · Read</div><p>One block here + matching pages in the <a href="../notes/Book_Project.pdf">Book Project</a> notes.</p></div>
+    <div class="session-block"><div class="time">25–55 min · Practise</div><p>Problem-set exercises or a <a href="../daily-practice.html">daily practice sheet</a>. Try before opening solutions.</p></div>
+    <div class="session-block"><div class="time">55–75 min · Recall</div><p><a href="../flashcards.html">Flashcards</a> for definitions and theorems from the block.</p></div>
+    <div class="session-block"><div class="time">75–90 min · Connect</div><p><a href="../for-data-science.html">ML topic map</a> — why this block matters for data science.</p></div>
+  </div></div>
   <div class="box idea">
     <span class="lbl">The framing that matters</span>
-    For each result, ask the three questions: <span class="spc s-state">State</span> can I write the precise statement and hypotheses? <span class="spc s-prove">Prove</span> do I know the one key idea the proof turns on? <span class="spc s-compute">Compute</span> can I run the recipe on a concrete example fast and without notes? On this exam, <strong>Compute and the proof-ideas dominate</strong>. Memorizing definitions verbatim earns little; reproducing a solution method under time pressure earns everything.
+    For each result, ask the three questions: <span class="spc s-state">State</span> can I write the precise statement and hypotheses? <span class="spc s-prove">Prove</span> do I know the one key idea the proof turns on? <span class="spc s-compute">Compute</span> can I run the recipe on a concrete example? <strong>Compute and proof-ideas are where depth lives</strong> — memorizing definitions verbatim is not enough; being able to reproduce a solution method is.
   </div>
-  <div class="callout"><strong>Practice protocol:</strong> attempt every practice problem on paper with a timer before opening the solution. If you peek first, it doesn't count as practice — it counts as reading.</div>
+  <div class="callout"><strong>Practice protocol:</strong> attempt every practice problem on paper before opening the solution. If you peek first, it doesn't count as practice — it counts as reading. No timer required unless you're running the optional accelerated schedule below.</div>
+</section>
+
+<section id="self-paced">
+  <h2><span class="tag">At your pace</span>Self-paced path (10 blocks)</h2>
+  <p>Move at your own speed — one block per study week is a comfortable default (~6–8 h/week). Don't advance until you can state the key results, run the recipes, and answer the block's practice problems without peeking. Pair each block with the matching <a href="../daily-practice.html">practice sheet</a> when you want extra drill.</p>
+  <div class="scroll-x">
+  <table>
+    <tr><th>Phase</th><th>Block</th><th>Focus</th><th>Notes pages</th><th>Tools</th></tr>
+    <tr><td>1</td><td>1</td><td>Metric spaces, completeness, compactness</td><td>11–23</td><td><a href="../flashcards.html">Flashcards</a> · PS1</td></tr>
+    <tr><td>2</td><td>2</td><td>Continuity, connectedness, fixed points</td><td>24–38</td><td>PS2 · <a href="../daily-practice.html">Day 2–3</a></td></tr>
+    <tr><td>3</td><td>3</td><td>Curves &amp; arc length</td><td>135–139</td><td>PS3 · Day 4</td></tr>
+    <tr><td>4</td><td>4</td><td>Gradient, Jacobian, affine approximation</td><td>61–70, 125–150</td><td>PS4–5 · Day 5</td></tr>
+    <tr><td>5</td><td>5</td><td>Taylor, Hessian, classifying extrema</td><td>151–158</td><td>PS6–7 · Day 6</td></tr>
+    <tr><td>6</td><td>6</td><td>Convexity &amp; closure rules</td><td>76–78, 129–134</td><td>PS7 · Day 8</td></tr>
+    <tr><td>7</td><td>7</td><td>Gradient descent, SGD, $L$-smoothness</td><td>158–165</td><td>PS7–8 · Day 9</td></tr>
+    <tr><td>8</td><td>8</td><td>Newton, IFT, convergence orders</td><td>166–172</td><td>PS10–11 · Day 10–12</td></tr>
+    <tr><td>9</td><td>9</td><td>Lagrange multipliers, constrained extrema</td><td>173–183</td><td>PS12–13 · Day 13</td></tr>
+    <tr><td>10</td><td>10</td><td>Operator norms, Neumann series</td><td>101–111</td><td>PS9 · Day 14</td></tr>
+  </table>
+  </div>
 </section>
 
 <section id="plan">
-  <h2><span class="tag">Schedule</span>The 2.5-week plan</h2>
-  <p>17 days. Front half builds the machinery block-by-block while re-deriving every problem-set solution from scratch; back half is mixed timed practice and weak-spot repair. Each day pairs <strong>one external resource</strong> with hands-on work — the videos are scheduled, not optional. Each day also points to the matching pages in the <a href="../notes/Book_Project.pdf">Book Project</a> notes (📖). For extra drill, each day has a <a href="../daily-practice.html">practice sheet</a> that blends cumulative spaced review with fresh problems.</p>
+  <h2><span class="tag">Optional</span>Accelerated 17-day schedule</h2>
+  <p>If you <em>do</em> have an exam coming up, this 2.5-week plan front-loads the material block-by-block with timed mocks. Skip this section entirely if you're learning at your own pace — use the <a href="#self-paced">self-paced path</a> instead. Each day also has a matching <a href="../daily-practice.html">practice sheet</a> and points to pages in the <a href="../notes/Book_Project.pdf">Book Project</a> notes (📖).</p>
 
-  <h3 id="exam-focus">Exam focus — your professor's exercise coding</h3>
-  <p>Straight from your professor's marked problem sets: <strong>✅ on the exam</strong> · <strong>⚠️ may appear</strong> · <strong>❌ skip</strong> (won't be on the exam). Work top-down — master every ✅, then the ⚠️, and don't sink hours into ❌.</p>
+  <h3 id="exam-focus">Problem-set priorities (professor's coding)</h3>
+  <p>From your professor's marked problem sets: <strong>✅ high priority</strong> · <strong>⚠️ maybe</strong> · <strong>❌ skip for now</strong>. When time is tight, master every ✅ first — but if you're self-studying without an exam, treat ❌ as "later" rather than "never".</p>
   <div class="scroll-x">
   <table>
     <tr><th>Problem set</th><th>✅ on exam</th><th>⚠️ maybe</th><th>❌ skip</th></tr>
@@ -1268,6 +1385,149 @@ myGeometricSum(x, n) = myNeumann(fill(1 - x, 1, 1); n=n)[1]</pre>
     w.className = 'scroll-x';
     t.parentNode.insertBefore(w, t);
     w.appendChild(t);
+  });
+
+  /* ---- block progress (localStorage + export/import) ---- */
+  var BLOCK_COUNT = 10, CIRC = 188.5, PROG_KEY = 'asg-progress-v1';
+  var progState = { v:1, blocks:{} };
+  for (var b = 1; b <= BLOCK_COUNT; b++) progState.blocks[String(b)] = false;
+
+  function loadProg(){
+    try {
+      var raw = localStorage.getItem(PROG_KEY);
+      if (!raw) return;
+      var parsed = JSON.parse(raw);
+      if (parsed && parsed.v === 1 && parsed.blocks){
+        for (var i = 1; i <= BLOCK_COUNT; i++){
+          if (typeof parsed.blocks[String(i)] === 'boolean') progState.blocks[String(i)] = parsed.blocks[String(i)];
+        }
+      }
+    } catch(e){}
+  }
+  function saveProg(){
+    try { localStorage.setItem(PROG_KEY, JSON.stringify(progState)); } catch(e){}
+  }
+  function setBlockCheck(btn, on){
+    btn.setAttribute('aria-checked', on ? 'true' : 'false');
+    btn.textContent = on ? 'Block complete' : 'Mark block complete';
+  }
+  function renderBlock(id){
+    var sec = document.getElementById('b' + id);
+    var btn = sec && sec.querySelector('.block-check');
+    var on = !!progState.blocks[String(id)];
+    if (btn) setBlockCheck(btn, on);
+    if (sec) sec.classList.toggle('is-done', on);
+    var navA = document.querySelector('nav a[href="#b' + id + '"]');
+    if (navA) navA.classList.toggle('nav-done', on);
+  }
+  function countDoneBlocks(){
+    var n = 0;
+    for (var i = 1; i <= BLOCK_COUNT; i++) if (progState.blocks[String(i)]) n++;
+    return n;
+  }
+  function renderProgStats(){
+    var done = countDoneBlocks();
+    var stat = document.getElementById('stat-blocks');
+    var ring = document.getElementById('ring-fg');
+    var label = document.getElementById('ring-label');
+    var nextEl = document.getElementById('stat-next');
+    if (stat) stat.textContent = done + ' / ' + BLOCK_COUNT;
+    if (label) label.textContent = done + '/' + BLOCK_COUNT;
+    if (ring) ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - done / BLOCK_COUNT)));
+    if (nextEl){
+      var next = null;
+      for (var i = 1; i <= BLOCK_COUNT; i++){
+        if (!progState.blocks[String(i)]){ next = i; break; }
+      }
+      nextEl.textContent = next ? 'Block ' + next : 'All done ✓';
+    }
+  }
+  function renderAllBlocks(){
+    for (var i = 1; i <= BLOCK_COUNT; i++) renderBlock(i);
+    renderProgStats();
+  }
+  function injectBlockChecks(){
+    for (var i = 1; i <= BLOCK_COUNT; i++){
+      var sec = document.getElementById('b' + i);
+      if (!sec || sec.querySelector('.block-check')) continue;
+      var maps = sec.querySelector('.maps');
+      var row = document.createElement('div');
+      row.className = 'block-done-row';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'block-check';
+      btn.dataset.block = String(i);
+      btn.setAttribute('role', 'checkbox');
+      btn.setAttribute('aria-label', 'Mark block ' + i + ' complete');
+      btn.addEventListener('click', function(){
+        var id = this.dataset.block;
+        progState.blocks[id] = !progState.blocks[id];
+        saveProg(); renderBlock(id); renderProgStats();
+      });
+      row.appendChild(btn);
+      if (maps) sec.insertBefore(row, maps);
+      else sec.appendChild(row);
+    }
+  }
+  var syncPanel = document.getElementById('sync-panel');
+  var syncMsg = document.getElementById('sync-msg');
+  function showSync(msg, ok){
+    if (!syncMsg) return;
+    syncMsg.textContent = msg;
+    syncMsg.className = 'sync-msg ' + (ok ? 'ok' : 'err');
+  }
+  loadProg();
+  injectBlockChecks();
+  renderAllBlocks();
+  var btnExport = document.getElementById('btn-export');
+  if (btnExport) btnExport.addEventListener('click', function(){
+    var json = JSON.stringify(progState, null, 2);
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(json).then(function(){
+        showSync('Copied to clipboard.', true);
+        if (syncPanel){ syncPanel.hidden = false; document.getElementById('import-data').value = json; }
+        var toggle = document.getElementById('btn-import-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded','true');
+      }).catch(function(){
+        if (syncPanel){ syncPanel.hidden = false; document.getElementById('import-data').value = json; showSync('JSON shown below — copy manually.', true); }
+      });
+    } else if (syncPanel){
+      syncPanel.hidden = false;
+      document.getElementById('import-data').value = json;
+      showSync('JSON shown below — copy manually.', true);
+    }
+  });
+  var btnImportToggle = document.getElementById('btn-import-toggle');
+  if (btnImportToggle) btnImportToggle.addEventListener('click', function(){
+    if (!syncPanel) return;
+    var open = syncPanel.hidden;
+    syncPanel.hidden = !open;
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open){ document.getElementById('import-data').focus(); showSync('', true); }
+  });
+  var btnImportCancel = document.getElementById('btn-import-cancel');
+  if (btnImportCancel) btnImportCancel.addEventListener('click', function(){
+    if (syncPanel) syncPanel.hidden = true;
+    if (btnImportToggle) btnImportToggle.setAttribute('aria-expanded','false');
+    showSync('', true);
+  });
+  var btnImportApply = document.getElementById('btn-import-apply');
+  if (btnImportApply) btnImportApply.addEventListener('click', function(){
+    try {
+      var parsed = JSON.parse(document.getElementById('import-data').value.trim());
+      if (!parsed || parsed.v !== 1 || !parsed.blocks) throw new Error('bad');
+      for (var i = 1; i <= BLOCK_COUNT; i++){
+        if (typeof parsed.blocks[String(i)] === 'boolean') progState.blocks[String(i)] = parsed.blocks[String(i)];
+      }
+      saveProg(); renderAllBlocks();
+      showSync('Progress imported.', true);
+    } catch(e){ showSync('Could not import — check the JSON.', false); }
+  });
+  var btnReset = document.getElementById('btn-reset');
+  if (btnReset) btnReset.addEventListener('click', function(){
+    if (!confirm('Reset all block progress?')) return;
+    for (var i = 1; i <= BLOCK_COUNT; i++) progState.blocks[String(i)] = false;
+    saveProg(); renderAllBlocks(); showSync('', true);
   });
 })();
 </script>

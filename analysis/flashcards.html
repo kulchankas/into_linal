@@ -108,6 +108,11 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' }, star
   .reset { background: none; border: none; color: var(--text-dim); font-size: .76rem;
     font-family: 'JetBrains Mono', monospace; cursor: pointer; margin-top: 2rem; text-decoration: underline; }
   .reset:hover { color: var(--again); }
+  .sync-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 .5rem}
+  .sync-row .btn{font-size:.82rem;padding:.55rem .85rem}
+  .sync-panel textarea{width:100%;min-height:64px;font-family:'JetBrains Mono',monospace;font-size:.72rem;background:#14110d;color:var(--text-muted);border:1px solid var(--border);border-radius:8px;padding:.55rem .65rem;resize:vertical}
+  .sync-msg{font-size:.78rem;color:var(--text-dim);min-height:1.1em}
+  .sync-msg.ok{color:var(--good)}.sync-msg.err{color:var(--again)}
   footer { margin-top: 3rem; padding-top: 1.3rem; border-top: 1px solid var(--border-soft);
     color: var(--text-dim); font-size: .82rem; }
   footer a { color: var(--accent); text-decoration: none; }
@@ -127,6 +132,19 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' }, star
   <div id="app"></div>
 
   <button class="reset" id="reset">Reset all progress for this deck</button>
+
+  <div class="sync-row">
+    <button class="btn" id="btn-export" type="button">Export progress</button>
+    <button class="btn" id="btn-import-toggle" type="button">Import</button>
+  </div>
+  <div id="sync-panel" hidden>
+    <textarea id="import-data" rows="3" spellcheck="false" placeholder='Paste exported JSON'></textarea>
+    <div class="sync-row">
+      <button class="btn primary" id="btn-import-apply" type="button">Apply</button>
+      <button class="btn" id="btn-import-cancel" type="button">Cancel</button>
+    </div>
+    <p class="sync-msg" id="sync-msg"></p>
+  </div>
 
   <footer>
     Leitner-style scheduling, stored locally in your browser — no account, nothing leaves your device.
@@ -452,6 +470,46 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' }, star
     if (confirm('Reset all spaced-repetition progress for this deck?')){
       store = {}; save(); buildQueue(); showCard();
     }
+  };
+
+  var syncPanel = document.getElementById('sync-panel');
+  var syncMsg = document.getElementById('sync-msg');
+  function showSync(msg, ok){
+    syncMsg.textContent = msg;
+    syncMsg.className = 'sync-msg ' + (ok ? 'ok' : 'err');
+  }
+  document.getElementById('btn-export').onclick = ()=>{
+    var json = JSON.stringify(store, null, 2);
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(json).then(()=>{
+        showSync('Copied to clipboard.', true);
+        syncPanel.hidden = false;
+        document.getElementById('import-data').value = json;
+      }).catch(()=>{
+        syncPanel.hidden = false;
+        document.getElementById('import-data').value = json;
+        showSync('JSON shown below.', true);
+      });
+    } else {
+      syncPanel.hidden = false;
+      document.getElementById('import-data').value = json;
+      showSync('JSON shown below.', true);
+    }
+  };
+  document.getElementById('btn-import-toggle').onclick = ()=>{
+    syncPanel.hidden = !syncPanel.hidden;
+    if (!syncPanel.hidden) document.getElementById('import-data').focus();
+  };
+  document.getElementById('btn-import-cancel').onclick = ()=>{
+    syncPanel.hidden = true; syncMsg.textContent = '';
+  };
+  document.getElementById('btn-import-apply').onclick = ()=>{
+    try {
+      var p = JSON.parse(document.getElementById('import-data').value.trim());
+      if (!p || typeof p !== 'object') throw new Error('bad');
+      store = p; save(); buildQueue(); showCard();
+      showSync('Progress imported.', true);
+    } catch(e){ showSync('Could not import — check JSON.', false); }
   };
 
   buildQueue();

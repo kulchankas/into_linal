@@ -32,14 +32,36 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   .legend b{font-weight:600}
   .k-review{color:var(--review)}.k-today{color:var(--today)}.k-stretch{color:var(--stretch)}
 
-  details.day{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;margin-top:1rem;overflow:hidden}
-  details.day>summary{cursor:pointer;list-style:none;padding:1.1rem 1.3rem;font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+  details.day{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;margin-top:1rem;overflow:hidden;transition:border-color .2s}
+  details.day.is-done{border-color:rgba(139,198,160,.4)}
+  details.day>summary{cursor:pointer;list-style:none;padding:1.1rem 1.3rem;font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
   details.day>summary::-webkit-details-marker{display:none}
   details.day>summary::before{content:'▸';color:var(--accent);font-size:.8em}
   details.day[open]>summary::before{content:'▾'}
   details.day[open]>summary{border-bottom:1px solid var(--border-soft)}
   summary .dnum{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.85rem}
   summary .dps{font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:.74rem;font-weight:400;margin-left:auto}
+  .day-check{flex-shrink:0;width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elevated);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:transparent;font-size:1rem;transition:border-color .15s,background .15s,color .15s}
+  .day-check:hover{border-color:var(--accent)}
+  .day-check[aria-checked="true"]{background:rgba(139,198,160,.15);border-color:#8bc6a0;color:#8bc6a0}
+  .dashboard{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:clamp(1rem,3vw,1.35rem);margin:1.5rem 0}
+  .dash-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:.85rem}
+  .dash-title{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:600}
+  .dash-sub{font-size:.84rem;color:var(--text-dim);margin-top:.15rem}
+  .dash-actions{display:flex;flex-wrap:wrap;gap:.4rem}
+  .btn{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text-muted);padding:.45rem .75rem;border-radius:8px;transition:border-color .15s,color .15s}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.primary{background:rgba(224,184,136,.12);border-color:rgba(224,184,136,.35);color:var(--accent)}
+  .btn.danger:hover{border-color:#c87060;color:#c87060}
+  .stat-line{font-size:.86rem;color:var(--text-muted);display:flex;justify-content:space-between;padding:.25rem 0}
+  .stat-line strong{color:var(--text)}
+  .sync-panel{margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--border-soft)}
+  .sync-panel[hidden]{display:none}
+  .sync-panel label{display:block;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--text-dim);margin-bottom:.35rem}
+  .sync-panel textarea{width:100%;min-height:72px;font-family:'JetBrains Mono',monospace;font-size:.72rem;background:#14110d;color:var(--text-muted);border:1px solid var(--border);border-radius:8px;padding:.55rem .65rem;resize:vertical}
+  .sync-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.45rem}
+  .sync-msg{font-size:.8rem;margin-top:.4rem;min-height:1.1em}
+  .sync-msg.ok{color:#8bc6a0}.sync-msg.err{color:#c87060}
   .daybody{padding:1.1rem 1.3rem 1.4rem}
   .grp{margin-top:1.1rem}
   .grp:first-child{margin-top:.2rem}
@@ -67,17 +89,41 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   <a class="back-link" href="index.html">← Analysis</a>
   <div class="eyebrow">Analysis · Daily practice</div>
   <h1>Daily practice sheets</h1>
-  <p class="lede">One sheet per content day of the <a href="study-guide/#plan" style="color:var(--accent)">17-day plan</a>. Each day mixes <b class="k-review">spaced review</b> of earlier problem sets, the day's <b class="k-today">core</b> tasks, and a <b class="k-stretch">stretch</b> problem that hits previously-covered topics from a new angle — so material keeps coming back. These are <em>fresh</em> problems (not the ones already in the study guide's practice blocks). Solutions are hidden — try first.</p>
+  <p class="lede">One sheet per content block of the <a href="study-guide/#self-paced" style="color:var(--accent)">self-paced path</a> (or the optional <a href="study-guide/#plan" style="color:var(--accent)">17-day schedule</a>). Each day mixes <b class="k-review">spaced review</b>, the day's <b class="k-today">core</b> tasks, and a <b class="k-stretch">stretch</b> problem. Mark days complete as you go — progress saves in your browser. These are <em>fresh</em> problems (not the study guide's practice blocks). Try before opening solutions.</p>
+
+  <section class="dashboard" aria-labelledby="dash-title">
+    <div class="dash-head">
+      <div>
+        <h2 class="dash-title" id="dash-title">Sheet progress</h2>
+        <p class="dash-sub">14 practice sheets · export to move devices</p>
+      </div>
+      <div class="dash-actions">
+        <button type="button" class="btn primary" id="btn-export">Export</button>
+        <button type="button" class="btn" id="btn-import-toggle">Import</button>
+        <button type="button" class="btn danger" id="btn-reset">Reset</button>
+      </div>
+    </div>
+    <div class="stat-line"><span>Days complete</span><strong id="stat-days">0 / 14</strong></div>
+    <div class="sync-panel" id="sync-panel" hidden>
+      <label for="import-data">Paste exported JSON</label>
+      <textarea id="import-data" rows="3" spellcheck="false"></textarea>
+      <div class="sync-row">
+        <button type="button" class="btn primary" id="btn-import-apply">Apply</button>
+        <button type="button" class="btn" id="btn-import-cancel">Cancel</button>
+      </div>
+      <p class="sync-msg" id="sync-msg" role="status"></p>
+    </div>
+  </section>
 
   <div class="legend">
     <span><b class="k-review">🔁 Review</b> — earlier topics, cumulative</span>
     <span><b class="k-today">🎯 Today</b> — the day's block</span>
     <span><b class="k-stretch">🌱 Stretch</b> — deeper / different angle</span>
   </div>
-  <p style="color:var(--text-dim);font-size:.86rem;margin:.4rem 0 0">Prioritize with your professor's coding — <b style="color:#8bc6a0">✅ on exam</b> · <b style="color:#e0b888">⚠️ maybe</b> · <b style="color:#c4a6df">❌ skip</b>: see the <a href="study-guide/#exam-focus" style="color:var(--accent)">exam-focus table</a>.</p>
+  <p style="color:var(--text-dim);font-size:.86rem;margin:.4rem 0 0">Prioritize with your professor's coding — <b style="color:#8bc6a0">✅ priority</b> · <b style="color:#e0b888">⚠️ maybe</b> · <b style="color:#c4a6df">❌ later</b>: see the <a href="study-guide/#exam-focus" style="color:var(--accent)">priority table</a>.</p>
 
   <!-- DAY 1 -->
-  <details class="day"><summary><span class="dnum">Day 1</span> Metric spaces, completeness, compactness <span class="dps">covers PS1 · 📖 11–23</span></summary>
+  <details class="day" data-day="1"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 1 complete"></button><span class="dnum">Day 1</span> Metric spaces, completeness, compactness <span class="dps">covers PS1 · 📖 11–23</span></summary>
   <div class="daybody">
     <div class="grp today"><div class="grp-lbl">🎯 Today</div>
     <ol class="tasks">
@@ -94,7 +140,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 2 -->
-  <details class="day"><summary><span class="dnum">Day 2</span> Continuity, preimages, connectedness <span class="dps">covers PS2 · 📖 24–38</span></summary>
+  <details class="day" data-day="2"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 2 complete"></button><span class="dnum">Day 2</span> Continuity, preimages, connectedness <span class="dps">covers PS2 · 📖 24–38</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Day 1</div>
     <ol class="tasks">
@@ -118,7 +164,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 3 -->
-  <details class="day"><summary><span class="dnum">Day 3</span> Contractions, fixed points, path-connectedness <span class="dps">covers PS2 P4 · 📖 24–38</span></summary>
+  <details class="day" data-day="3"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 3 complete"></button><span class="dnum">Day 3</span> Contractions, fixed points, path-connectedness <span class="dps">covers PS2 P4 · 📖 24–38</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–2</div>
     <ol class="tasks">
@@ -140,7 +186,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 4 -->
-  <details class="day"><summary><span class="dnum">Day 4</span> Curves &amp; arc length <span class="dps">covers PS3 · 📖 135–139</span></summary>
+  <details class="day" data-day="4"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 4 complete"></button><span class="dnum">Day 4</span> Curves &amp; arc length <span class="dps">covers PS3 · 📖 135–139</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–3</div>
     <ol class="tasks">
@@ -162,7 +208,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 5 -->
-  <details class="day"><summary><span class="dnum">Day 5</span> Gradient, partials, affine approximation, Jacobian <span class="dps">covers PS4 PS5 · 📖 61–70, 125–150</span></summary>
+  <details class="day" data-day="5"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 5 complete"></button><span class="dnum">Day 5</span> Gradient, partials, affine approximation, Jacobian <span class="dps">covers PS4 PS5 · 📖 61–70, 125–150</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–4</div>
     <ol class="tasks">
@@ -184,7 +230,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 6 -->
-  <details class="day"><summary><span class="dnum">Day 6</span> Taylor in $\mathbb R^n$, Hessian, classifying extrema <span class="dps">covers PS6 PS7 P1 · 📖 151–158</span></summary>
+  <details class="day" data-day="6"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 6 complete"></button><span class="dnum">Day 6</span> Taylor in $\mathbb R^n$, Hessian, classifying extrema <span class="dps">covers PS6 PS7 P1 · 📖 151–158</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–5</div>
     <ol class="tasks">
@@ -206,7 +252,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 8 -->
-  <details class="day"><summary><span class="dnum">Day 8</span> Convexity <span class="dps">covers PS7 P3 · 📖 76–78, 129–134</span></summary>
+  <details class="day" data-day="8"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 8 complete"></button><span class="dnum">Day 8</span> Convexity <span class="dps">covers PS7 P3 · 📖 76–78, 129–134</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–6</div>
     <ol class="tasks">
@@ -228,7 +274,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 9 -->
-  <details class="day"><summary><span class="dnum">Day 9</span> Gradient descent, SGD, $L$-smoothness <span class="dps">covers PS7 P4 PS8 · 📖 158–165</span></summary>
+  <details class="day" data-day="9"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 9 complete"></button><span class="dnum">Day 9</span> Gradient descent, SGD, $L$-smoothness <span class="dps">covers PS7 P4 PS8 · 📖 158–165</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–8</div>
     <ol class="tasks">
@@ -250,7 +296,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 10 -->
-  <details class="day"><summary><span class="dnum">Day 10</span> Newton in 1-D and $\mathbb R^n$, convergence orders <span class="dps">covers PS8 P3–4 PS10 · 📖 166–172</span></summary>
+  <details class="day" data-day="10"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 10 complete"></button><span class="dnum">Day 10</span> Newton in 1-D and $\mathbb R^n$, convergence orders <span class="dps">covers PS8 P3–4 PS10 · 📖 166–172</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–9</div>
     <ol class="tasks">
@@ -272,7 +318,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 11 -->
-  <details class="day"><summary><span class="dnum">Day 11</span> Newton edge cases · implicit / inverse function theorem <span class="dps">covers PS10 · 📖 166–172</span></summary>
+  <details class="day" data-day="11"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 11 complete"></button><span class="dnum">Day 11</span> Newton edge cases · implicit / inverse function theorem <span class="dps">covers PS10 · 📖 166–172</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–10</div>
     <ol class="tasks">
@@ -294,7 +340,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 12 -->
-  <details class="day"><summary><span class="dnum">Day 12</span> Implicit/Inverse FT · submanifolds · tangent space <span class="dps">covers PS11 · 📖 166–179</span></summary>
+  <details class="day" data-day="12"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 12 complete"></button><span class="dnum">Day 12</span> Implicit/Inverse FT · submanifolds · tangent space <span class="dps">covers PS11 · 📖 166–179</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–11</div>
     <ol class="tasks">
@@ -316,7 +362,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 13 -->
-  <details class="day"><summary><span class="dnum">Day 13</span> Lagrange multipliers · constrained extrema <span class="dps">covers PS12 PS13 PS14 P1 · 📖 173–183</span></summary>
+  <details class="day" data-day="13"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 13 complete"></button><span class="dnum">Day 13</span> Lagrange multipliers · constrained extrema <span class="dps">covers PS12 PS13 PS14 P1 · 📖 173–183</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–12</div>
     <ol class="tasks">
@@ -338,7 +384,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   </div></details>
 
   <!-- DAY 14 -->
-  <details class="day"><summary><span class="dnum">Day 14</span> Operator norms · (von) Neumann series <span class="dps">covers PS9 PS14 P3 · 📖 101–111</span></summary>
+  <details class="day" data-day="14"><summary><button type="button" class="day-check" role="checkbox" aria-checked="false" aria-label="Mark day 14 complete"></button><span class="dnum">Day 14</span> Operator norms · (von) Neumann series <span class="dps">covers PS9 PS14 P3 · 📖 101–111</span></summary>
   <div class="daybody">
     <div class="grp review"><div class="grp-lbl">🔁 Review · Days 1–13</div>
     <ol class="tasks">
@@ -359,11 +405,114 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
     </ol></div>
   </div></details>
 
-  <div class="callout"><strong>Days 7, 15–17 have no sheet</strong> — they are the checkpoint and full mocks in the plan. Use the <a href="../linear-algebra/mock_exams.html" style="color:var(--accent)">mock format</a> and the study guide's per-block practice for those.</div>
+  <div class="callout"><strong>Days 7, 15–17 have no sheet</strong> — they are checkpoint and mock days in the optional accelerated schedule. Use the study guide's <a href="study-guide/#mock" style="color:var(--accent)">checkpoint mock</a> and per-block practice for those.</div>
 
   <footer>
     Fresh problems with hidden solution sketches — distinct from the study guide's practice blocks. Source on <a href="https://github.com/kulchankas/mfds_univie_first_year">GitHub</a>.
   </footer>
 </div>
+<script>
+(function(){
+  var KEY = 'analysis-daily-v1';
+  var DAYS = ['1','2','3','4','5','6','8','9','10','11','12','13','14'];
+  var state = { v:1, days:{} };
+  DAYS.forEach(function(d){ state.days[d] = false; });
+
+  function load(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var p = JSON.parse(raw);
+      if (p && p.v === 1 && p.days){
+        DAYS.forEach(function(d){
+          if (typeof p.days[d] === 'boolean') state.days[d] = p.days[d];
+        });
+      }
+    } catch(e){}
+  }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+  function renderDay(d){
+    var el = document.querySelector('.day[data-day="'+d+'"]');
+    var btn = el && el.querySelector('.day-check');
+    var on = !!state.days[d];
+    if (btn){
+      btn.setAttribute('aria-checked', on ? 'true' : 'false');
+      btn.textContent = on ? '✓' : '';
+    }
+    if (el) el.classList.toggle('is-done', on);
+  }
+  function countDone(){
+    return DAYS.filter(function(d){ return state.days[d]; }).length;
+  }
+  function renderStats(){
+    var el = document.getElementById('stat-days');
+    if (el) el.textContent = countDone() + ' / ' + DAYS.length;
+  }
+  function renderAll(){
+    DAYS.forEach(renderDay);
+    renderStats();
+  }
+
+  load();
+  document.querySelectorAll('.day-check').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var day = btn.closest('.day').dataset.day;
+      state.days[day] = !state.days[day];
+      save(); renderDay(day); renderStats();
+    });
+  });
+  renderAll();
+
+  var syncPanel = document.getElementById('sync-panel');
+  var syncMsg = document.getElementById('sync-msg');
+  function showSync(msg, ok){
+    syncMsg.textContent = msg;
+    syncMsg.className = 'sync-msg ' + (ok ? 'ok' : 'err');
+  }
+  document.getElementById('btn-export').addEventListener('click', function(){
+    var json = JSON.stringify(state, null, 2);
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(json).then(function(){
+        showSync('Copied to clipboard.', true);
+        syncPanel.hidden = false;
+        document.getElementById('import-data').value = json;
+      }).catch(function(){
+        syncPanel.hidden = false;
+        document.getElementById('import-data').value = json;
+        showSync('JSON shown below.', true);
+      });
+    } else {
+      syncPanel.hidden = false;
+      document.getElementById('import-data').value = json;
+      showSync('JSON shown below.', true);
+    }
+  });
+  document.getElementById('btn-import-toggle').addEventListener('click', function(){
+    syncPanel.hidden = !syncPanel.hidden;
+    if (!syncPanel.hidden) document.getElementById('import-data').focus();
+  });
+  document.getElementById('btn-import-cancel').addEventListener('click', function(){
+    syncPanel.hidden = true; syncMsg.textContent = '';
+  });
+  document.getElementById('btn-import-apply').addEventListener('click', function(){
+    try {
+      var p = JSON.parse(document.getElementById('import-data').value.trim());
+      if (!p || p.v !== 1 || !p.days) throw new Error('bad');
+      DAYS.forEach(function(d){
+        if (typeof p.days[d] === 'boolean') state.days[d] = p.days[d];
+      });
+      save(); renderAll();
+      showSync('Progress imported.', true);
+    } catch(e){ showSync('Could not import — check JSON.', false); }
+  });
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    if (!confirm('Reset all daily practice progress?')) return;
+    DAYS.forEach(function(d){ state.days[d] = false; });
+    save(); renderAll(); syncMsg.textContent = '';
+  });
+})();
+</script>
 </body>
 </html>

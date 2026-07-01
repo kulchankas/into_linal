@@ -121,7 +121,7 @@ figure.fig figcaption b{color:var(--accent2)}
    mobile nav, back-to-top, copy-code, print)
    ============================================================ */
 /* reading-progress bar */
-#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:80;
+#read-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:80;
   background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .08s linear}
 /* shared small UI button */
 .btn-ui{font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;cursor:pointer;
@@ -163,6 +163,18 @@ section{scroll-margin-top:24px}
 
 /* ---- progress dashboard ---- */
 .dashboard{border:1px solid var(--line);border-radius:12px;padding:clamp(1rem,3vw,1.35rem);margin:0 0 28px;background:#fbfaf4}
+nav .dashboard{margin:0 0 16px;padding:.75rem .85rem;flex-shrink:0;border-top:none;display:block}
+nav .dash-head{margin-bottom:.65rem;gap:.5rem}
+nav .dash-title{font-size:.95rem}
+nav .dash-sub{font-size:.72rem;line-height:1.35}
+nav .dash-actions{gap:.35rem}
+nav .btn-sync{font-size:11px;padding:5px 9px}
+nav .dash-stats{gap:.75rem;margin-bottom:.55rem}
+nav .ring-wrap{width:52px;height:52px}
+nav .ring-label{font-size:.7rem}
+nav .stat-line{font-size:.78rem;padding:.18rem 0}
+nav .sync-panel{margin-top:.55rem;padding-top:.55rem}
+nav .sync-panel textarea{min-height:64px;font-size:.7rem}
 .dash-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:.75rem 1rem;margin-bottom:1rem}
 .dash-title{font-family:"Space Grotesk",sans-serif;font-size:1.15rem;font-weight:700;color:var(--accent2);letter-spacing:-.02em;margin:0}
 .dash-sub{font-size:.86rem;color:var(--muted);margin-top:.15rem}
@@ -291,7 +303,7 @@ nav a.nav-done::after{content:' ✓';font-size:.85em}
 
 /* ---------- print ---------- */
 @media print{
-  nav,#progress,#toTop,.topbar,#overlay,.copy-btn{display:none!important}
+  nav,#read-progress,#toTop,.topbar,#overlay,.copy-btn{display:none!important}
   .wrap{grid-template-columns:1fr}
   main{padding:0}
   body{font-size:11pt}
@@ -314,7 +326,38 @@ nav a.nav-done::after{content:' ✓';font-size:.85em}
     <button class="btn-ui js-theme" aria-label="Toggle dark mode"><span class="ti">◐</span><span class="tl">Dark</span></button>
     <button class="btn-ui" onclick="window.print()" aria-label="Print or save as PDF">⎙ Print</button>
   </div>
-  <a href="#progress">Your progress</a>
+  <section id="dashboard" class="dashboard" aria-labelledby="dash-title">
+    <div class="dash-head">
+      <div>
+        <h2 class="dash-title" id="dash-title">Your progress</h2>
+        <p class="dash-sub">Saved locally · export to move devices</p>
+      </div>
+      <div class="dash-actions">
+        <button type="button" class="btn-sync primary" id="btn-export">Export</button>
+        <button type="button" class="btn-sync" id="btn-import-toggle" aria-expanded="false" aria-controls="sync-panel">Import</button>
+        <button type="button" class="btn-sync danger" id="btn-reset">Reset</button>
+      </div>
+    </div>
+    <div class="dash-stats">
+      <div class="ring-wrap" aria-hidden="true">
+        <svg viewBox="0 0 72 72"><circle class="ring-bg" cx="36" cy="36" r="30"/><circle class="ring-fg" id="ring-fg" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg>
+        <div class="ring-label" id="ring-label">0/10</div>
+      </div>
+      <div class="stat-lines">
+        <div class="stat-line"><span>Blocks complete</span><strong id="stat-blocks">0 / 10</strong></div>
+        <div class="stat-line"><span>Next up</span><strong id="stat-next">Block 1</strong></div>
+      </div>
+    </div>
+    <div class="sync-panel" id="sync-panel" hidden>
+      <label for="import-data">Paste exported JSON</label>
+      <textarea id="import-data" rows="4" spellcheck="false" placeholder='{"v":1,"blocks":{"1":true,...}}'></textarea>
+      <div class="sync-row">
+        <button type="button" class="btn-sync primary" id="btn-import-apply">Apply import</button>
+        <button type="button" class="btn-sync" id="btn-import-cancel">Cancel</button>
+      </div>
+      <p class="sync-msg" id="sync-msg" role="status" aria-live="polite"></p>
+    </div>
+  </section>
   <a href="#how">How to use this</a>
   <a href="#self-paced">Self-paced path</a>
   <a href="#plan">Accelerated schedule</a>
@@ -347,39 +390,6 @@ nav a.nav-done::after{content:' ✓';font-size:.85em}
   <h1>Analysis in Data&nbsp;Science</h1>
   <p class="lede">Learn the material properly, at your own pace — not cram for an exam. Each block ties concepts to problem-set task types, solution recipes, and fresh practice problems. Mark blocks complete as you go; progress saves in your browser.</p>
 </header>
-
-<section id="progress" class="dashboard" aria-labelledby="dash-title">
-  <div class="dash-head">
-    <div>
-      <h2 class="dash-title" id="dash-title">Your progress</h2>
-      <p class="dash-sub">Saved locally · export to move devices</p>
-    </div>
-    <div class="dash-actions">
-      <button type="button" class="btn-sync primary" id="btn-export">Export</button>
-      <button type="button" class="btn-sync" id="btn-import-toggle" aria-expanded="false" aria-controls="sync-panel">Import</button>
-      <button type="button" class="btn-sync danger" id="btn-reset">Reset</button>
-    </div>
-  </div>
-  <div class="dash-stats">
-    <div class="ring-wrap" aria-hidden="true">
-      <svg viewBox="0 0 72 72"><circle class="ring-bg" cx="36" cy="36" r="30"/><circle class="ring-fg" id="ring-fg" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg>
-      <div class="ring-label" id="ring-label">0/10</div>
-    </div>
-    <div class="stat-lines">
-      <div class="stat-line"><span>Blocks complete</span><strong id="stat-blocks">0 / 10</strong></div>
-      <div class="stat-line"><span>Next up</span><strong id="stat-next">Block 1</strong></div>
-    </div>
-  </div>
-  <div class="sync-panel" id="sync-panel" hidden>
-    <label for="import-data">Paste exported JSON</label>
-    <textarea id="import-data" rows="4" spellcheck="false" placeholder='{"v":1,"blocks":{"1":true,...}}'></textarea>
-    <div class="sync-row">
-      <button type="button" class="btn-sync primary" id="btn-import-apply">Apply import</button>
-      <button type="button" class="btn-sync" id="btn-import-cancel">Cancel</button>
-    </div>
-    <p class="sync-msg" id="sync-msg" role="status" aria-live="polite"></p>
-  </div>
-</section>
 
 <section id="how">
   <h2><span class="tag">Read first</span>How to use this guide</h2>
@@ -1290,7 +1300,7 @@ myGeometricSum(x, n) = myNeumann(fill(1 - x, 1, 1); n=n)[1]</pre>
 </main>
 </div>
 
-<div id="progress"></div>
+<div id="read-progress"></div>
 <div id="overlay"></div>
 <button id="toTop" aria-label="Back to top">↑</button>
 <div class="topbar">
@@ -1324,7 +1334,7 @@ myGeometricSum(x, n) = myNeumann(fill(1 - x, 1, 1); n=n)[1]</pre>
   syncLabels();
 
   /* ---- reading progress + back-to-top ---- */
-  var prog = document.getElementById('progress'), toTop = document.getElementById('toTop');
+  var prog = document.getElementById('read-progress'), toTop = document.getElementById('toTop');
   function onScroll(){
     var st = window.scrollY || root.scrollTop;
     var sh = root.scrollHeight - root.clientHeight;

@@ -4,69 +4,239 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1a1612">
-<meta name="description" content="Linear Algebra for Data Science (Mula & Wu) — textbook, a chapter-by-chapter self-study plan with external resources, the course exercises, and the weekly homework schedule.">
+<meta name="description" content="Linear Algebra for Data Science (Mula & Wu) — self-paced study plan with progress tracking, session recipes, chapter recall checks, and course exercises.">
 <title>Linear Algebra for Data Science — Self-study</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
   :root{
     --bg:#1a1612;--bg-elevated:#221d18;--bg-card:#1f1a15;--border:#3a342c;--border-soft:#2a251f;
     --text:#f5efe4;--text-muted:#b8aa97;--text-dim:#8a7e6e;--accent:#e0b888;--accent-hover:#ecc89c;
-    --watch:#d99a7e;--read:#8fb8de;--prac:#8bc6a0;--ds:#c4a6df;--glow:rgba(224,184,136,.14);
+    --watch:#d99a7e;--read:#8fb8de;--prac:#8bc6a0;--ds:#c4a6df;--recall:#e8a87c;--glow:rgba(224,184,136,.14);
+    --recall-bg:rgba(232,168,124,.09);
+    --radius:12px;--radius-sm:8px;--ring:rgba(224,184,136,.42);--touch:44px;
+    --watch-bg:rgba(217,154,126,.09);--read-bg:rgba(143,184,222,.09);--prac-bg:rgba(139,198,160,.09);--ds-bg:rgba(196,166,223,.09);
+    --success:#8bc6a0;--danger:#d99a7e;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
   body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;background-image:radial-gradient(900px 500px at 50% -10%,var(--glow),transparent 70%);background-repeat:no-repeat}
-  .wrap{max-width:820px;margin:0 auto;padding:clamp(2rem,6vw,3rem) clamp(1.1rem,5vw,1.75rem) 5rem;padding-left:max(clamp(1.1rem,5vw,1.75rem),env(safe-area-inset-left));padding-right:max(clamp(1.1rem,5vw,1.75rem),env(safe-area-inset-right))}
-  .back-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--text-dim);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.8rem;margin-bottom:1.5rem;transition:color .15s}
+  :focus-visible{outline:none;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--ring)}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    html{scroll-behavior:auto}
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:clamp(2rem,6vw,3rem) clamp(1.1rem,5vw,1.75rem) 6rem;padding-left:max(clamp(1.1rem,5vw,1.75rem),env(safe-area-inset-left));padding-right:max(clamp(1.1rem,5vw,1.75rem),env(safe-area-inset-right))}
+  .back-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--text-dim);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.8rem;margin-bottom:1.5rem;min-height:var(--touch);padding:.35rem 0;transition:color .15s}
   .back-link:hover{color:var(--accent)}
   .eyebrow{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--accent);font-size:clamp(.74rem,2.6vw,.82rem);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
   h1{font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(2rem,7vw,2.9rem);line-height:1.06;letter-spacing:-.03em;margin-bottom:.7rem}
   .lede{color:var(--text-muted);font-size:clamp(1rem,3.4vw,1.1rem);max-width:42em}
   h2{font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(1.35rem,4.5vw,1.7rem);letter-spacing:-.02em;margin:clamp(2.5rem,6vw,3.25rem) 0 1rem}
+  h2 .sec-tag{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.35rem}
   .feature{display:block;background:linear-gradient(180deg,var(--bg-card),var(--bg-elevated));border:1px solid var(--border);border-radius:14px;padding:clamp(1.4rem,4vw,1.85rem);text-decoration:none;color:inherit;margin:1.5rem 0 .5rem;transition:transform .2s,border-color .2s,box-shadow .2s}
-  .feature:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  .feature:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.35)}
   .feature-tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.6rem}
   .feature-title{font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(1.3rem,4.5vw,1.65rem);letter-spacing:-.02em;margin-bottom:.5rem}
   .feature-desc{color:var(--text-muted);font-size:.96rem;margin-bottom:1rem}
   .feature-cta{font-weight:600;font-size:.9rem;color:var(--accent)}
-  .box{background:var(--bg-card);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:1rem 1.25rem;margin:1.2rem 0;color:var(--text-muted);font-size:.95rem}
+  .box{background:var(--bg-card);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.25rem;margin:1.2rem 0;color:var(--text-muted);font-size:.95rem}
   .box .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:.5rem}
   .box a{color:var(--accent)}
   .box ul{margin:.3rem 0 0;padding-left:1.2rem}
   .box li{margin:.3rem 0}
-  details.ch{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-top:1rem;overflow:hidden}
-  details.ch>summary{cursor:pointer;list-style:none;padding:1rem 1.25rem;font-family:'Sora',sans-serif;font-weight:600;font-size:1.02rem;display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
+
+  /* ---- progress dashboard ---- */
+  #read-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:90;background:linear-gradient(90deg,var(--accent),var(--read));transition:width .08s linear}
+  .dashboard{background:linear-gradient(180deg,var(--bg-card),var(--bg-elevated));border:1px solid var(--border);border-radius:var(--radius);padding:clamp(1.1rem,3.5vw,1.5rem);margin:1.75rem 0 1rem}
+  .dash-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:.75rem 1rem;margin-bottom:1.1rem}
+  .dash-title{font-family:'Sora',sans-serif;font-size:1.15rem;font-weight:600;letter-spacing:-.02em}
+  .dash-sub{font-size:.86rem;color:var(--text-dim);margin-top:.15rem}
+  .dash-actions{display:flex;flex-wrap:wrap;gap:.45rem}
+  .btn{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text-muted);min-height:var(--touch);min-width:var(--touch);padding:0 .85rem;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;gap:.35rem;transition:background .15s,border-color .15s,color .15s}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.primary{background:rgba(224,184,136,.12);border-color:rgba(224,184,136,.35);color:var(--accent)}
+  .btn.danger:hover{border-color:var(--danger);color:var(--danger)}
+  .dash-stats{display:flex;align-items:center;gap:1.25rem;margin-bottom:1.15rem}
+  .ring-wrap{position:relative;width:72px;height:72px;flex-shrink:0}
+  .ring-wrap svg{transform:rotate(-90deg);width:100%;height:100%}
+  .ring-bg{fill:none;stroke:var(--border-soft);stroke-width:6}
+  .ring-fg{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .35s ease}
+  .ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:600;color:var(--accent)}
+  .stat-lines{flex:1;min-width:0}
+  .stat-line{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.86rem;color:var(--text-muted);padding:.28rem 0;border-bottom:1px solid var(--border-soft)}
+  .stat-line:last-child{border-bottom:none}
+  .stat-line strong{color:var(--text);font-weight:600}
+  .lane-pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:.28rem .55rem;border-radius:999px;border:1px solid transparent}
+  .pill.watch{color:var(--watch);background:var(--watch-bg);border-color:rgba(217,154,126,.25)}
+  .pill.read{color:var(--read);background:var(--read-bg);border-color:rgba(143,184,222,.25)}
+  .pill.prac{color:var(--prac);background:var(--prac-bg);border-color:rgba(139,198,160,.25)}
+  .pill.ds{color:var(--ds);background:var(--ds-bg);border-color:rgba(196,166,223,.25)}
+  .pill.recall{color:var(--recall);background:var(--recall-bg);border-color:rgba(232,168,124,.25)}
+
+  /* session recipe & exercise chips */
+  .box.session{border-left-color:var(--read)}
+  .session-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;margin-top:.5rem}
+  .session-block{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .75rem}
+  .session-block .time{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--read);margin-bottom:.25rem}
+  .session-block p{font-size:.86rem;margin:0;color:var(--text-muted)}
+  .ex-list{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.45rem}
+  .ex-chip{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;padding:.35rem .65rem;min-height:36px;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;transition:border-color .15s,color .15s,background .15s}
+  .ex-chip:hover{border-color:var(--prac);color:var(--text-muted)}
+  .ex-chip.done{background:rgba(139,198,160,.12);border-color:var(--prac);color:var(--prac);text-decoration:line-through}
+  .ex-progress{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-dim);margin-top:.4rem}
+  .mini-lab{background:rgba(196,166,223,.08);border:1px solid rgba(196,166,223,.25);border-radius:var(--radius-sm);padding:.85rem 1rem;margin-top:.65rem}
+  .mini-lab .rl{color:var(--ds)!important}
+  .mini-lab ol{margin:.4rem 0 0 1.1rem;font-size:.9rem;color:var(--text-muted)}
+  .mini-lab li{margin:.35rem 0}
+  mjx-container{color:var(--text)!important}
+
+  /* sync panel */
+  .sync-panel{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border-soft)}
+  .sync-panel[hidden]{display:none}
+  .sync-panel label{display:block;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin-bottom:.4rem}
+  .sync-panel textarea{width:100%;min-height:88px;font-family:'JetBrains Mono',monospace;font-size:.75rem;background:#14110d;color:var(--text-muted);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .75rem;resize:vertical}
+  .sync-panel .sync-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.55rem}
+  .sync-msg{font-size:.82rem;margin-top:.5rem;min-height:1.2em}
+  .sync-msg.ok{color:var(--success)} .sync-msg.err{color:var(--danger)}
+
+  /* sticky chapter jump */
+  .ch-jump-wrap{position:sticky;top:0;z-index:50;margin:0 -0.25rem 1rem;padding:.55rem 0;background:linear-gradient(180deg,var(--bg) 70%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .ch-jump{display:flex;gap:.4rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:.15rem .25rem}
+  .ch-jump::-webkit-scrollbar{display:none}
+  .ch-jump a{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;text-decoration:none;color:var(--text-dim);border:1px solid var(--border);background:var(--bg-card);padding:.55rem .75rem;border-radius:999px;min-height:var(--touch);display:inline-flex;align-items:center;gap:.35rem;transition:border-color .15s,color .15s,background .15s}
+  .ch-jump a:hover,.ch-jump a.active{border-color:var(--accent);color:var(--accent)}
+  .ch-jump a.done{background:rgba(139,198,160,.12);border-color:rgba(139,198,160,.35);color:var(--prac)}
+  .ch-jump a .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5}
+
+  /* chapters */
+  details.ch{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);margin-top:1rem;overflow:hidden;scroll-margin-top:5.5rem;transition:border-color .2s}
+  details.ch.is-done{border-color:rgba(139,198,160,.35)}
+  details.ch>summary{cursor:pointer;list-style:none;padding:1rem 1.25rem;font-family:'Sora',sans-serif;font-weight:600;font-size:1.02rem;display:flex;gap:.55rem;align-items:center;flex-wrap:wrap;min-height:var(--touch);transition:background .15s}
   details.ch>summary::-webkit-details-marker{display:none}
-  details.ch>summary::before{content:'▸';color:var(--accent);font-size:.8em}
+  details.ch>summary::before{content:'▸';color:var(--accent);font-size:.8em;flex-shrink:0;transition:transform .15s}
   details.ch[open]>summary::before{content:'▾'}
-  details.ch[open]>summary{border-bottom:1px solid var(--border-soft)}
+  details.ch[open]>summary{border-bottom:1px solid var(--border-soft);background:rgba(255,255,255,.02)}
   summary .cnum{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.85rem}
-  summary .ctopics{font-weight:400;color:var(--text-dim);font-size:.82rem;flex-basis:100%}
+  summary .ctopics{font-weight:400;color:var(--text-dim);font-size:.82rem;flex-basis:100%;padding-left:1.35rem}
+  summary .ch-meta{margin-left:auto;display:flex;align-items:center;gap:.45rem;flex-shrink:0}
+  .mini-bar{display:flex;gap:3px;align-items:center}
+  .mini-bar span{width:14px;height:4px;border-radius:2px;background:var(--border-soft);transition:background .15s}
+  .mini-bar span.on.watch{background:var(--watch)} .mini-bar span.on.read{background:var(--read)}
+  .mini-bar span.on.prac{background:var(--prac)} .mini-bar span.on.ds{background:var(--ds)}
   .chbody{padding:1rem 1.25rem 1.3rem}
-  .row{margin:.8rem 0}
-  .row .rl{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.25rem}
-  .row.watch .rl{color:var(--watch)} .row.read .rl{color:var(--read)} .row.prac .rl{color:var(--prac)} .row.ds .rl{color:var(--ds)}
+  .lane-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.85rem;padding-bottom:.75rem;border-bottom:1px solid var(--border-soft)}
+  .lane-head .hint{font-size:.82rem;color:var(--text-dim)}
+  .lane-toggles{display:flex;flex-wrap:wrap;gap:.35rem}
+  .lane-btn{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-dim);min-height:var(--touch);padding:0 .65rem;border-radius:999px;display:inline-flex;align-items:center;gap:.3rem;transition:background .15s,border-color .15s,color .15s}
+  .lane-btn[data-lane="watch"].on{color:var(--watch);background:var(--watch-bg);border-color:rgba(217,154,126,.4)}
+  .lane-btn[data-lane="read"].on{color:var(--read);background:var(--read-bg);border-color:rgba(143,184,222,.4)}
+  .lane-btn[data-lane="prac"].on{color:var(--prac);background:var(--prac-bg);border-color:rgba(139,198,160,.4)}
+  .lane-btn[data-lane="ds"].on{color:var(--ds);background:var(--ds-bg);border-color:rgba(196,166,223,.4)}
+  .row{margin:.65rem 0;padding:.75rem .85rem;border-radius:var(--radius-sm);border-left:3px solid transparent}
+  .row.watch{background:var(--watch-bg);border-left-color:var(--watch)}
+  .row.read{background:var(--read-bg);border-left-color:var(--read)}
+  .row.prac{background:var(--prac-bg);border-left-color:var(--prac)}
+  .row.ds{background:var(--ds-bg);border-left-color:var(--ds)}
+  .row.recall{background:var(--recall-bg);border-left-color:var(--recall)}
+  .row .rl{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
+  .row.watch .rl{color:var(--watch)} .row.read .rl{color:var(--read)} .row.prac .rl{color:var(--prac)} .row.ds .rl{color:var(--ds)} .row.recall .rl{color:var(--recall)}
   .row p,.row div{color:var(--text-muted);font-size:.94rem}
   .row a{color:var(--accent);text-decoration:none} .row a:hover{text-decoration:underline}
+  .check{width:var(--touch);height:var(--touch);flex-shrink:0;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:transparent;transition:border-color .15s,background .15s,color .15s}
+  .check:hover{border-color:var(--accent)}
+  .check[aria-checked="true"]{background:rgba(139,198,160,.15);border-color:var(--prac);color:var(--prac)}
+  .check[aria-checked="true"]::after{content:'✓';font-size:1rem;font-weight:700;line-height:1}
+  .found-item{display:flex;gap:.65rem;align-items:flex-start;padding:.65rem 0;border-bottom:1px solid var(--border-soft)}
+  .found-item:last-child{border-bottom:none}
+  .found-item .txt{flex:1;font-size:.94rem;color:var(--text-muted)}
   code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:#14110d;color:var(--accent);padding:.08rem .35rem;border-radius:4px}
-  .scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2rem 0}
+  .scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2rem 0;border-radius:var(--radius-sm);border:1px solid var(--border-soft)}
   table{border-collapse:collapse;width:100%;font-size:.86rem}
-  th,td{border:1px solid var(--border);padding:.45rem .6rem;text-align:left;vertical-align:top}
-  th{background:#2a2218;color:var(--accent);font-weight:600;white-space:nowrap}
-  .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.3rem;margin:1rem 0;font-size:.85rem;color:var(--text-dim)}
+  th,td{border:1px solid var(--border);padding:.55rem .65rem;text-align:left;vertical-align:top}
+  th{background:#2a2218;color:var(--accent);font-weight:600;white-space:nowrap;position:sticky;top:0;z-index:1}
+  tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+  .legend{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin:1rem 0;font-size:.85rem;color:var(--text-dim)}
   .legend b{font-weight:600}
+  #toTop{position:fixed;right:max(1rem,env(safe-area-inset-right));bottom:max(1rem,env(safe-area-inset-bottom));width:var(--touch);height:var(--touch);border-radius:50%;border:1px solid var(--border);background:var(--bg-elevated);color:var(--accent);font-size:1.15rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s,border-color .15s,background .15s;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  #toTop.show{opacity:1;pointer-events:auto;transform:none}
+  #toTop:hover{border-color:var(--accent);background:var(--bg-card)}
   footer{margin-top:3rem;padding-top:1.3rem;border-top:1px solid var(--border-soft);color:var(--text-dim);font-size:.82rem}
   footer a{color:var(--accent);text-decoration:none}
+  section[id]{scroll-margin-top:5.5rem}
+  @media (max-width:560px){
+    .dash-stats{flex-direction:column;align-items:flex-start}
+    summary .ch-meta{margin-left:0;width:100%;justify-content:space-between;padding-left:1.35rem}
+    .ch-jump-wrap{top:0;margin-left:max(-.5rem,calc(-1 * env(safe-area-inset-left)));margin-right:max(-.5rem,calc(-1 * env(safe-area-inset-right)));padding-left:max(.25rem,env(safe-area-inset-left));padding-right:max(.25rem,env(safe-area-inset-right))}
+    .btn{font-size:.68rem;padding:0 .65rem}
+  }
+  @media print{
+    #read-progress,#toTop,.dashboard,.ch-jump-wrap,.check,.ex-chip,.lane-btn,.lane-head{display:none!important}
+    details.ch{border:1px solid #ccc;page-break-inside:avoid}
+    details.ch[open] summary,details.ch .chbody{display:block!important}
+  }
 </style>
 </head>
 <body>
+<div id="read-progress" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
 <div class="wrap">
   <a class="back-link" href="../index.html">← All subjects</a>
-  <div class="eyebrow">Universität Wien · Mula &amp; Wu · 2026S</div>
+  <div class="eyebrow">Universität Wien · Mula &amp; Wu · self-paced</div>
   <h1>Linear Algebra for Data Science</h1>
-  <p class="lede">A self-study track built around the course textbook: watch for intuition, read for rigour, and practise with the actual course exercises — organised chapter by chapter, with the data-science payoff of each topic.</p>
+  <p class="lede">Learn the material properly, at your own pace — not cram for an exam. This track is built around the Mula &amp; Wu textbook: watch for geometric intuition, read for rigour, practise with real exercises, and check you can explain each chapter before moving on. Progress saves in your browser.</p>
+
+  <section class="dashboard" aria-labelledby="dash-title">
+    <div class="dash-head">
+      <div>
+        <h2 class="dash-title" id="dash-title">Your progress</h2>
+        <p class="dash-sub">Saved locally in this browser · export to move devices</p>
+      </div>
+      <div class="dash-actions">
+        <button type="button" class="btn primary" id="btn-export" aria-label="Export progress as JSON">Export</button>
+        <button type="button" class="btn" id="btn-import-toggle" aria-expanded="false" aria-controls="sync-panel">Import</button>
+        <button type="button" class="btn danger" id="btn-reset" aria-label="Reset all progress">Reset</button>
+      </div>
+    </div>
+    <div class="dash-stats">
+      <div class="ring-wrap" aria-hidden="true">
+        <svg viewBox="0 0 72 72"><circle class="ring-bg" cx="36" cy="36" r="30"/><circle class="ring-fg" id="ring-fg" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg>
+        <div class="ring-label" id="ring-label">0/6</div>
+      </div>
+      <div class="stat-lines">
+        <div class="stat-line"><span>Chapters complete</span><strong id="stat-chapters">0 / 6</strong></div>
+        <div class="stat-line"><span>Lane items checked</span><strong id="stat-lanes">0</strong></div>
+        <div class="stat-line"><span>Exercises done</span><strong id="stat-exercises">0 / 0</strong></div>
+        <div class="stat-line"><span>Foundations</span><strong id="stat-found">0 / 4</strong></div>
+        <div class="lane-pills" aria-label="Study lanes">
+          <span class="pill watch">Watch</span><span class="pill read">Read</span><span class="pill prac">Practise</span><span class="pill ds">Data science</span>
+        </div>
+      </div>
+    </div>
+    <div class="sync-panel" id="sync-panel" hidden>
+      <label for="import-data">Paste exported JSON</label>
+      <textarea id="import-data" rows="4" spellcheck="false" placeholder='{"v":1,"chapters":{...},"exercises":{...}}'></textarea>
+      <div class="sync-row">
+        <button type="button" class="btn primary" id="btn-import-apply">Apply import</button>
+        <button type="button" class="btn" id="btn-import-cancel">Cancel</button>
+      </div>
+      <p class="sync-msg" id="sync-msg" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <div class="box session"><span class="lbl">One study session (~90 min)</span>
+  <p style="margin-bottom:.6rem">Use this block whenever you sit down to learn — adjust times, but keep the order: intuition → reading → doing → explaining.</p>
+  <div class="session-grid">
+    <div class="session-block"><div class="time">0–20 min · 📺 Watch</div><p>One video chunk from the chapter's list. Pause and predict what comes next.</p></div>
+    <div class="session-block"><div class="time">20–45 min · 📖 Read</div><p>Textbook section + one parallel source (MML for DS angle, Axler for a proof).</p></div>
+    <div class="session-block"><div class="time">45–75 min · 🎯 Practise</div><p>2–4 exercises from the checklist. Write full reasoning; peek at solutions only after a real attempt.</p></div>
+    <div class="session-block"><div class="time">75–90 min · 🗣 Recall</div><p>Close the book. Answer the chapter's "Before moving on" prompts out loud or in a note.</p></div>
+  </div></div>
 
   <a class="feature" href="notes/Linear_Algebra_Mula_Wu.pdf">
     <div class="feature-tag">📘 Course textbook · v. 29 Jun 2026</div>
@@ -75,74 +245,243 @@
     <span class="feature-cta">Open the textbook (PDF) →</span>
   </a>
 
-  <h2>Start here — the foundations</h2>
-  <p class="lede" style="font-size:1rem">Do this <em>once</em>, up front: it makes every chapter below far easier.</p>
-  <div class="box"><span class="lbl">Watch &amp; keep open</span>
-  <ul>
-    <li>📺 <a href="https://www.3blue1brown.com/topics/linear-algebra">3Blue1Brown — Essence of Linear Algebra</a> (≈3 h total). The geometric intuition for vectors, span, transformations, determinant, eigenvectors. Watch the whole series first.</li>
-    <li>📖 <a href="https://mml-book.github.io/">Mathematics for Machine Learning</a> (Deisenroth, Faisal &amp; Ong — free PDF). <strong>Part I, chapters 2–4</strong> are <em>literally</em> linear algebra for data science; keep it as your DS-facing companion.</li>
-    <li>🎓 <a href="https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/">MIT 18.06 — Linear Algebra (Gilbert Strang)</a> — the classic video course; lectures are mapped per chapter below.</li>
-    <li>📐 <a href="https://linear.axler.net/">Axler — Linear Algebra Done Right</a> (free online). The abstract, proof-first take — best match for this course's dual-space / inner-product flavour.</li>
-  </ul></div>
+  <nav class="ch-jump-wrap" aria-label="Jump to section">
+    <div class="ch-jump" id="ch-jump">
+      <a href="#foundations"><span class="dot"></span>Foundations</a>
+      <a href="#self-paced"><span class="dot"></span>Path</a>
+      <a href="#ch1" data-ch="1"><span class="dot"></span>Ch 1</a>
+      <a href="#ch2" data-ch="2"><span class="dot"></span>Ch 2</a>
+      <a href="#ch3" data-ch="3"><span class="dot"></span>Ch 3</a>
+      <a href="#ch4" data-ch="4"><span class="dot"></span>Ch 4</a>
+      <a href="#ch5" data-ch="5"><span class="dot"></span>Ch 5</a>
+      <a href="#ch6" data-ch="6"><span class="dot"></span>Ch 6</a>
+      <a href="#schedule"><span class="dot"></span>Schedule</a>
+    </div>
+  </nav>
 
-  <h2>Self-study plan, chapter by chapter</h2>
+  <section id="self-paced">
+  <h2><span class="sec-tag">At your pace</span>Self-paced path (16 phases)</h2>
+  <p class="lede" style="font-size:1rem">Move at your own speed — one phase per study week is a comfortable default (~6–8 h/week). The official course calendar is below if you want it; you don't need to follow those dates.</p>
+  <div class="scroll-x">
+  <table>
+    <tr><th>Phase</th><th>Focus</th><th>Goal for the week</th><th>Exercises (tick in chapter)</th></tr>
+    <tr><td>0</td><td>Foundations</td><td>3B1B + MML skim; bookmark Strang &amp; Axler</td><td>—</td></tr>
+    <tr><td>1</td><td>Ch 1 intro</td><td>Vector spaces, subspaces, linear independence</td><td>1.3, 1.4, 1.5, 1.6, 1.28</td></tr>
+    <tr><td>2</td><td>Ch 1 maps</td><td>Linear maps, matrix representation</td><td>1.22, 1.31, 1.40, 1.42, 1.43</td></tr>
+    <tr><td>3</td><td>Ch 1 depth</td><td>Dual space, projections, norms</td><td>1.24, 1.29, 1.33, 1.37</td></tr>
+    <tr><td>4</td><td>Ch 1→2 bridge</td><td>Finish Ch 1; start inner products</td><td>1.23, 1.38, 1.44, 2.4</td></tr>
+    <tr><td>5</td><td>Ch 1–2 review</td><td>Consolidate; recall checks for both chapters</td><td>1.45, 2.2, 2.3</td></tr>
+    <tr><td>6</td><td>Ch 2 core</td><td>Orthogonality, projection, least squares</td><td>2.1, 2.4, 2.7, 2.8</td></tr>
+    <tr><td>7</td><td>Ch 2 depth</td><td>Gram–Schmidt, adjoints, Riesz</td><td>2.11, 2.12, 2.13, 2.15</td></tr>
+    <tr><td>8</td><td>Ch 2→3</td><td>Programming + bilinear forms intro</td><td>2.17, 2.18, 3.1, 3.3</td></tr>
+    <tr><td>9</td><td>Ch 3</td><td>Sesquilinear forms, tensor product</td><td>3.4, 3.5, 3.6, 3.8</td></tr>
+    <tr><td>10</td><td>Ch 3–4</td><td>Forms + determinants</td><td>3.9, 3.10, 4.1, 4.5</td></tr>
+    <tr><td>11</td><td>Ch 3–5 bridge</td><td>Determinants + eigenvalues start</td><td>3.17, 4.7, 5.1, 5.2</td></tr>
+    <tr><td>12</td><td>Ch 4–5</td><td>Determinant properties; diagonalization</td><td>4.9, 4.13, 5.3, 5.5</td></tr>
+    <tr><td>13</td><td>Ch 5 core</td><td>Characteristic polynomial, Cayley–Hamilton</td><td>5.6, 5.8, 5.15, 5.19</td></tr>
+    <tr><td>14</td><td>Ch 5 depth</td><td>Matrix functions, complex triangularization</td><td>5.10, 5.14, 5.16, 5.17</td></tr>
+    <tr><td>15</td><td>Ch 5–6 capstone</td><td>Eigen mastery + spectral theorem + SVD mini-lab</td><td>5.22, 5.25, 5.29, 5.31 + Ch 6 lab</td></tr>
+  </table>
+  </div>
+  </section>
+
+  <section id="foundations">
+  <h2><span class="sec-tag">Once · up front</span>Start here — the foundations</h2>
+  <p class="lede" style="font-size:1rem">Do this <em>once</em>, up front (Phase 0): it makes every chapter below far easier.</p>
+  <div class="box"><span class="lbl">Watch &amp; keep open</span>
+  <div class="found-item" data-found="3b1b">
+    <button type="button" class="check" role="checkbox" aria-checked="false" aria-label="Mark 3Blue1Brown series complete"></button>
+    <div class="txt">📺 <a href="https://www.3blue1brown.com/topics/linear-algebra">3Blue1Brown — Essence of Linear Algebra</a> (≈3 h total). The geometric intuition for vectors, span, transformations, determinant, eigenvectors. Watch the whole series first.</div>
+  </div>
+  <div class="found-item" data-found="mml">
+    <button type="button" class="check" role="checkbox" aria-checked="false" aria-label="Mark MML companion complete"></button>
+    <div class="txt">📖 <a href="https://mml-book.github.io/">Mathematics for Machine Learning</a> (Deisenroth, Faisal &amp; Ong — free PDF). <strong>Part I, chapters 2–4</strong> are <em>literally</em> linear algebra for data science; keep it as your DS-facing companion.</div>
+  </div>
+  <div class="found-item" data-found="strang">
+    <button type="button" class="check" role="checkbox" aria-checked="false" aria-label="Mark MIT Strang course complete"></button>
+    <div class="txt">🎓 <a href="https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/">MIT 18.06 — Linear Algebra (Gilbert Strang)</a> — the classic video course; lectures are mapped per chapter below.</div>
+  </div>
+  <div class="found-item" data-found="axler">
+    <button type="button" class="check" role="checkbox" aria-checked="false" aria-label="Mark Axler text complete"></button>
+    <div class="txt">📐 <a href="https://linear.axler.net/">Axler — Linear Algebra Done Right</a> (free online). The abstract, proof-first take — best match for this course's dual-space / inner-product flavour.</div>
+  </div>
+  </div>
+  </section>
+
+  <section id="plan">
+  <h2><span class="sec-tag">Chapter by chapter</span>Self-study plan</h2>
   <div class="legend">
-    <span><b style="color:var(--watch)">📺 Watch</b></span>
-    <span><b style="color:var(--read)">📖 Read</b></span>
-    <span><b style="color:var(--prac)">🎯 Course exercises</b></span>
-    <span><b style="color:var(--ds)">🤖 In data science</b></span>
+    <span><b style="color:var(--watch)">📺 Watch</b> — intuition</span>
+    <span><b style="color:var(--read)">📖 Read</b> — rigour</span>
+    <span><b style="color:var(--prac)">🎯 Practise</b> — course exercises</span>
+    <span><b style="color:var(--ds)">🤖 DS</b> — data-science payoff</span>
+    <span><b style="color:var(--recall)">🗣 Recall</b> — before moving on</span>
   </div>
 
-  <details class="ch"><summary><span class="cnum">Ch 1</span> Vector Spaces<span class="ctopics">spaces &amp; subspaces · basis &amp; direct sum · linear maps · dual space · matrix representation · projections &amp; symmetries · metric &amp; normed spaces · operator norm</span></summary>
+  <details class="ch" id="ch1" data-ch="1"><summary>
+    <button type="button" class="check ch-done" role="checkbox" aria-checked="false" aria-label="Mark Chapter 1 complete"></button>
+    <span class="cnum">Ch 1</span> Vector Spaces
+    <span class="ch-meta"><span class="mini-bar" aria-hidden="true"><span data-l="watch"></span><span data-l="read"></span><span data-l="prac"></span><span data-l="ds"></span></span></span>
+    <span class="ctopics">spaces &amp; subspaces · basis &amp; direct sum · linear maps · dual space · matrix representation · projections &amp; symmetries · metric &amp; normed spaces · operator norm</span>
+  </summary>
   <div class="chbody">
+    <div class="lane-head"><span class="hint">Tap lanes as you finish each pass</span>
+      <div class="lane-toggles">
+        <button type="button" class="lane-btn" data-lane="watch" aria-pressed="false">📺 Watch</button>
+        <button type="button" class="lane-btn" data-lane="read" aria-pressed="false">📖 Read</button>
+        <button type="button" class="lane-btn" data-lane="prac" aria-pressed="false">🎯 Practise</button>
+        <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
+      </div>
+    </div>
     <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 1–4, 7–8, 13 (vectors → linear combinations/span/basis → linear transformations → matrix multiplication → inverse, column space, null space → change of basis).</div></div>
     <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 2 (Linear Algebra); Axler ch. 1–3 (vector spaces, finite-dimensional spaces, linear maps &amp; the dual); Strang 18.06 lec. 1–3, 5–10 (spaces, subspaces, the four fundamental subspaces). Course textbook ch. 1.</div></div>
-    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>1.3, 1.4, 1.5, 1.6, 1.22, 1.23, 1.24, 1.28, 1.29, 1.31, 1.33, 1.37, 1.38, 1.40, 1.42, 1.43, 1.44, 1.45.</div></div>
+    <div class="row prac"><span class="rl">🎯 Course exercises</span>
+      <div class="ex-list" data-exercises="1.3,1.4,1.5,1.6,1.22,1.23,1.24,1.28,1.29,1.31,1.33,1.37,1.38,1.40,1.42,1.43,1.44,1.45"></div>
+      <div class="ex-progress" data-ex-progress="1"></div>
+    </div>
     <div class="row ds"><span class="rl">🤖 In data science</span><div>Feature spaces and embeddings are vector spaces; linear models are linear maps; norms drive regularization ($L^1$/$L^2$); the operator norm bounds a layer's stability/Lipschitz constant.</div></div>
+    <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain, without notes: (1) why $\mathbb{R}^2$ is a vector space but the first quadrant is not? (2) What is the dual of a vector space and why does it matter for inner products later? (3) How does a linear map become a matrix once you pick bases?</div></div>
   </div></details>
 
-  <details class="ch"><summary><span class="cnum">Ch 2</span> Inner-Product Spaces<span class="ctopics">inner products · orthonormal bases &amp; Gram–Schmidt · orthogonal projection · least-squares / supervised learning · Riesz theorem · adjoint operators</span></summary>
+  <details class="ch" id="ch2" data-ch="2"><summary>
+    <button type="button" class="check ch-done" role="checkbox" aria-checked="false" aria-label="Mark Chapter 2 complete"></button>
+    <span class="cnum">Ch 2</span> Inner-Product Spaces
+    <span class="ch-meta"><span class="mini-bar" aria-hidden="true"><span data-l="watch"></span><span data-l="read"></span><span data-l="prac"></span><span data-l="ds"></span></span></span>
+    <span class="ctopics">inner products · orthonormal bases &amp; Gram–Schmidt · orthogonal projection · least-squares / supervised learning · Riesz theorem · adjoint operators</span>
+  </summary>
   <div class="chbody">
+    <div class="lane-head"><span class="hint">Tap lanes as you finish each pass</span>
+      <div class="lane-toggles">
+        <button type="button" class="lane-btn" data-lane="watch" aria-pressed="false">📺 Watch</button>
+        <button type="button" class="lane-btn" data-lane="read" aria-pressed="false">📖 Read</button>
+        <button type="button" class="lane-btn" data-lane="prac" aria-pressed="false">🎯 Practise</button>
+        <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
+      </div>
+    </div>
     <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 9 (dot products &amp; duality) — and revisit ch. 13 (change of basis) for orthonormal coordinates.</div></div>
     <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 3 (Analytic Geometry — inner products, projections, orthogonality); Axler ch. 6 (inner-product spaces); Strang 18.06 lec. 14–17 (orthogonality, projections, least squares, Gram–Schmidt). Course textbook ch. 2.</div></div>
-    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>2.1, 2.2, 2.3, 2.4, 2.7, 2.8, 2.11, 2.12, 2.13, 2.15, 2.17, 2.18 (programming).</div></div>
+    <div class="row prac"><span class="rl">🎯 Course exercises</span>
+      <div class="ex-list" data-exercises="2.1,2.2,2.3,2.4,2.7,2.8,2.11,2.12,2.13,2.15,2.17,2.18"></div>
+      <div class="ex-progress" data-ex-progress="2"></div>
+    </div>
     <div class="row ds"><span class="rl">🤖 In data science</span><div>Least-squares regression <em>is</em> orthogonal projection onto the column space; Gram–Schmidt → QR; orthonormal bases underpin PCA; inner products generalize to kernels (the kernel trick).</div></div>
+    <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) why least-squares is "project $b$ onto $\mathrm{Col}(A)$"? (2) What Gram–Schmidt actually produces and why orthonormal bases simplify coordinates. (3) What the adjoint of an operator is and how it relates to the transpose.</div></div>
   </div></details>
 
-  <details class="ch"><summary><span class="cnum">Ch 3</span> Sesquilinear &amp; Bilinear Forms<span class="ctopics">bilinear/sesquilinear forms · matrix representation · tensor product</span></summary>
+  <details class="ch" id="ch3" data-ch="3"><summary>
+    <button type="button" class="check ch-done" role="checkbox" aria-checked="false" aria-label="Mark Chapter 3 complete"></button>
+    <span class="cnum">Ch 3</span> Sesquilinear &amp; Bilinear Forms
+    <span class="ch-meta"><span class="mini-bar" aria-hidden="true"><span data-l="watch"></span><span data-l="read"></span><span data-l="prac"></span><span data-l="ds"></span></span></span>
+    <span class="ctopics">bilinear/sesquilinear forms · matrix representation · tensor product</span>
+  </summary>
   <div class="chbody">
+    <div class="lane-head"><span class="hint">Tap lanes as you finish each pass</span>
+      <div class="lane-toggles">
+        <button type="button" class="lane-btn" data-lane="read" aria-pressed="false">📖 Read</button>
+        <button type="button" class="lane-btn" data-lane="prac" aria-pressed="false">🎯 Practise</button>
+        <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
+      </div>
+    </div>
     <div class="row read"><span class="rl">📖 Read</span><div>Course textbook ch. 3 is the main source (this topic is light in video courses). Support: MML ch. 3 (bilinear forms / metrics) and Axler ch. 9 for the form viewpoint; for tensor products, read the textbook's section carefully and cross-check with MML's notation.</div></div>
-    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>3.1, 3.3, 3.4, 3.5, 3.6, 3.8, 3.9, 3.10, 3.17.</div></div>
+    <div class="row prac"><span class="rl">🎯 Course exercises</span>
+      <div class="ex-list" data-exercises="3.1,3.3,3.4,3.5,3.6,3.8,3.9,3.10,3.17"></div>
+      <div class="ex-progress" data-ex-progress="3"></div>
+    </div>
     <div class="row ds"><span class="rl">🤖 In data science</span><div>Bilinear/quadratic forms = covariance matrices and Mahalanobis distance; tensor products model multilinear data and power tensor decompositions and the bilinear scores inside attention.</div></div>
+    <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) the difference between bilinear and sesquilinear — and which one matches an inner product over $\mathbb{C}$. (2) Why a symmetric positive-definite form defines an ellipsoid. (3) What $V \otimes W$ buys you that direct product doesn't.</div></div>
   </div></details>
 
-  <details class="ch"><summary><span class="cnum">Ch 4</span> Determinants<span class="ctopics">definition &amp; properties · alternating $n$-linear forms · determinant &amp; volume · Cramer's rule</span></summary>
+  <details class="ch" id="ch4" data-ch="4"><summary>
+    <button type="button" class="check ch-done" role="checkbox" aria-checked="false" aria-label="Mark Chapter 4 complete"></button>
+    <span class="cnum">Ch 4</span> Determinants
+    <span class="ch-meta"><span class="mini-bar" aria-hidden="true"><span data-l="watch"></span><span data-l="read"></span><span data-l="prac"></span><span data-l="ds"></span></span></span>
+    <span class="ctopics">definition &amp; properties · alternating $n$-linear forms · determinant &amp; volume · Cramer's rule</span>
+  </summary>
   <div class="chbody">
+    <div class="lane-head"><span class="hint">Tap lanes as you finish each pass</span>
+      <div class="lane-toggles">
+        <button type="button" class="lane-btn" data-lane="watch" aria-pressed="false">📺 Watch</button>
+        <button type="button" class="lane-btn" data-lane="read" aria-pressed="false">📖 Read</button>
+        <button type="button" class="lane-btn" data-lane="prac" aria-pressed="false">🎯 Practise</button>
+        <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
+      </div>
+    </div>
     <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 6 (the determinant — as a signed area/volume scaling factor).</div></div>
     <div class="row read"><span class="rl">📖 Read</span><div>Strang 18.06 lec. 18–20 (determinants, formulas, applications); Axler ch. 10 (determinants from alternating forms — matches this course); MML ch. 4.1. Course textbook ch. 4.</div></div>
-    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>4.1, 4.5, 4.7, 4.9, 4.13.</div></div>
+    <div class="row prac"><span class="rl">🎯 Course exercises</span>
+      <div class="ex-list" data-exercises="4.1,4.5,4.7,4.9,4.13"></div>
+      <div class="ex-progress" data-ex-progress="4"></div>
+    </div>
     <div class="row ds"><span class="rl">🤖 In data science</span><div>The Jacobian determinant is the change-of-variables factor in normalizing flows; $\log\det$ appears in Gaussian likelihoods; determinant = volume scaling under a linear map.</div></div>
+    <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) determinant as volume scaling (sign included). (2) Why $\det(AB)=\det A \det B$ matches composition of linear maps. (3) When Cramer's rule is useful vs. when row reduction wins.</div></div>
   </div></details>
 
-  <details class="ch"><summary><span class="cnum">Ch 5</span> Eigenvalues<span class="ctopics">eigenvalues/-vectors/-spaces · characteristic polynomial · diagonalization · Cayley–Hamilton · matrix functions · triangularization over $\mathbb{C}$</span></summary>
+  <details class="ch" id="ch5" data-ch="5"><summary>
+    <button type="button" class="check ch-done" role="checkbox" aria-checked="false" aria-label="Mark Chapter 5 complete"></button>
+    <span class="cnum">Ch 5</span> Eigenvalues
+    <span class="ch-meta"><span class="mini-bar" aria-hidden="true"><span data-l="watch"></span><span data-l="read"></span><span data-l="prac"></span><span data-l="ds"></span></span></span>
+    <span class="ctopics">eigenvalues/-vectors/-spaces · characteristic polynomial · diagonalization · Cayley–Hamilton · matrix functions · triangularization over $\mathbb{C}$</span>
+  </summary>
   <div class="chbody">
+    <div class="lane-head"><span class="hint">Tap lanes as you finish each pass</span>
+      <div class="lane-toggles">
+        <button type="button" class="lane-btn" data-lane="watch" aria-pressed="false">📺 Watch</button>
+        <button type="button" class="lane-btn" data-lane="read" aria-pressed="false">📖 Read</button>
+        <button type="button" class="lane-btn" data-lane="prac" aria-pressed="false">🎯 Practise</button>
+        <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
+      </div>
+    </div>
     <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 14 (eigenvectors &amp; eigenvalues) and ch. 15 (abstract vector spaces).</div></div>
     <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4.1–4.4 (eigendecomposition, characteristic polynomial); Strang 18.06 lec. 21–22, 25 (eigenvalues, symmetric matrices, diagonalization); Axler ch. 5, 8 (eigenvalues, operators on complex spaces). Course textbook ch. 5.</div></div>
-    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>5.1, 5.2, 5.3, 5.5, 5.6, 5.8, 5.10, 5.14, 5.15, 5.16, 5.17, 5.19, 5.22, 5.25, 5.29, 5.31.</div></div>
+    <div class="row prac"><span class="rl">🎯 Course exercises</span>
+      <div class="ex-list" data-exercises="5.1,5.2,5.3,5.5,5.6,5.8,5.10,5.14,5.15,5.16,5.17,5.19,5.22,5.25,5.29,5.31"></div>
+      <div class="ex-progress" data-ex-progress="5"></div>
+    </div>
     <div class="row ds"><span class="rl">🤖 In data science</span><div>PCA = eigendecomposition of the covariance; spectral clustering and PageRank are eigenproblems; matrix functions (e.g. $e^{tA}$) model graph diffusion and linear dynamics; the characteristic polynomial underlies stability analysis.</div></div>
+    <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) geometric meaning of an eigenvector. (2) Why symmetric matrices have real eigenvalues and orthogonal eigenvectors. (3) What Cayley–Hamilton says and one place matrix functions use it.</div></div>
   </div></details>
 
-  <details class="ch"><summary><span class="cnum">Ch 6</span> Spectral Theorems &amp; SVD<span class="ctopics">Schur's lemma &amp; unitary triangularization · diagonalization of normal endomorphisms (spectral theorem) · Singular Value Decomposition</span></summary>
+  <details class="ch" id="ch6" data-ch="6"><summary>
+    <button type="button" class="check ch-done" role="checkbox" aria-checked="false" aria-label="Mark Chapter 6 complete"></button>
+    <span class="cnum">Ch 6</span> Spectral Theorems &amp; SVD
+    <span class="ch-meta"><span class="mini-bar" aria-hidden="true"><span data-l="watch"></span><span data-l="read"></span><span data-l="prac"></span><span data-l="ds"></span></span></span>
+    <span class="ctopics">Schur's lemma &amp; unitary triangularization · diagonalization of normal endomorphisms (spectral theorem) · Singular Value Decomposition</span>
+  </summary>
   <div class="chbody">
+    <div class="lane-head"><span class="hint">Tap lanes as you finish each pass</span>
+      <div class="lane-toggles">
+        <button type="button" class="lane-btn" data-lane="watch" aria-pressed="false">📺 Watch</button>
+        <button type="button" class="lane-btn" data-lane="read" aria-pressed="false">📖 Read</button>
+        <button type="button" class="lane-btn" data-lane="prac" aria-pressed="false">🎯 Practise</button>
+        <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
+      </div>
+    </div>
     <div class="row ds"><span class="rl">🆕 New in v. 29 Jun</span><div>This version completes Chapter 6 with §6.3 — the <strong>Singular Value Decomposition</strong> (Theorem 6.9). It's the single most important decomposition for data science, so give it real time.</div></div>
     <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B's <a href="https://www.youtube.com/watch?v=vSczTbgc8Rc">SVD / PCA</a> and singular-value visual explainers; revisit Essence ch. 14 for the symmetric-matrix case behind the spectral theorem.</div></div>
     <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4.5 (the SVD — the DS-critical section); Strang 18.06 lec. 29–30 (SVD, its geometry &amp; applications); Axler ch. 7 (the spectral theorem for self-adjoint &amp; normal operators). Course textbook ch. 6.</div></div>
-    <div class="row prac"><span class="rl">🎯 Course exercises</span><div>No end-of-chapter exercises — this is a theory chapter. Reinforce it via the Ch 5 eigenvalue exercises and by computing an SVD by hand on a small $2\times2$, then checking against <code>numpy.linalg.svd</code>.</div></div>
+    <div class="row prac"><span class="rl">🎯 Reinforcement</span><div>No end-of-chapter exercises — use the mini-lab below instead of skipping practice.</div>
+      <div class="ex-list" data-exercises="6-lab-1,6-lab-2,6-lab-3,6-lab-4,6-lab-5,6-lab-6"></div>
+      <div class="ex-progress" data-ex-progress="6"></div>
+    </div>
+    <div class="mini-lab">
+      <span class="rl">🔬 SVD / PCA mini-lab</span>
+      <ol>
+        <li><strong>By hand ($2\times2$):</strong> For $A=\begin{pmatrix}3&1\\1&3\end{pmatrix}$, find singular values and an orthonormal pair of singular vectors. Check with <code>numpy.linalg.svd</code>.</li>
+        <li><strong>Rank-1 approximation:</strong> Take a small grayscale image matrix (e.g. 32×32). Plot original vs. rank-$k$ SVD reconstruction for $k=1,5,20$. Where does most energy live?</li>
+        <li><strong>PCA pipeline:</strong> On a toy dataset (Iris or synthetic 2D clusters): center data → covariance → eigenvectors → project to 2D. Compare to <code>sklearn.decomposition.PCA</code>.</li>
+        <li><strong>Pseudoinverse:</strong> Solve an overdetermined $Ax=b$ via $A^+$ from SVD; match <code>numpy.linalg.lstsq</code>.</li>
+        <li><strong>Spectral vs SVD:</strong> For a symmetric $B$, verify SVD agrees with orthogonal eigendecomposition. When do they differ (non-square $A$)?</li>
+        <li><strong>Explain Eckart–Young:</strong> In one paragraph, why truncating singular values gives the best low-rank approximation in Frobenius norm.</li>
+      </ol>
+    </div>
     <div class="row ds"><span class="rl">🤖 In data science</span><div>The headline result: SVD powers dimensionality reduction (truncated SVD / low-rank approximation via Eckart–Young), recommender systems and latent-semantic analysis, pseudo-inverses for least-squares, and image compression. The spectral theorem guarantees real, orthogonally-diagonalizable covariance matrices — the bedrock of PCA.</div></div>
+    <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) why every matrix has an SVD even when it's not diagonalizable. (2) How singular values relate to $\|A\|_2$ and to PCA. (3) What "normal operator" means and why the spectral theorem needs it.</div></div>
   </div></details>
+  </section>
 
-  <h2>Weekly homework schedule</h2>
-  <p class="lede" style="font-size:1rem">The official "exercises to do each week" (2026S). "To tick" = submit for the tick.</p>
+  <section id="schedule">
+  <h2><span class="sec-tag">Optional · 2026S</span>Official course calendar</h2>
+  <p class="lede" style="font-size:1rem">Weekly homework if you're syncing with the live course. "To tick" = submit for the course tick — irrelevant if you're self-studying; use the <a href="#self-paced" style="color:var(--accent)">self-paced path</a> instead.</p>
   <div class="scroll-x">
   <table>
     <tr><th>Wk</th><th>Date</th><th>Lecture</th><th>Homework</th><th>Tick?</th></tr>
@@ -163,17 +502,346 @@
     <tr><td>15</td><td>22 Jun</td><td>Ch 5</td><td>Ex. 5.22, 5.25, 5.29, 5.31</td><td>Yes</td></tr>
   </table>
   </div>
+  </section>
 
   <div class="box"><span class="lbl">How to use this</span>
   <ul>
-    <li><strong>Each week:</strong> watch that chapter's 📺 clips → skim the 📖 reading → do the week's 🎯 exercises → only then read the textbook proofs in full.</li>
+    <li><strong>Each session:</strong> follow the 90-minute recipe — watch → read → exercises → recall. Mark lanes and exercise chips as you go; progress persists in this browser.</li>
+    <li><strong>Each phase:</strong> one row from the self-paced table per week (or faster/slower). Don't advance until recall prompts feel easy.</li>
     <li><strong>For depth:</strong> Axler for proofs, Strang for computation, MML for the data-science framing — pick by what you're stuck on.</li>
-    <li><strong>Programming (Ex. 2.18):</strong> use NumPy/Julia; verify least-squares against <code>numpy.linalg.lstsq</code> and decompositions against <code>numpy.linalg.svd</code>.</li>
+    <li><strong>Programming (Ex. 2.18 + Ch 6 lab):</strong> use NumPy; verify against <code>numpy.linalg.lstsq</code>, <code>numpy.linalg.svd</code>, and <code>sklearn.decomposition.PCA</code>.</li>
+    <li><strong>Backup progress:</strong> export JSON before switching devices; import on the new one.</li>
   </ul></div>
 
   <footer>
     Textbook © its authors (Mula &amp; Wu); external links are third-party study resources. Source on <a href="https://github.com/kulchankas/mfds_univie_first_year">GitHub</a>.
   </footer>
 </div>
+
+<button type="button" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var KEY = 'lads-progress-v1';
+  var CH_COUNT = 6;
+  var FOUND_KEYS = ['3b1b','mml','strang','axler'];
+  var LANES = ['watch','read','prac','ds'];
+  var CIRC = 188.5;
+
+  var state = { v:1, chapters:{}, foundations:{}, exercises:{} };
+  FOUND_KEYS.forEach(function(k){ state.foundations[k] = false; });
+  for (var i = 1; i <= CH_COUNT; i++){
+    state.chapters[String(i)] = { done:false, lanes:{} };
+    LANES.forEach(function(l){ state.chapters[String(i)].lanes[l] = false; });
+  }
+
+  function buildExerciseChips(){
+    document.querySelectorAll('[data-exercises]').forEach(function(container){
+      if (container.dataset.built) return;
+      container.dataset.built = '1';
+      container.getAttribute('data-exercises').split(',').forEach(function(raw){
+        var id = raw.trim();
+        if (!id) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ex-chip';
+        btn.dataset.ex = id;
+        btn.setAttribute('aria-pressed', state.exercises[id] ? 'true' : 'false');
+        btn.textContent = id.indexOf('6-lab-') === 0 ? 'Lab ' + id.slice(6) : 'Ex. ' + id;
+        if (state.exercises[id]) btn.classList.add('done');
+        btn.addEventListener('click', function(){
+          state.exercises[id] = !state.exercises[id];
+          btn.classList.toggle('done', state.exercises[id]);
+          btn.setAttribute('aria-pressed', state.exercises[id] ? 'true' : 'false');
+          save(); renderExerciseStats();
+        });
+        container.appendChild(btn);
+      });
+    });
+  }
+
+  function countExercises(){
+    var done = 0, total = 0;
+    document.querySelectorAll('[data-ex]').forEach(function(el){
+      total++;
+      if (state.exercises[el.dataset.ex]) done++;
+    });
+    return { done: done, total: total };
+  }
+
+  function renderExerciseStats(){
+    var counts = countExercises();
+    var el = document.getElementById('stat-exercises');
+    if (el) el.textContent = counts.done + ' / ' + counts.total;
+    for (var ch = 1; ch <= CH_COUNT; ch++){
+      var prog = document.querySelector('[data-ex-progress="' + ch + '"]');
+      if (!prog) continue;
+      var chDone = 0, chTotal = 0;
+      document.querySelectorAll('#ch' + ch + ' [data-ex]').forEach(function(btn){
+        chTotal++;
+        if (state.exercises[btn.dataset.ex]) chDone++;
+      });
+      prog.textContent = chDone + ' / ' + chTotal + ' done';
+    }
+  }
+
+  function load(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var parsed = JSON.parse(raw);
+      if (parsed && parsed.v === 1){
+        FOUND_KEYS.forEach(function(k){
+          if (typeof parsed.foundations[k] === 'boolean') state.foundations[k] = parsed.foundations[k];
+        });
+        for (var i = 1; i <= CH_COUNT; i++){
+          var id = String(i), src = parsed.chapters && parsed.chapters[id];
+          if (!src) continue;
+          if (typeof src.done === 'boolean') state.chapters[id].done = src.done;
+          LANES.forEach(function(l){
+            if (src.lanes && typeof src.lanes[l] === 'boolean') state.chapters[id].lanes[l] = src.lanes[l];
+          });
+        }
+        if (parsed.exercises && typeof parsed.exercises === 'object'){
+          state.exercises = {};
+          Object.keys(parsed.exercises).forEach(function(k){
+            if (typeof parsed.exercises[k] === 'boolean') state.exercises[k] = parsed.exercises[k];
+          });
+        }
+      }
+    } catch(e){}
+  }
+
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  function setCheck(btn, on){
+    btn.setAttribute('aria-checked', on ? 'true' : 'false');
+  }
+
+  function renderChapter(chEl){
+    var id = chEl.getAttribute('data-ch');
+    var data = state.chapters[id];
+    if (!data) return;
+    var doneBtn = chEl.querySelector('.ch-done');
+    if (doneBtn) setCheck(doneBtn, data.done);
+    chEl.classList.toggle('is-done', data.done);
+    chEl.querySelectorAll('.lane-btn').forEach(function(btn){
+      var lane = btn.getAttribute('data-lane');
+      var on = !!(data.lanes && data.lanes[lane]);
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    chEl.querySelectorAll('.mini-bar span').forEach(function(dot){
+      var l = dot.getAttribute('data-l');
+      dot.classList.toggle('on', !!(data.lanes && data.lanes[l]));
+      dot.classList.toggle(l, !!(data.lanes && data.lanes[l]));
+    });
+    var jump = document.querySelector('.ch-jump a[data-ch="'+id+'"]');
+    if (jump) jump.classList.toggle('done', data.done);
+  }
+
+  function renderFoundations(){
+    document.querySelectorAll('.found-item').forEach(function(item){
+      var k = item.getAttribute('data-found');
+      var btn = item.querySelector('.check');
+      if (btn && typeof state.foundations[k] === 'boolean') setCheck(btn, state.foundations[k]);
+    });
+  }
+
+  function countLanes(){
+    var n = 0;
+    for (var i = 1; i <= CH_COUNT; i++){
+      LANES.forEach(function(l){ if (state.chapters[String(i)].lanes[l]) n++; });
+    }
+    return n;
+  }
+
+  function countDoneCh(){
+    var n = 0;
+    for (var i = 1; i <= CH_COUNT; i++) if (state.chapters[String(i)].done) n++;
+    return n;
+  }
+
+  function countFound(){
+    return FOUND_KEYS.filter(function(k){ return state.foundations[k]; }).length;
+  }
+
+  function renderStats(){
+    var done = countDoneCh();
+    document.getElementById('stat-chapters').textContent = done + ' / ' + CH_COUNT;
+    document.getElementById('stat-lanes').textContent = String(countLanes());
+    document.getElementById('stat-found').textContent = countFound() + ' / ' + FOUND_KEYS.length;
+    document.getElementById('ring-label').textContent = done + '/' + CH_COUNT;
+    var ring = document.getElementById('ring-fg');
+    var pct = CH_COUNT ? done / CH_COUNT : 0;
+    ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pct)));
+    renderExerciseStats();
+  }
+
+  function renderAll(){
+    document.querySelectorAll('details.ch').forEach(renderChapter);
+    renderFoundations();
+    document.querySelectorAll('[data-ex]').forEach(function(btn){
+      var on = !!state.exercises[btn.dataset.ex];
+      btn.classList.toggle('done', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    renderStats();
+  }
+
+  load();
+  buildExerciseChips();
+  renderAll();
+
+  document.querySelectorAll('details.ch').forEach(function(chEl){
+    var id = chEl.getAttribute('data-ch');
+    var doneBtn = chEl.querySelector('.ch-done');
+    if (doneBtn){
+      ['click','mousedown'].forEach(function(ev){
+        doneBtn.addEventListener(ev, function(e){
+          e.preventDefault(); e.stopPropagation();
+          if (ev === 'click'){
+            state.chapters[id].done = !state.chapters[id].done;
+            save(); renderChapter(chEl); renderStats();
+          }
+        });
+      });
+    }
+    chEl.querySelectorAll('.lane-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var lane = btn.getAttribute('data-lane');
+        state.chapters[id].lanes[lane] = !state.chapters[id].lanes[lane];
+        save(); renderChapter(chEl); renderStats();
+      });
+    });
+  });
+
+  document.querySelectorAll('.found-item .check').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var k = btn.closest('.found-item').getAttribute('data-found');
+      state.foundations[k] = !state.foundations[k];
+      save(); renderFoundations(); renderStats();
+    });
+  });
+
+  var syncPanel = document.getElementById('sync-panel');
+  var syncMsg = document.getElementById('sync-msg');
+  function showSync(msg, ok){
+    syncMsg.textContent = msg;
+    syncMsg.className = 'sync-msg ' + (ok ? 'ok' : 'err');
+  }
+
+  document.getElementById('btn-export').addEventListener('click', function(){
+    var json = JSON.stringify(state, null, 2);
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(json).then(function(){
+        showSync('Copied to clipboard.', true);
+        syncPanel.hidden = false;
+        document.getElementById('import-data').value = json;
+        document.getElementById('btn-import-toggle').setAttribute('aria-expanded','true');
+      }).catch(function(){ fallbackExport(json); });
+    } else fallbackExport(json);
+  });
+
+  function fallbackExport(json){
+    document.getElementById('import-data').value = json;
+    syncPanel.hidden = false;
+    document.getElementById('btn-import-toggle').setAttribute('aria-expanded','true');
+    showSync('JSON shown below — copy manually if needed.', true);
+  }
+
+  document.getElementById('btn-import-toggle').addEventListener('click', function(){
+    var open = syncPanel.hidden;
+    syncPanel.hidden = !open;
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open){ document.getElementById('import-data').focus(); syncMsg.textContent = ''; }
+  });
+
+  document.getElementById('btn-import-cancel').addEventListener('click', function(){
+    syncPanel.hidden = true;
+    document.getElementById('btn-import-toggle').setAttribute('aria-expanded','false');
+    syncMsg.textContent = '';
+  });
+
+  document.getElementById('btn-import-apply').addEventListener('click', function(){
+    try {
+      var parsed = JSON.parse(document.getElementById('import-data').value.trim());
+      if (!parsed || parsed.v !== 1) throw new Error('Invalid version');
+      FOUND_KEYS.forEach(function(k){
+        if (typeof parsed.foundations[k] === 'boolean') state.foundations[k] = parsed.foundations[k];
+      });
+      for (var i = 1; i <= CH_COUNT; i++){
+        var id = String(i), src = parsed.chapters && parsed.chapters[id];
+        if (!src) continue;
+        if (typeof src.done === 'boolean') state.chapters[id].done = src.done;
+        LANES.forEach(function(l){
+          if (src.lanes && typeof src.lanes[l] === 'boolean') state.chapters[id].lanes[l] = src.lanes[l];
+        });
+      }
+      state.exercises = {};
+      if (parsed.exercises && typeof parsed.exercises === 'object'){
+        Object.keys(parsed.exercises).forEach(function(k){
+          if (typeof parsed.exercises[k] === 'boolean') state.exercises[k] = parsed.exercises[k];
+        });
+      }
+      save(); renderAll();
+      showSync('Progress imported.', true);
+    } catch(e){ showSync('Could not import — check the JSON.', false); }
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    if (!confirm('Reset all progress on this page?')) return;
+    FOUND_KEYS.forEach(function(k){ state.foundations[k] = false; });
+    for (var i = 1; i <= CH_COUNT; i++){
+      state.chapters[String(i)] = { done:false, lanes:{} };
+      LANES.forEach(function(l){ state.chapters[String(i)].lanes[l] = false; });
+    }
+    state.exercises = {};
+    save(); renderAll(); syncMsg.textContent = '';
+  });
+
+  var prog = document.getElementById('read-progress');
+  var toTop = document.getElementById('toTop');
+  function onScroll(){
+    var st = window.scrollY || document.documentElement.scrollTop;
+    var sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = sh > 0 ? (st / sh * 100) : 0;
+    prog.style.width = pct + '%';
+    prog.setAttribute('aria-valuenow', Math.round(pct));
+    toTop.classList.toggle('show', st > 420);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  var jumpLinks = Array.prototype.slice.call(document.querySelectorAll('.ch-jump a[href^="#"]'));
+  var sectionMap = {};
+  jumpLinks.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (el) sectionMap[id] = a;
+    a.addEventListener('click', function(e){
+      var target = document.getElementById(id);
+      if (target && target.tagName === 'DETAILS') target.open = true;
+    });
+  });
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          jumpLinks.forEach(function(a){ a.classList.remove('active'); });
+          if (sectionMap[e.target.id]) sectionMap[e.target.id].classList.add('active');
+        }
+      });
+    }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
+    Object.keys(sectionMap).forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+  }
+})();
+</script>
 </body>
 </html>

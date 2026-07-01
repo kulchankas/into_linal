@@ -87,9 +87,17 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   .session-block .time{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--read);margin-bottom:.25rem}
   .session-block p{font-size:.86rem;margin:0;color:var(--text-muted)}
   .ex-list{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.45rem}
-  .ex-chip{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;padding:.35rem .65rem;min-height:36px;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;transition:border-color .15s,color .15s,background .15s}
+  .ex-chip,.cl-chip{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;padding:.35rem .65rem;min-height:var(--touch);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;transition:border-color .15s,color .15s,background .15s}
   .ex-chip:hover{border-color:var(--prac);color:var(--text-muted)}
   .ex-chip.done{background:rgba(139,198,160,.12);border-color:var(--prac);color:var(--prac);text-decoration:line-through}
+  .cl-list{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.15rem}
+  .cl-chip[data-lane="watch"]:hover{border-color:var(--watch);color:var(--text-muted)}
+  .cl-chip[data-lane="watch"].done{background:var(--watch-bg);border-color:var(--watch);color:var(--watch);text-decoration:line-through}
+  .cl-chip[data-lane="read"]:hover{border-color:var(--read);color:var(--text-muted)}
+  .cl-chip[data-lane="read"].done{background:var(--read-bg);border-color:var(--read);color:var(--read);text-decoration:line-through}
+  .cl-chip[data-lane="ds"]:hover{border-color:var(--ds);color:var(--text-muted)}
+  .cl-chip[data-lane="ds"].done{background:var(--ds-bg);border-color:var(--ds);color:var(--ds);text-decoration:line-through}
+  .cl-progress{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-dim);margin-top:.4rem}
   .ex-progress{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-dim);margin-top:.4rem}
   .mini-lab{background:rgba(196,166,223,.08);border:1px solid rgba(196,166,223,.25);border-radius:var(--radius-sm);padding:.85rem 1rem;margin-top:.65rem}
   .mini-lab .rl{color:var(--ds)!important}
@@ -177,7 +185,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
     .btn{font-size:.68rem;padding:0 .65rem}
   }
   @media print{
-    #read-progress,#toTop,.dashboard,.ch-jump-wrap,.check,.ex-chip,.lane-btn,.lane-head{display:none!important}
+    #read-progress,#toTop,.dashboard,.ch-jump-wrap,.check,.ex-chip,.cl-chip,.lane-btn,.lane-head{display:none!important}
     details.ch{border:1px solid #ccc;page-break-inside:avoid}
     details.ch[open] summary,details.ch .chbody{display:block!important}
   }
@@ -333,13 +341,22 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
         <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
       </div>
     </div>
-    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 1–4, 7–8, 13 (vectors → linear combinations/span/basis → linear transformations → matrix multiplication → inverse, column space, null space → change of basis).</div></div>
-    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 2 (Linear Algebra); Axler ch. 1–3 (vector spaces, finite-dimensional spaces, linear maps &amp; the dual); Strang 18.06 lec. 1–3, 5–10 (spaces, subspaces, the four fundamental subspaces). Course textbook ch. 1.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span>
+      <div class="cl-list" data-checklist-group="1-watch"></div>
+      <div class="cl-progress" data-cl-progress="1-watch"></div>
+    </div>
+    <div class="row read"><span class="rl">📖 Read</span>
+      <div class="cl-list" data-checklist-group="1-read"></div>
+      <div class="cl-progress" data-cl-progress="1-read"></div>
+    </div>
     <div class="row prac"><span class="rl">🎯 Course exercises</span>
       <div class="ex-list" data-exercises="1.3,1.4,1.5,1.6,1.22,1.23,1.24,1.28,1.29,1.31,1.33,1.37,1.38,1.40,1.42,1.43,1.44,1.45"></div>
       <div class="ex-progress" data-ex-progress="1"></div>
     </div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>Feature spaces and embeddings are vector spaces; linear models are linear maps; norms drive regularization ($L^1$/$L^2$); the operator norm bounds a layer's stability/Lipschitz constant.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span>
+      <div class="cl-list" data-checklist-group="1-ds"></div>
+      <div class="cl-progress" data-cl-progress="1-ds"></div>
+    </div>
     <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain, without notes: (1) why $\mathbb{R}^2$ is a vector space but the first quadrant is not? (2) What is the dual of a vector space and why does it matter for inner products later? (3) How does a linear map become a matrix once you pick bases?</div></div>
   </div></details>
 
@@ -358,13 +375,22 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
         <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
       </div>
     </div>
-    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 9 (dot products &amp; duality) — and revisit ch. 13 (change of basis) for orthonormal coordinates.</div></div>
-    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 3 (Analytic Geometry — inner products, projections, orthogonality); Axler ch. 6 (inner-product spaces); Strang 18.06 lec. 14–17 (orthogonality, projections, least squares, Gram–Schmidt). Course textbook ch. 2.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span>
+      <div class="cl-list" data-checklist-group="2-watch"></div>
+      <div class="cl-progress" data-cl-progress="2-watch"></div>
+    </div>
+    <div class="row read"><span class="rl">📖 Read</span>
+      <div class="cl-list" data-checklist-group="2-read"></div>
+      <div class="cl-progress" data-cl-progress="2-read"></div>
+    </div>
     <div class="row prac"><span class="rl">🎯 Course exercises</span>
       <div class="ex-list" data-exercises="2.1,2.2,2.3,2.4,2.7,2.8,2.11,2.12,2.13,2.15,2.17,2.18"></div>
       <div class="ex-progress" data-ex-progress="2"></div>
     </div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>Least-squares regression <em>is</em> orthogonal projection onto the column space; Gram–Schmidt → QR; orthonormal bases underpin PCA; inner products generalize to kernels (the kernel trick).</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span>
+      <div class="cl-list" data-checklist-group="2-ds"></div>
+      <div class="cl-progress" data-cl-progress="2-ds"></div>
+    </div>
     <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) why least-squares is "project $b$ onto $\mathrm{Col}(A)$"? (2) What Gram–Schmidt actually produces and why orthonormal bases simplify coordinates. (3) What the adjoint of an operator is and how it relates to the transpose.</div></div>
   </div></details>
 
@@ -382,12 +408,18 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
         <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
       </div>
     </div>
-    <div class="row read"><span class="rl">📖 Read</span><div>Course textbook ch. 3 is the main source (this topic is light in video courses). Support: MML ch. 3 (bilinear forms / metrics) and Axler ch. 9 for the form viewpoint; for tensor products, read the textbook's section carefully and cross-check with MML's notation.</div></div>
+    <div class="row read"><span class="rl">📖 Read</span>
+      <div class="cl-list" data-checklist-group="3-read"></div>
+      <div class="cl-progress" data-cl-progress="3-read"></div>
+    </div>
     <div class="row prac"><span class="rl">🎯 Course exercises</span>
       <div class="ex-list" data-exercises="3.1,3.3,3.4,3.5,3.6,3.8,3.9,3.10,3.17"></div>
       <div class="ex-progress" data-ex-progress="3"></div>
     </div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>Bilinear/quadratic forms = covariance matrices and Mahalanobis distance; tensor products model multilinear data and power tensor decompositions and the bilinear scores inside attention.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span>
+      <div class="cl-list" data-checklist-group="3-ds"></div>
+      <div class="cl-progress" data-cl-progress="3-ds"></div>
+    </div>
     <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) the difference between bilinear and sesquilinear — and which one matches an inner product over $\mathbb{C}$. (2) Why a symmetric positive-definite form defines an ellipsoid. (3) What $V \otimes W$ buys you that direct product doesn't.</div></div>
   </div></details>
 
@@ -406,13 +438,22 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
         <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
       </div>
     </div>
-    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 6 (the determinant — as a signed area/volume scaling factor).</div></div>
-    <div class="row read"><span class="rl">📖 Read</span><div>Strang 18.06 lec. 18–20 (determinants, formulas, applications); Axler ch. 10 (determinants from alternating forms — matches this course); MML ch. 4.1. Course textbook ch. 4.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span>
+      <div class="cl-list" data-checklist-group="4-watch"></div>
+      <div class="cl-progress" data-cl-progress="4-watch"></div>
+    </div>
+    <div class="row read"><span class="rl">📖 Read</span>
+      <div class="cl-list" data-checklist-group="4-read"></div>
+      <div class="cl-progress" data-cl-progress="4-read"></div>
+    </div>
     <div class="row prac"><span class="rl">🎯 Course exercises</span>
       <div class="ex-list" data-exercises="4.1,4.5,4.7,4.9,4.13"></div>
       <div class="ex-progress" data-ex-progress="4"></div>
     </div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>The Jacobian determinant is the change-of-variables factor in normalizing flows; $\log\det$ appears in Gaussian likelihoods; determinant = volume scaling under a linear map.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span>
+      <div class="cl-list" data-checklist-group="4-ds"></div>
+      <div class="cl-progress" data-cl-progress="4-ds"></div>
+    </div>
     <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) determinant as volume scaling (sign included). (2) Why $\det(AB)=\det A \det B$ matches composition of linear maps. (3) When Cramer's rule is useful vs. when row reduction wins.</div></div>
   </div></details>
 
@@ -431,13 +472,22 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
         <button type="button" class="lane-btn" data-lane="ds" aria-pressed="false">🤖 DS</button>
       </div>
     </div>
-    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B Essence ch. 14 (eigenvectors &amp; eigenvalues) and ch. 15 (abstract vector spaces).</div></div>
-    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4.1–4.4 (eigendecomposition, characteristic polynomial); Strang 18.06 lec. 21–22, 25 (eigenvalues, symmetric matrices, diagonalization); Axler ch. 5, 8 (eigenvalues, operators on complex spaces). Course textbook ch. 5.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span>
+      <div class="cl-list" data-checklist-group="5-watch"></div>
+      <div class="cl-progress" data-cl-progress="5-watch"></div>
+    </div>
+    <div class="row read"><span class="rl">📖 Read</span>
+      <div class="cl-list" data-checklist-group="5-read"></div>
+      <div class="cl-progress" data-cl-progress="5-read"></div>
+    </div>
     <div class="row prac"><span class="rl">🎯 Course exercises</span>
       <div class="ex-list" data-exercises="5.1,5.2,5.3,5.5,5.6,5.8,5.10,5.14,5.15,5.16,5.17,5.19,5.22,5.25,5.29,5.31"></div>
       <div class="ex-progress" data-ex-progress="5"></div>
     </div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>PCA = eigendecomposition of the covariance; spectral clustering and PageRank are eigenproblems; matrix functions (e.g. $e^{tA}$) model graph diffusion and linear dynamics; the characteristic polynomial underlies stability analysis.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span>
+      <div class="cl-list" data-checklist-group="5-ds"></div>
+      <div class="cl-progress" data-cl-progress="5-ds"></div>
+    </div>
     <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) geometric meaning of an eigenvector. (2) Why symmetric matrices have real eigenvalues and orthogonal eigenvectors. (3) What Cayley–Hamilton says and one place matrix functions use it.</div></div>
   </div></details>
 
@@ -457,8 +507,14 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
       </div>
     </div>
     <div class="row ds"><span class="rl">🆕 New in v. 29 Jun</span><div>This version completes Chapter 6 with §6.3 — the <strong>Singular Value Decomposition</strong> (Theorem 6.9). It's the single most important decomposition for data science, so give it real time.</div></div>
-    <div class="row watch"><span class="rl">📺 Watch</span><div>3B1B's <a href="https://www.youtube.com/watch?v=vSczTbgc8Rc">SVD / PCA</a> and singular-value visual explainers; revisit Essence ch. 14 for the symmetric-matrix case behind the spectral theorem.</div></div>
-    <div class="row read"><span class="rl">📖 Read</span><div>MML ch. 4.5 (the SVD — the DS-critical section); Strang 18.06 lec. 29–30 (SVD, its geometry &amp; applications); Axler ch. 7 (the spectral theorem for self-adjoint &amp; normal operators). Course textbook ch. 6.</div></div>
+    <div class="row watch"><span class="rl">📺 Watch</span>
+      <div class="cl-list" data-checklist-group="6-watch"></div>
+      <div class="cl-progress" data-cl-progress="6-watch"></div>
+    </div>
+    <div class="row read"><span class="rl">📖 Read</span>
+      <div class="cl-list" data-checklist-group="6-read"></div>
+      <div class="cl-progress" data-cl-progress="6-read"></div>
+    </div>
     <div class="row prac"><span class="rl">🎯 Reinforcement</span><div>No end-of-chapter exercises — use the mini-lab below instead of skipping practice.</div>
       <div class="ex-list" data-exercises="6-lab-1,6-lab-2,6-lab-3,6-lab-4,6-lab-5,6-lab-6"></div>
       <div class="ex-progress" data-ex-progress="6"></div>
@@ -474,7 +530,10 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
         <li><strong>Explain Eckart–Young:</strong> In one paragraph, why truncating singular values gives the best low-rank approximation in Frobenius norm.</li>
       </ol>
     </div>
-    <div class="row ds"><span class="rl">🤖 In data science</span><div>The headline result: SVD powers dimensionality reduction (truncated SVD / low-rank approximation via Eckart–Young), recommender systems and latent-semantic analysis, pseudo-inverses for least-squares, and image compression. The spectral theorem guarantees real, orthogonally-diagonalizable covariance matrices — the bedrock of PCA.</div></div>
+    <div class="row ds"><span class="rl">🤖 In data science</span>
+      <div class="cl-list" data-checklist-group="6-ds"></div>
+      <div class="cl-progress" data-cl-progress="6-ds"></div>
+    </div>
     <div class="row recall"><span class="rl">🗣 Before moving on</span><div>Can you explain: (1) why every matrix has an SVD even when it's not diagonalizable. (2) How singular values relate to $\|A\|_2$ and to PCA. (3) What "normal operator" means and why the spectral theorem needs it.</div></div>
   </div></details>
   </section>
@@ -528,11 +587,176 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
   var LANES = ['watch','read','prac','ds'];
   var CIRC = 188.5;
 
-  var state = { v:1, chapters:{}, foundations:{}, exercises:{} };
+  var CHECKLIST = {
+    '1-watch': [
+      { id:'1-watch-3b1b-14', label:'3B1B ch. 1–4' },
+      { id:'1-watch-3b1b-78', label:'3B1B ch. 7–8' },
+      { id:'1-watch-3b1b-13', label:'3B1B ch. 13' }
+    ],
+    '1-read': [
+      { id:'1-read-mml2', label:'MML ch. 2' },
+      { id:'1-read-axler-13', label:'Axler ch. 1–3' },
+      { id:'1-read-strang-13', label:'Strang lec. 1–3' },
+      { id:'1-read-strang-510', label:'Strang lec. 5–10' },
+      { id:'1-read-textbook', label:'Textbook ch. 1' }
+    ],
+    '1-ds': [
+      { id:'1-ds-feature', label:'Feature spaces & embeddings' },
+      { id:'1-ds-linear', label:'Linear models = linear maps' },
+      { id:'1-ds-norms', label:'Norms & regularization' },
+      { id:'1-ds-opnorm', label:'Operator norm / stability' }
+    ],
+    '2-watch': [
+      { id:'2-watch-3b1b-9', label:'3B1B ch. 9' },
+      { id:'2-watch-3b1b-13', label:'3B1B ch. 13 (revisit)' }
+    ],
+    '2-read': [
+      { id:'2-read-mml3', label:'MML ch. 3' },
+      { id:'2-read-axler6', label:'Axler ch. 6' },
+      { id:'2-read-strang', label:'Strang lec. 14–17' },
+      { id:'2-read-textbook', label:'Textbook ch. 2' }
+    ],
+    '2-ds': [
+      { id:'2-ds-ls', label:'Least-squares = projection' },
+      { id:'2-ds-qr', label:'Gram–Schmidt → QR' },
+      { id:'2-ds-pca', label:'PCA & orthonormal bases' },
+      { id:'2-ds-kernels', label:'Kernels / kernel trick' }
+    ],
+    '3-read': [
+      { id:'3-read-textbook', label:'Textbook ch. 3' },
+      { id:'3-read-mml', label:'MML ch. 3 (forms)' },
+      { id:'3-read-axler9', label:'Axler ch. 9' },
+      { id:'3-read-tensor', label:'Tensor products (textbook)' }
+    ],
+    '3-ds': [
+      { id:'3-ds-forms', label:'Bilinear / quadratic forms' },
+      { id:'3-ds-tensor', label:'Tensor products in ML' }
+    ],
+    '4-watch': [
+      { id:'4-watch-3b1b-6', label:'3B1B ch. 6' }
+    ],
+    '4-read': [
+      { id:'4-read-strang', label:'Strang lec. 18–20' },
+      { id:'4-read-axler10', label:'Axler ch. 10' },
+      { id:'4-read-mml41', label:'MML ch. 4.1' },
+      { id:'4-read-textbook', label:'Textbook ch. 4' }
+    ],
+    '4-ds': [
+      { id:'4-ds-jacobian', label:'Jacobian & change of variables' },
+      { id:'4-ds-logdet', label:'Gaussian log-determinants' },
+      { id:'4-ds-volume', label:'Volume scaling' }
+    ],
+    '5-watch': [
+      { id:'5-watch-3b1b-14', label:'3B1B ch. 14' },
+      { id:'5-watch-3b1b-15', label:'3B1B ch. 15' }
+    ],
+    '5-read': [
+      { id:'5-read-mml', label:'MML ch. 4.1–4.4' },
+      { id:'5-read-strang', label:'Strang lec. 21–22, 25' },
+      { id:'5-read-axler', label:'Axler ch. 5, 8' },
+      { id:'5-read-textbook', label:'Textbook ch. 5' }
+    ],
+    '5-ds': [
+      { id:'5-ds-pca', label:'PCA = covariance eigendecomp' },
+      { id:'5-ds-spectral', label:'Spectral clustering / PageRank' },
+      { id:'5-ds-expA', label:'Matrix functions (e^tA)' },
+      { id:'5-ds-stability', label:'Characteristic polynomial' }
+    ],
+    '6-watch': [
+      { id:'6-watch-svd', label:'3B1B SVD / PCA' },
+      { id:'6-watch-14', label:'3B1B Essence ch. 14 (revisit)' }
+    ],
+    '6-read': [
+      { id:'6-read-mml45', label:'MML ch. 4.5' },
+      { id:'6-read-strang', label:'Strang lec. 29–30' },
+      { id:'6-read-axler7', label:'Axler ch. 7' },
+      { id:'6-read-textbook', label:'Textbook ch. 6' }
+    ],
+    '6-ds': [
+      { id:'6-ds-svd', label:'Truncated SVD / low-rank' },
+      { id:'6-ds-rec', label:'Recommenders / LSA' },
+      { id:'6-ds-pinv', label:'Pseudo-inverse & least-squares' },
+      { id:'6-ds-pca', label:'Spectral theorem & PCA' }
+    ]
+  };
+
+  var CHECKLIST_LANE_LABELS = { watch:'Watch', read:'Read', ds:'DS' };
+
+  var state = { v:1, chapters:{}, foundations:{}, exercises:{}, checklist:{} };
   FOUND_KEYS.forEach(function(k){ state.foundations[k] = false; });
   for (var i = 1; i <= CH_COUNT; i++){
     state.chapters[String(i)] = { done:false, lanes:{} };
     LANES.forEach(function(l){ state.chapters[String(i)].lanes[l] = false; });
+  }
+
+  function buildChecklistChips(){
+    document.querySelectorAll('[data-checklist-group]').forEach(function(container){
+      if (container.dataset.built) return;
+      container.dataset.built = '1';
+      var group = container.getAttribute('data-checklist-group');
+      var items = CHECKLIST[group];
+      if (!items) return;
+      var lane = group.split('-').slice(1).join('-');
+      items.forEach(function(item){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cl-chip';
+        btn.dataset.cl = item.id;
+        btn.dataset.lane = lane;
+        btn.setAttribute('aria-pressed', state.checklist[item.id] ? 'true' : 'false');
+        btn.setAttribute('aria-label', 'Mark ' + item.label + ' complete');
+        btn.textContent = item.label;
+        if (state.checklist[item.id]) btn.classList.add('done');
+        btn.addEventListener('click', function(){
+          state.checklist[item.id] = !state.checklist[item.id];
+          btn.classList.toggle('done', state.checklist[item.id]);
+          btn.setAttribute('aria-pressed', state.checklist[item.id] ? 'true' : 'false');
+          syncLaneFromChecklist(group);
+          save();
+          renderChecklistStats();
+          var chId = group.split('-')[0];
+          var chEl = document.querySelector('details.ch[data-ch="' + chId + '"]');
+          if (chEl) renderChapter(chEl);
+          renderStats();
+        });
+        container.appendChild(btn);
+      });
+    });
+  }
+
+  function checklistGroupProgress(group){
+    var items = CHECKLIST[group];
+    if (!items || !items.length) return { done:0, total:0 };
+    var done = 0;
+    items.forEach(function(item){ if (state.checklist[item.id]) done++; });
+    return { done: done, total: items.length };
+  }
+
+  function syncLaneFromChecklist(group){
+    var parts = group.split('-');
+    var chId = parts[0];
+    var lane = parts.slice(1).join('-');
+    if (LANES.indexOf(lane) === -1) return;
+    var prog = checklistGroupProgress(group);
+    if (!state.chapters[chId]) return;
+    if (prog.total > 0 && prog.done === prog.total){
+      state.chapters[chId].lanes[lane] = true;
+    }
+  }
+
+  function syncAllLanesFromChecklists(){
+    Object.keys(CHECKLIST).forEach(syncLaneFromChecklist);
+  }
+
+  function renderChecklistStats(){
+    Object.keys(CHECKLIST).forEach(function(group){
+      var progEl = document.querySelector('[data-cl-progress="' + group + '"]');
+      if (!progEl) return;
+      var prog = checklistGroupProgress(group);
+      var lane = group.split('-').slice(1).join('-');
+      var laneLabel = CHECKLIST_LANE_LABELS[lane] || lane;
+      progEl.textContent = laneLabel + ' ' + prog.done + ' / ' + prog.total;
+    });
   }
 
   function buildExerciseChips(){
@@ -608,6 +832,13 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
             if (typeof parsed.exercises[k] === 'boolean') state.exercises[k] = parsed.exercises[k];
           });
         }
+        if (parsed.checklist && typeof parsed.checklist === 'object'){
+          state.checklist = {};
+          Object.keys(parsed.checklist).forEach(function(k){
+            if (typeof parsed.checklist[k] === 'boolean') state.checklist[k] = parsed.checklist[k];
+          });
+        }
+        syncAllLanesFromChecklists();
       }
     } catch(e){}
   }
@@ -688,11 +919,19 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
       btn.classList.toggle('done', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    document.querySelectorAll('[data-cl]').forEach(function(btn){
+      var on = !!state.checklist[btn.dataset.cl];
+      btn.classList.toggle('done', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    renderChecklistStats();
     renderStats();
   }
 
   load();
+  buildChecklistChips();
   buildExerciseChips();
+  syncAllLanesFromChecklists();
   renderAll();
 
   document.querySelectorAll('details.ch').forEach(function(chEl){
@@ -786,6 +1025,13 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
           if (typeof parsed.exercises[k] === 'boolean') state.exercises[k] = parsed.exercises[k];
         });
       }
+      state.checklist = {};
+      if (parsed.checklist && typeof parsed.checklist === 'object'){
+        Object.keys(parsed.checklist).forEach(function(k){
+          if (typeof parsed.checklist[k] === 'boolean') state.checklist[k] = parsed.checklist[k];
+        });
+      }
+      syncAllLanesFromChecklists();
       save(); renderAll();
       showSync('Progress imported.', true);
     } catch(e){ showSync('Could not import — check the JSON.', false); }
@@ -799,6 +1045,7 @@ MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
       LANES.forEach(function(l){ state.chapters[String(i)].lanes[l] = false; });
     }
     state.exercises = {};
+    state.checklist = {};
     save(); renderAll(); syncMsg.textContent = '';
   });
 
